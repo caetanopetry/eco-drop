@@ -1,0 +1,176 @@
+/*
+ * EcoDrop — Componentes reutilizáveis
+ * Cada padrão aqui responde a um uso real do produto — não um kit de cards
+ * genérico repetido em toda a tela.
+ */
+
+/* Botões ------------------------------------------------------------- */
+.botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaco-2);
+    padding: 13px 26px;
+    border: 1px solid transparent;
+    border-radius: var(--raio-sm);
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+.botao:disabled { opacity: .55; cursor: not-allowed; }
+
+.botao-primario { background: var(--musgo); color: var(--superficie); }
+.botao-primario:hover:not(:disabled) { background: var(--musgo-escuro); }
+
+.botao-secundario { background: transparent; color: var(--tinta); border-color: var(--linha); }
+.botao-secundario:hover:not(:disabled) { border-color: var(--musgo); color: var(--musgo); }
+
+.botao-perigo { background: var(--erro); color: var(--superficie); }
+.botao-perigo:hover:not(:disabled) { background: #7f2e21; }
+
+.botao-bloco { width: 100%; }
+
+/* Formulários ---------------------------------------------------------*/
+.campo { margin-bottom: var(--espaco-4); }
+.campo label {
+    display: block;
+    margin-bottom: var(--espaco-2);
+    font-weight: 600;
+    font-size: .92rem;
+    color: var(--tinta);
+}
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-sm);
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--superficie);
+    color: var(--tinta);
+}
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus { border-color: var(--musgo); }
+.campo-ajuda { display: block; margin-top: var(--espaco-1); font-size: .85rem; color: var(--tinta-suave); }
+.campo-erro-texto { display: block; margin-top: var(--espaco-1); font-size: .85rem; color: var(--erro); }
+.campo.com-erro input,
+.campo.com-erro select { border-color: var(--erro); }
+
+/* Alertas / feedback ---------------------------------------------------*/
+.alerta {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espaco-2);
+    padding: var(--espaco-3) var(--espaco-4);
+    border-radius: var(--raio-sm);
+    border-left: 3px solid transparent;
+    font-size: .95rem;
+    margin-bottom: var(--espaco-4);
+}
+.alerta-sucesso { background: var(--sucesso-fundo); color: var(--sucesso); border-color: var(--sucesso); }
+.alerta-erro { background: var(--erro-fundo); color: var(--erro); border-color: var(--erro); }
+.alerta-aviso { background: var(--aviso-fundo); color: var(--aviso); border-color: var(--aviso); }
+
+/* Badges (status de voucher/resgate etc.) -------------------------------*/
+.badge { display: inline-block; padding: 3px 10px; border-radius: var(--raio-sm); font-size: .82rem; font-weight: 600; }
+.badge-sucesso { background: var(--sucesso-fundo); color: var(--sucesso); }
+.badge-erro { background: var(--erro-fundo); color: var(--erro); }
+.badge-aviso { background: var(--aviso-fundo); color: var(--aviso); }
+.badge-neutro { background: var(--musgo-claro); color: var(--musgo-escuro); }
+
+/* Chips de material (cor real de cada material — RN001-RN008) ----------*/
+.chip-material { display: inline-flex; align-items: center; gap: var(--espaco-2); font-weight: 600; font-size: .92rem; }
+.chip-material::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--cor-chip, var(--musgo)); }
+.chip-plastico { --cor-chip: var(--m-plastico); }
+.chip-papel { --cor-chip: var(--m-papel); }
+.chip-vidro { --cor-chip: var(--m-vidro); }
+.chip-oleo { --cor-chip: var(--m-oleo); }
+
+/* Navbar do App -----------------------------------------------------------*/
+.navbar-ecodrop { border-bottom: 1px solid var(--linha); }
+.navbar-ecodrop .container { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
+.navbar-marca { font-family: var(--fonte-titulo); font-size: 1.35rem; color: var(--tinta); text-decoration: none; }
+.navbar-marca em { font-style: normal; color: var(--musgo); }
+.navbar-links { display: flex; align-items: center; gap: var(--espaco-5); list-style: none; margin: 0; padding: 0; }
+.navbar-links a { color: var(--tinta-suave); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.navbar-links a:hover, .navbar-links a[aria-current="page"] { color: var(--musgo); }
+.navbar-usuario { display: flex; align-items: center; gap: var(--espaco-4); }
+
+/* Loading -----------------------------------------------------------------*/
+.carregando { display: flex; align-items: center; gap: var(--espaco-2); color: var(--tinta-suave); padding: var(--espaco-5); justify-content: center; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--musgo-claro); border-top-color: var(--musgo); border-radius: 50%; animation: girar .7s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Estado vazio --------------------------------------------------------------*/
+.estado-vazio { padding: var(--espaco-7) 0; color: var(--tinta-suave); border-top: 1px solid var(--linha); }
+
+/* Tabelas (Admin) -------------------------------------------------------------*/
+.tabela-wrapper { overflow-x: auto; }
+table.tabela-ecodrop { width: 100%; border-collapse: collapse; font-size: .95rem; }
+table.tabela-ecodrop th, table.tabela-ecodrop td { text-align: left; padding: 12px 6px; border-bottom: 1px solid var(--linha); }
+table.tabela-ecodrop th { color: var(--tinta-suave); font-weight: 600; font-size: .85rem; }
+
+/* Rodapé ---------------------------------------------------------------------*/
+.rodape-ecodrop { padding: var(--espaco-6) 0; color: var(--tinta-suave); font-size: .9rem; border-top: 1px solid var(--linha); }
+
+/* Tela dividida — autenticação (login/cadastro) -------------------------------*/
+.tela-dividida { min-height: 100vh; display: grid; grid-template-columns: 1fr; }
+.tela-dividida-editorial {
+    background: var(--musgo-escuro);
+    color: var(--musgo-claro);
+    padding: var(--espaco-8) var(--espaco-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.tela-dividida-editorial .marca { font-family: var(--fonte-titulo); font-size: 1.4rem; color: #fff; text-decoration: none; }
+.tela-dividida-editorial .marca em { font-style: normal; color: #a8d3b8; }
+.tela-dividida-editorial .frase { font-family: var(--fonte-titulo); font-size: clamp(1.5rem, 3vw, 2.1rem); color: #fff; max-width: 26ch; line-height: 1.25; }
+.tela-dividida-editorial .rodape-frase { color: rgba(255,255,255,.65); font-size: .9rem; }
+.tela-dividida-formulario { display: flex; align-items: center; justify-content: center; padding: var(--espaco-6); }
+.tela-dividida-formulario .miolo { width: 100%; max-width: 380px; }
+.tela-dividida-formulario h1 { margin-bottom: var(--espaco-1); }
+.tela-dividida-formulario .subtitulo { margin-bottom: var(--espaco-6); }
+.rodape-autenticacao { margin-top: var(--espaco-5); font-size: .92rem; color: var(--tinta-suave); }
+
+@media (min-width: 900px) {
+    .tela-dividida { grid-template-columns: 5fr 7fr; }
+}
+
+/* Acabamento compartilhado: identidade botânica e superfícies de papel. */
+.botao { min-height: 46px; font-size: .9rem; padding: 13px 22px; font-weight: 600; transition: background-color .18s, transform .18s, box-shadow .18s; }
+.botao:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 0 #173f3218; }
+.botao-primario { background: var(--musgo-escuro); }
+.botao-primario:hover:not(:disabled) { background: #2c634b; }
+.botao-secundario { border-color: #adb9a6; }
+.navbar-marca, .marca { letter-spacing: -.05em; font-size: 1.7rem; font-weight: 600; }
+.navbar-marca::before, .tela-dividida-editorial .marca::before { content: ''; display: inline-block; width: 22px; height: 29px; margin-right: 10px; background: #7f9b55; border-radius: 80% 0 80% 30%; transform: rotate(17deg); vertical-align: -4px; }
+.navbar-ecodrop { background: var(--superficie); }
+.navbar-links a[aria-current="page"] { padding: 10px 16px; background: var(--musgo-claro); border-radius: 24px; }
+.campo { margin-bottom: 21px; }
+.campo input, .campo select, .campo textarea { min-height: 50px; background: #fffef9; border-color: #c6cebf; transition: border-color .15s, box-shadow .15s; }
+.campo input:focus, .campo select:focus, .campo textarea:focus { box-shadow: 0 0 0 4px #2860440e; }
+.campo input::placeholder { color: #788273; }
+.rodape-autenticacao a { font-weight: 600; text-underline-offset: 4px; }
+.tela-dividida-editorial { position: relative; isolation: isolate; overflow: hidden; padding: 44px 48px; min-height: 100vh; background: #173f32; }
+.tela-dividida-editorial::before { content: ''; position: absolute; z-index: -1; inset: 22% 2% 13%; background: url('../img/ciclo.svg') center / contain no-repeat; opacity: .95; }
+.tela-dividida-editorial .frase { font-size: clamp(1.8rem, 2.5vw, 2.7rem); line-height: 1.2; margin-top: auto; padding-top: 390px; max-width: 22ch; }
+.tela-dividida-editorial .rodape-frase { margin: 24px 0 0; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: #c4d4bc; }
+.tela-dividida-formulario { padding: 56px 32px; }
+.tela-dividida-formulario .miolo { max-width: 420px; }
+.tela-dividida-formulario h1 { font-size: clamp(2rem, 3vw, 3rem); letter-spacing: -.04em; }
+.tela-dividida-formulario .subtitulo { margin-top: 12px; font-size: .95rem; }
+.tela-dividida-formulario .miolo::before { content: ''; display: block; width: 38px; height: 9px; border-radius: 8px; background: #d3b65f; margin-bottom: 26px; }
+.rodape-ecodrop { background: #ebeede; padding: 32px 0; }
+.rodape-ecodrop a:not(.navbar-marca) { font-size: .8rem; text-underline-offset: 4px; }
+.tabela-wrapper { background: var(--superficie); border: 1px solid var(--linha); border-radius: 16px; }
+.tabela-ecodrop th, .tabela-ecodrop td { padding: 16px !important; }
+.tabela-ecodrop thead { background: #e8eddf; }
+@media(max-width: 899px) { .tela-dividida-editorial { min-height: 240px; padding: 28px; } .tela-dividida-editorial::before { inset: 0 0 0 58%; opacity: .35; } .tela-dividida-editorial .frase { padding-top: 32px; font-size: 1.6rem; margin-bottom: 0; max-width: 22ch; } .tela-dividida-editorial .rodape-frase { margin-top: 18px; } }
+@media(max-width: 600px) { .navbar-ecodrop .container { flex-wrap: wrap; gap: 16px; padding-top: 18px; padding-bottom: 18px; } .navbar-usuario { width: 100%; justify-content: space-between; font-size: .85rem; } .navbar-usuario > span { overflow-wrap: anywhere; } .tela-dividida-formulario { padding: 36px 24px; } }

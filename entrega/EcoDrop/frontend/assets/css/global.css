@@ -1,0 +1,92 @@
+/*
+ * EcoDrop — Global
+ * Reset leve + tipografia base. Carregado em todas as páginas.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: var(--fonte-corpo);
+    font-size: 16px;
+    color: var(--tinta);
+    background: var(--papel);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--tinta);
+    line-height: 1.15;
+    margin: 0 0 var(--espaco-3);
+    letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2.1rem, 4vw, 3.4rem); font-weight: 500; }
+h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+h3 { font-size: 1.15rem; font-family: var(--fonte-corpo); font-weight: 700; }
+
+p {
+    margin: 0 0 var(--espaco-3);
+    color: var(--tinta-suave);
+    max-width: var(--largura-leitura);
+}
+
+a { color: var(--musgo); }
+img, svg { max-width: 100%; display: block; }
+
+/* Foco visível para acessibilidade */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--musgo);
+    outline-offset: 3px;
+}
+
+.container {
+    max-width: var(--largura-conteudo);
+    margin: 0 auto;
+    padding-left: var(--espaco-5);
+    padding-right: var(--espaco-5);
+}
+
+.somente-leitor-tela {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.flex { display: flex; }
+.flex-coluna { display: flex; flex-direction: column; }
+.itens-centro { align-items: center; }
+.justificar-entre { justify-content: space-between; }
+.gap-2 { gap: var(--espaco-2); }
+.gap-3 { gap: var(--espaco-3); }
+.gap-4 { gap: var(--espaco-4); }
+.texto-suave { color: var(--tinta-suave); }
+.texto-centro { text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+@media (max-width: 680px) {
+    .container { padding-left: var(--espaco-4); padding-right: var(--espaco-4); }
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+::selection { background: #dec16c; color: #173f32; }
+.pular-conteudo { position: fixed; top: 8px; left: 16px; padding: 12px 20px; background: var(--musgo-escuro); color: white; z-index: 100; transform: translateY(-160%); }
+.pular-conteudo:focus { transform: translateY(0); }
+[hidden] { display: none !important; }
+@media(prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

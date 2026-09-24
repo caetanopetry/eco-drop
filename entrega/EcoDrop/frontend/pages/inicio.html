@@ -1,0 +1,67 @@
+<?php require_once __DIR__ . '/../../backend/core/Url.php'; ?>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f32">
+  <meta name="description" content="Dê um novo destino aos seus recicláveis. Conheça o EcoDrop, a plataforma de coleta seletiva que transforma seus descartes em pontos.">
+  <title>EcoDrop — um novo ciclo começa com você</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
+  <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
+  <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
+  <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/site.css') ?>">
+</head>
+<body>
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-cabecalho">
+    <div class="container flex itens-centro justificar-entre">
+      <a class="navbar-marca" href="<?= Url::escapar('/') ?>" aria-label="EcoDrop, página inicial">Eco<em>Drop</em></a>
+      <nav aria-label="Navegação principal" class="flex itens-centro gap-4">
+        <a href="#como-funciona">Como funciona</a><a href="#materiais">Materiais</a><a href="<?= Url::escapar('/app/login/') ?>">Entrar</a><a href="<?= Url::escapar('/app/cadastro/') ?>" class="botao botao-primario">Criar conta <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo">
+    <section class="hero">
+      <div class="container hero-grade">
+        <div class="hero-texto">
+          <span class="sobretitulo">Pequenos hábitos, novos ciclos</span>
+          <h1>Seu descarte.<br>Um <em>novo começo.</em></h1>
+          <p>O que não serve mais para você pode fazer muito pelo mundo. Separe seus recicláveis, leve a uma estação EcoDrop e transforme essa atitude em pontos.</p>
+          <div class="hero-acoes"><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Quero fazer parte <span aria-hidden="true">↗</span></a><a class="botao botao-secundario" href="#como-funciona">Conheça o ciclo <span aria-hidden="true">↓</span></a></div>
+          <p class="hero-nota"><span aria-hidden="true">♧</span> Bom para você. Melhor para o planeta.</p>
+        </div>
+        <div class="hero-ilustracao"><img src="<?= Url::escapar('/frontend/assets/img/ciclo.svg') ?>" width="600" height="560" alt="Garrafas e papel em uma cesta de reciclagem, cercada por folhas e um selo: menos lixo, mais vida."><p class="ilustracao-legenda">Nada termina. Tudo se transforma.</p></div>
+      </div>
+    </section>
+    <div class="faixa-ciclo"><div class="container"><span><b aria-hidden="true">♻</b> Reciclar é recomeçar</span><span><b aria-hidden="true">↗</b> Seu hábito tem valor</span><span><b aria-hidden="true">✳</b> Mais cuidado, menos resíduos</span><span><b aria-hidden="true">♡</b> Um futuro feito juntos</span></div></div>
+    <section id="como-funciona" class="secao-timeline">
+      <div class="container">
+        <div class="secao-cabecalho"><div><span class="sobretitulo">Simples de fazer parte</span><h2>Um bom hábito.<br>Um ciclo completo.</h2></div><p>Da separação em casa à sua conta de pontos, cada atitude encontra um novo destino.</p></div>
+        <ol class="timeline">
+          <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div><strong>Encontre seu ponto de encontro</strong><p>Separe os materiais em casa e leve seus recicláveis a uma estação EcoDrop disponível.</p></div></li>
+          <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6m0 6v6h-6m-6 0H3v-6M7 7h3v3H7zm7 0h3v3h-3zM7 14h3v3H7zm7 0h3v3h-3z"/></svg></span><div><strong>Conecte sua conta à estação</strong><p>Use o QR Code temporário para identificar sua conta e começar o descarte.</p></div></li>
+          <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10h18v4H3zm2 4v7h14v-7M12 10v11m0-11C2 10 5 1 9 5l3 5Zm0 0c10 0 7-9 3-5l-3 5Z"/></svg></span><div><strong>Dê valor à sua atitude</strong><p>Com o descarte validado, os pontos entram na sua conta. Um incentivo para continuar esse ciclo.</p></div></li>
+        </ol>
+      </div>
+    </section>
+    <section id="materiais" class="secao-materiais">
+      <div class="container">
+        <div class="secao-cabecalho"><div><span class="sobretitulo">Cada material, uma possibilidade</span><h2>Tem valor no que<br>você separa.</h2></div><p>Conheça os materiais previstos nesta primeira versão do EcoDrop.</p></div>
+        <ul class="lista-materiais">
+          <li class="material material-plastico"><svg aria-hidden="true" viewBox="0 0 100 100"><path d="M39 8h22v13H39zm2 13v12L30 47v39q0 7 7 7h26q7 0 7-7V47L59 33V21M31 55h38M31 77h38M42 64h16"/></svg><h3>Plástico</h3><p>Um novo ciclo para suas embalagens.</p></li>
+          <li class="material material-papel"><svg aria-hidden="true" viewBox="0 0 100 100"><path d="m24 17 49-7 10 72-49 7ZM17 24h49v69H17z" fill="#d8e5ea"/><path d="M27 37h29M27 45h29M27 76h29M27 83h19M27 54h29v14H27z"/></svg><h3>Papel</h3><p>Histórias que podem começar de novo.</p></li>
+          <li class="material material-vidro"><svg aria-hidden="true" viewBox="0 0 100 100"><path d="M41 8h18v9H41zm2 9v24c0 9-13 12-13 23v23q0 6 6 6h28q6 0 6-6V64c0-11-13-14-13-23V17M30 64h40M30 81h40"/></svg><h3>Vidro</h3><p>Transformação, uma garrafa de cada vez.</p></li>
+          <li class="material material-oleo"><svg aria-hidden="true" viewBox="0 0 100 100"><path d="M35 9h24v12H35zm0 12-7 14v52q0 6 6 6h32q6 0 6-6V40L59 21M61 35h17v23h-6"/><path d="M50 43s-12 15-12 22a12 12 0 0 0 24 0c0-7-12-22-12-22Z"/></svg><h3>Óleo de cozinha</h3><p>Usado na cozinha. Longe do ralo.</p></li>
+        </ul>
+      </div>
+    </section>
+    <section class="secao-mvp"><div class="container"><div class="convite"><div><span class="sobretitulo">O próximo ciclo começa em casa</span><h2>Vamos dar um novo destino às coisas?</h2><p>Crie sua conta e venha fazer parte de uma comunidade que vê possibilidades no descarte.</p></div><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Começar meu ciclo <span aria-hidden="true">↗</span></a></div><p class="nota-projeto">Estamos começando: nesta primeira versão, a estação funciona por simulação controlada. Estações físicas e novas funcionalidades fazem parte das próximas etapas.</p></div></section>
+  </main>
+  <footer class="rodape-ecodrop"><div class="container rodape-grade"><a class="navbar-marca" href="<?= Url::escapar('/') ?>">Eco<em>Drop</em></a><p>Pequenas atitudes. Um mundo de possibilidades.</p><a href="#como-funciona">Conheça o projeto <span aria-hidden="true">↗</span></a></div></footer>
+</body>
+</html>
