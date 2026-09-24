@@ -83,3 +83,10 @@ textarea:focus-visible,
 @media (max-width: 680px) {
     .container { padding-left: var(--espaco-4); padding-right: var(--espaco-4); }
 }
+
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+::selection { background: #dec16c; color: #173f32; }
+.pular-conteudo { position: fixed; top: 8px; left: 16px; padding: 12px 20px; background: var(--musgo-escuro); color: white; z-index: 100; transform: translateY(-160%); }
+.pular-conteudo:focus { transform: translateY(0); }
+[hidden] { display: none !important; }
+@media(prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

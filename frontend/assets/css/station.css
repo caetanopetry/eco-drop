@@ -18,3 +18,10 @@
 .station-marca { font-family: var(--fonte-titulo); font-size: 1.4rem; margin-bottom: var(--espaco-6); }
 .station-titulo { font-family: var(--fonte-titulo); font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; }
 .station-botao-principal { font-size: 1.2rem; padding: 20px 42px; }
+
+.pagina-station { position: relative; isolation: isolate; overflow: hidden; }
+.pagina-station::before { content: ''; width: min(440px, 80vw); height: 300px; background: url('../img/ciclo.svg') center / contain no-repeat; margin-bottom: 24px; }
+.station-titulo { max-width: 22ch; font-size: clamp(2rem, 5vw, 3.8rem); }
+.station-botao-principal { background: #e6be62; color: #173f32; border-radius: 14px; min-height: 64px; }
+.station-botao-principal:hover:not(:disabled) { background: #f0cf85; color: #173f32; }
+.pagina-station p { color: #d0dfc1; }

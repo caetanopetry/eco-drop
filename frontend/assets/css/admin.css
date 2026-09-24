@@ -35,3 +35,17 @@
     .admin-sidebar nav ul { flex-direction: row; flex-wrap: wrap; gap: 0 var(--espaco-4); }
     .admin-sidebar nav a { border-bottom: none; }
 }
+
+.admin-sidebar { padding: 36px 24px; position: relative; overflow: hidden; }
+.admin-sidebar::after { content: ''; display: block; height: 165px; margin-top: 42px; background: url('../img/ciclo.svg') center / contain no-repeat; }
+.admin-sidebar nav a { padding: 12px; border: 0; border-radius: 8px; margin-bottom: 4px; }
+.admin-sidebar nav a[aria-current="page"] { background: #315b44; color: #f0edcf; }
+.admin-sidebar nav a[aria-disabled="true"] { color: #b4c6b6; cursor: not-allowed; }
+.admin-conteudo { padding: 48px; }
+.admin-cabecalho h1 { letter-spacing: -.045em; }
+.regua-indicadores { background: var(--superficie); border: 1px solid var(--linha); border-radius: 20px; padding: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; }
+.regua-indicadores .item { border-top: 3px solid #9db77b; padding-top: 22px; min-width: 0; }
+.regua-indicadores .item:nth-child(2n) { border-color: #d2b466; }
+.regua-indicadores .valor { font-size: 2.8rem; overflow-wrap: anywhere; }
+.admin-conteudo > p { padding: 22px 26px; border-left: 3px solid #b4bf98; background: #e9eddf; border-radius: 0 12px 12px 0; font-size: .9rem; }
+@media(max-width: 860px) { .admin-sidebar { padding: 24px; } .admin-sidebar .marca { margin-bottom: 24px; } .admin-sidebar::after { display: none; } .admin-sidebar nav ul { gap: 4px; } .admin-conteudo { padding: 30px 20px; } }

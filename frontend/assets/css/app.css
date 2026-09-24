@@ -23,3 +23,17 @@
 .lista-proximos-passos li:first-child { border-top: 1px solid var(--linha); }
 .lista-proximos-passos .marcador { color: var(--m-vidro); font-size: 1.1rem; line-height: 1.5; }
 .lista-proximos-passos strong { display: block; color: var(--tinta); }
+
+.conteudo-app { min-height: calc(100vh - 166px); }
+.saudacao-app h1 { letter-spacing: -.045em; }
+.bloco-saldo { position: relative; overflow: hidden; isolation: isolate; background: var(--musgo-escuro); border: 0; border-radius: 24px; padding: 40px; min-height: 235px; }
+.bloco-saldo::after { content: ''; position: absolute; z-index: -1; width: 310px; right: 20px; top: -28px; bottom: -80px; background: url('../img/ciclo.svg') center / contain no-repeat; }
+.bloco-saldo .rotulo { color: #d0dfc1; }
+.bloco-saldo .valor { color: #f5edcc; font-size: clamp(3rem, 8vw, 5rem); overflow-wrap: anywhere; max-width: calc(100% - 280px); }
+.bloco-saldo .valor small { color: #d0dfc1; }
+.lista-proximos-passos { display: grid; grid-template-columns: 1fr 1fr; max-width: none; gap: 0 40px; }
+.lista-proximos-passos li { padding: 24px 0; }
+.lista-proximos-passos li:nth-child(2) { border-top: 1px solid var(--linha); }
+.lista-proximos-passos .marcador { flex-shrink: 0; display: grid; place-items: center; width: 38px; height: 38px; background: #e3e9d4; border-radius: 50%; }
+.lista-proximos-passos .texto-suave { font-size: .85rem; }
+@media(max-width: 640px) { .bloco-saldo { padding: 28px; } .bloco-saldo::after { width: 160px; right: -40px; opacity: .3; } .bloco-saldo .valor { max-width: 100%; } .lista-proximos-passos { grid-template-columns: 1fr; } .lista-proximos-passos li:nth-child(2) { border-top: 0; } }

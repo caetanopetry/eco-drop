@@ -8,16 +8,16 @@
 
 :root {
     /* Base */
-    --papel: #efefe6;
+    --papel: #f6f3e9;
     --papel-forte: #e6e6d9;
-    --superficie: #fbfbf6;
+    --superficie: #fffdf6;
     --tinta: #17241c;
     --tinta-suave: #4b5a50;
     --linha: #d8d8cb;
 
     /* Marca */
-    --musgo: #2f5d42;
-    --musgo-escuro: #1b3b29;
+    --musgo: #286044;
+    --musgo-escuro: #173f32;
     --musgo-claro: #dde8de;
 
     /* Materiais (RN001-RN008 — plástico, papel, vidro, óleo) */
@@ -50,8 +50,8 @@
     --espaco-9: 104px;
 
     /* Raio — discreto, não uma pílula em tudo */
-    --raio-sm: 4px;
-    --raio-md: 8px;
+    --raio-sm: 10px;
+    --raio-md: 24px;
 
     --largura-conteudo: 1160px;
     --largura-leitura: 60ch;
