@@ -25,11 +25,13 @@ Este documento registra diretrizes iniciais de arquitetura sem escolher linguage
 | Resgates e vouchers | Registro de resgate, débito de pontos, emissão, validade e status de vouchers. |
 | Administração | Gestão de usuários, estações, materiais, pontuação, recompensas, parceiros e premiações mensais. |
 
+## Decisões registradas
+
+- Backend implementado em PHP puro, sem framework nesta etapa.
+- Frontend implementado em HTML e CSS, sem framework nesta etapa.
+
 ## Decisões ainda não tomadas
 
-- Linguagem de implementação.
-- Framework de backend.
-- Framework de frontend.
 - Estratégia técnica de autenticação.
 - Banco de dados específico.
 - Integração definitiva com Google Maps.

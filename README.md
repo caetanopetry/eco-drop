@@ -49,7 +49,52 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 
 ## Estado atual
 
-O projeto está em fase de especificação e organização da documentação inicial para desenvolvimento do MVP. Nenhum sistema de aplicação foi implementado nesta etapa.
+**Fase 1 implementada:** estrutura base, configuração centralizada, conexão MySQL,
+arquitetura em camadas, layout global/componentes e autenticação completa
+(cadastro, login, logout, sessão, controle de acesso por perfil).
+
+Fases seguintes (estações/QR Code/descarte/pontos, histórico/ranking,
+recompensas/vouchers, Admin completo, refinamento) ainda não foram implementadas —
+ver `docs/decisoes/pendencias.md` e a seção "Próximos passos" abaixo.
+
+## Como executar localmente (XAMPP)
+
+1. Copie a pasta do projeto para `C:\xampp\htdocs\EcoDrop`.
+2. Crie o banco: abra o phpMyAdmin (ou o cliente MySQL de sua preferência) e
+   execute, nesta ordem:
+   - `backend/database/schema.sql`
+   - `backend/database/seed.sql`
+3. Configuração: o arquivo `backend/config/config.php` já vem pronto com os
+   valores padrão do XAMPP (`root`, sem senha, banco `ecodrop`). Se o seu MySQL
+   usar outras credenciais, copie `backend/config/config.example.php` para
+   `backend/config/config.php` e ajuste.
+4. Inicie o Apache e o MySQL pelo painel do XAMPP.
+5. Acesse `http://localhost/EcoDrop/`.
+
+### Usuários de teste (criados pelo seed)
+
+| Perfil | E-mail | Senha |
+| --- | --- | --- |
+| Administrador | `admin@ecodrop.local` | `EcoDrop@123` |
+| Usuário comum | `usuario@ecodrop.local` | `Usuario@123` |
+
+### Rotas disponíveis nesta fase
+
+- `/` — página institucional
+- `/app/cadastro/` — criar conta
+- `/app/login/` — entrar
+- `/app/inicio/` — dashboard do usuário (protegida)
+- `/app/logout/` — encerrar sessão
+- `/admin/login/` — acesso administrativo
+- `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
+
+## Próximos passos recomendados
+
+1. FASE 2 — estações, sessão temporária + QR Code, fluxo de descarte, cálculo de pontos.
+2. FASE 3 — histórico, extrato, ranking mensal.
+3. FASE 4 — recompensas, resgate, vouchers.
+4. FASE 5 — Admin completo (usuários, estações, materiais, recompensas, parceiros, premiações).
+5. FASE 6 — refinamento visual, responsividade, acessibilidade, estados de erro, segurança, testes.
 
 ## Documentação
 
@@ -63,12 +108,15 @@ A documentação essencial do projeto está organizada em:
 - [`Requisitos não funcionais`](docs/requisitos/requisitos-nao-funcionais.md)
 - [`Regras de negócio`](docs/requisitos/regras-de-negocio.md)
 - [`Arquitetura`](docs/arquitetura/README.md)
+- [`Casos de uso`](docs/casos-de-uso/README.md) · [`Fluxos`](docs/fluxos/README.md)
+- [`Decisões de implementação`](docs/decisoes/)
 
 ## Tecnologias
 
-Stack de implementação em definição.
-
-Não há, neste momento, definição formal de framework, linguagem, banco de dados específico, provedor de mapas ou serviços externos. Essas decisões serão registradas em documentação própria quando forem tomadas.
+- Backend: PHP puro (sem framework), organizado em camadas (api/services/repositories/core).
+- Frontend: HTML, CSS e JavaScript puro.
+- Banco de dados: MySQL/MariaDB. Schema em `backend/database/schema.sql` (decisões em `docs/decisoes/banco-de-dados.md`).
+- Provedor de mapas e serviços externos: PENDENTE (ver `docs/decisoes/pendencias.md`).
 
 ## Contexto
 

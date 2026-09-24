@@ -1,0 +1,32 @@
+/*
+ * EcoDrop — página institucional (landing). Específico desta página;
+ * variáveis, tipografia e componentes de botão vêm dos arquivos compartilhados.
+ */
+
+.site-cabecalho { border-bottom: 1px solid var(--linha); }
+.site-cabecalho .container { min-height: 80px; }
+.site-cabecalho nav a:not(.botao) { color: var(--tinta-suave); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.site-cabecalho nav a:not(.botao):hover { color: var(--musgo); }
+
+.hero { padding: var(--espaco-9) 0 var(--espaco-8); }
+.hero-grade { display: grid; grid-template-columns: 1fr; gap: var(--espaco-7); align-items: center; }
+.hero-texto p { font-size: 1.1rem; max-width: 46ch; }
+.hero-ilustracao svg { width: 100%; height: auto; }
+
+.secao-timeline { padding: var(--espaco-8) 0; border-top: 1px solid var(--linha); }
+.timeline { list-style: none; margin: var(--espaco-6) 0 0; padding: 0; max-width: 680px; }
+.timeline li { display: flex; gap: var(--espaco-5); padding: var(--espaco-5) 0; border-top: 1px solid var(--linha); }
+.timeline li:last-child { border-bottom: 1px solid var(--linha); }
+.timeline-numero { font-family: var(--fonte-titulo); font-size: 2rem; color: var(--musgo); line-height: 1; flex-shrink: 0; width: 44px; }
+.timeline strong { display: block; margin-bottom: var(--espaco-1); font-size: 1.05rem; }
+.timeline p { margin: 0; }
+
+.secao-materiais { padding: var(--espaco-8) 0; border-top: 1px solid var(--linha); }
+.lista-materiais { list-style: none; display: flex; flex-wrap: wrap; gap: var(--espaco-5) var(--espaco-7); margin: var(--espaco-6) 0 0; padding: 0; font-size: 1.05rem; }
+
+.secao-mvp { padding: var(--espaco-8) 0 var(--espaco-9); border-top: 1px solid var(--linha); }
+.secao-mvp p { max-width: 62ch; }
+
+@media (min-width: 900px) {
+    .hero-grade { grid-template-columns: 1.1fr 1fr; }
+}
