@@ -16,6 +16,10 @@ $mensagem = null;
 $tipoMensagem = 'sucesso';
 $sessaoCriada = null;
 
+if (($_GET['associado'] ?? '') === '1') {
+    $mensagem = 'Sessao conectada. Agora selecione a sessao em uso, informe material e quantidade para registrar o descarte.';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!Csrf::validar($_POST['csrf_token'] ?? null)) {
         $mensagem = 'Token de segurança inválido. Recarregue a página.';
@@ -56,7 +60,6 @@ $sessoes = $repo->sessoesEmUso();
     <main class="station-shell">
         <header class="station-topo">
             <a class="station-marca" href="<?= Url::escapar('/app/inicio/') ?>">Eco<em>Drop</em></a>
-            <a class="botao botao-secundario" href="<?= Url::escapar('/app/inicio/') ?>">App do usuário</a>
         </header>
 
         <section class="station-hero">

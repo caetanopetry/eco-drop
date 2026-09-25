@@ -187,6 +187,8 @@ final class EcoDropRepository
             return [];
         }
 
+        $this->cancelarSessoesAguardandoDaEstacao($estacaoId);
+
         $token = bin2hex(random_bytes(32));
         $validadeSegundos = $this->validadeQrSegundos();
         $expiraEm = date('Y-m-d H:i:s', time() + $validadeSegundos);
@@ -221,6 +223,8 @@ final class EcoDropRepository
             if ($sessao['status'] !== 'aguardando_usuario') {
                 return ['sucesso' => false, 'mensagem' => 'Esta sessao nao esta aguardando identificacao.'];
             }
+
+            $this->cancelarOutrasSessoesEmUso($pdo, (int) $sessao['id'], (int) $sessao['estacao_id'], $usuarioId);
 
             $stmt = $pdo->prepare(
                 "UPDATE sessoes_estacao
@@ -414,6 +418,33 @@ final class EcoDropRepository
     {
         $stmt = Database::conexao()->prepare('UPDATE sessoes_estacao SET status = :status WHERE token = :token');
         $stmt->execute(['status' => $status, 'token' => $token]);
+    }
+
+    private function cancelarSessoesAguardandoDaEstacao(int $estacaoId): void
+    {
+        $stmt = Database::conexao()->prepare(
+            "UPDATE sessoes_estacao
+             SET status = 'cancelada'
+             WHERE estacao_id = :estacao_id
+                AND status = 'aguardando_usuario'"
+        );
+        $stmt->execute(['estacao_id' => $estacaoId]);
+    }
+
+    private function cancelarOutrasSessoesEmUso(PDO $pdo, int $sessaoAtualId, int $estacaoId, int $usuarioId): void
+    {
+        $stmt = $pdo->prepare(
+            "UPDATE sessoes_estacao
+             SET status = 'cancelada'
+             WHERE id <> :sessao_atual_id
+                AND status = 'em_uso'
+                AND (estacao_id = :estacao_id OR usuario_id = :usuario_id)"
+        );
+        $stmt->execute([
+            'sessao_atual_id' => $sessaoAtualId,
+            'estacao_id' => $estacaoId,
+            'usuario_id' => $usuarioId,
+        ]);
     }
 
     private function registrarMovimentacao(PDO $pdo, int $usuarioId, string $tipo, string $origem, int $origemId, int $quantidade, string $descricao): void

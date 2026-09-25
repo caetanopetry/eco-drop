@@ -22,8 +22,13 @@ $tipoMensagem = 'sucesso';
 
 if (isset($_GET['qr'])) {
     $resultado = $repo->associarSessao((string) $_GET['qr'], (int) $usuario['id']);
+    if ($resultado['sucesso']) {
+        header('Location: ' . Url::para('/station/?associado=1'));
+        exit;
+    }
+
     $mensagem = $resultado['mensagem'];
-    $tipoMensagem = $resultado['sucesso'] ? 'sucesso' : 'erro';
+    $tipoMensagem = 'erro';
 }
 
 $saldo = $repo->saldoDoUsuario((int) $usuario['id']);
