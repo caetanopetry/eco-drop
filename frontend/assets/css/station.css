@@ -166,17 +166,69 @@
         display: grid;
         align-items: stretch;
     }
+    .station-topo .botao {
+        width: 100%;
+    }
     .station-hero h1 { max-width: 12ch; }
 }
 
 @media (max-width: 560px) {
-    .station-shell { width: min(100% - 28px, 1180px); }
+    .station-shell {
+        width: min(100% - 24px, 1180px);
+        padding-top: 18px;
+        padding-bottom: 34px;
+    }
+
+    .station-topo {
+        margin-bottom: var(--espaco-5);
+    }
+
+    .station-hero {
+        gap: var(--espaco-4);
+        margin-bottom: var(--espaco-4);
+    }
+
+    .station-hero h1 {
+        max-width: 100%;
+        font-size: 2.35rem;
+    }
+
+    .station-hero p {
+        font-size: .96rem;
+    }
+
     .station-form,
     .station-operacao,
-    .station-qr { padding: 18px; }
+    .station-qr {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+    .station-form select,
+    .station-grid-form select,
+    .station-grid-form input {
+        min-height: 50px;
+        font-size: 16px;
+    }
+
+    .station-botao-principal {
+        min-height: 52px;
+        font-size: 1rem;
+    }
+
     .qr-falso {
         width: min(220px, 100%);
         height: auto;
         aspect-ratio: 1;
+    }
+}
+
+@media (max-width: 380px) {
+    .station-shell {
+        width: min(100% - 18px, 1180px);
+    }
+
+    .station-hero h1 {
+        font-size: 2rem;
     }
 }

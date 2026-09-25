@@ -41,6 +41,7 @@ p {
 a { color: var(--musgo); }
 img, svg { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; }
+input, select, textarea { max-width: 100%; }
 
 a:focus-visible,
 button:focus-visible,
@@ -99,8 +100,28 @@ textarea:focus-visible,
 }
 
 @media (max-width: 680px) {
+    body {
+        font-size: 15px;
+        overflow-x: hidden;
+    }
+
     .container {
         padding-left: var(--espaco-4);
         padding-right: var(--espaco-4);
     }
+
+    .flex {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 420px) {
+    .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.35rem; }
 }

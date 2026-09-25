@@ -523,6 +523,8 @@ table.tabela-ecodrop td {
         display: flex;
         gap: 6px;
         overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
     }
 
     .app-menu span,
@@ -543,12 +545,18 @@ table.tabela-ecodrop td {
 
 @media (max-width: 780px) {
     .conteudo-app {
-        padding: 20px 16px 30px;
+        padding: 18px 14px 30px;
     }
 
     .app-topbar {
         align-items: flex-start;
         flex-direction: column;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .app-topbar h1 {
+        font-size: 1.35rem;
     }
 
     .perfil-pill {
@@ -564,8 +572,32 @@ table.tabela-ecodrop td {
     }
 
     .cartao-principal,
-    .cartao-resumo {
+    .cartao-resumo,
+    .atalho-card,
+    .metricas-app article {
         min-height: auto;
+    }
+
+    .cartao-principal,
+    .cartao-resumo,
+    .painel-app,
+    .bloco-operacao,
+    .metricas-app article,
+    .atalho-card {
+        box-shadow: 0 8px 18px rgba(23, 33, 27, .05);
+    }
+
+    .cartao-principal h2 {
+        font-size: 1.45rem;
+        line-height: 1.08;
+    }
+
+    .cartao-resumo strong {
+        font-size: 2.45rem;
+    }
+
+    .acoes-hero .botao {
+        width: 100%;
     }
 
     .bloco-operacao {
@@ -579,13 +611,70 @@ table.tabela-ecodrop td {
 }
 
 @media (max-width: 560px) {
+    .app-sidebar {
+        padding: 12px 14px;
+    }
+
+    .app-marca {
+        font-size: 1.18rem;
+    }
+
     .app-menu a {
+        flex: 0 0 auto;
+        min-height: 38px;
+        padding: 8px 10px;
+        font-size: .82rem;
         white-space: nowrap;
+    }
+
+    .conteudo-app {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .perfil-pill {
+        width: 100%;
+    }
+
+    .perfil-pill strong {
+        min-width: 0;
+    }
+
+    .dashboard-hero,
+    .metricas-app,
+    .atalhos-dashboard,
+    .bloco-operacao,
+    .grade-dashboard {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .cartao-principal,
+    .cartao-resumo,
+    .painel-app,
+    .bloco-operacao,
+    .metricas-app article,
+    .atalho-card {
+        padding: 14px;
+        border-radius: 7px;
+    }
+
+    .cartao-principal p,
+    .bloco-operacao p,
+    .atalho-card em {
+        font-size: .86rem;
     }
 
     .lista-compacta li,
     .ranking li {
         align-items: start;
+    }
+
+    .lista-compacta li {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        min-height: 0;
     }
 
     .ranking li {
@@ -594,5 +683,25 @@ table.tabela-ecodrop td {
 
     .ranking li em {
         grid-column: 2;
+    }
+
+    .cabecalho-painel {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 380px) {
+    .cartao-principal h2 {
+        font-size: 1.28rem;
+    }
+
+    .cartao-resumo strong {
+        font-size: 2.1rem;
+    }
+
+    .metricas-app strong {
+        font-size: 1.55rem;
     }
 }

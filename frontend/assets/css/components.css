@@ -14,6 +14,7 @@
     text-decoration: none;
     cursor: pointer;
     transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+    touch-action: manipulation;
 }
 
 .botao:disabled {
@@ -65,6 +66,7 @@
     border-radius: var(--raio-sm);
     color: var(--tinta);
     background: #fffef9;
+    font-size: 16px;
 }
 
 .campo input:focus,
@@ -195,6 +197,7 @@
 /* Tabelas ------------------------------------------------------------ */
 .tabela-wrapper {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--linha);
     border-radius: var(--raio-md);
     background: var(--superficie);
@@ -336,6 +339,19 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
 }
 
 @media (max-width: 680px) {
+    .botao {
+        min-height: 46px;
+        padding: 12px 14px;
+    }
+
+    .botao-bloco {
+        width: 100%;
+    }
+
+    .alerta {
+        font-size: .88rem;
+    }
+
     .navbar-ecodrop .container {
         flex-wrap: wrap;
         padding-top: 14px;
@@ -350,4 +366,37 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     }
     .navbar-usuario > span { overflow-wrap: anywhere; }
     .tela-dividida-formulario { padding: 36px 20px; }
+
+    .tabela-wrapper {
+        margin-left: -2px;
+        margin-right: -2px;
+    }
+
+    table.tabela-ecodrop {
+        min-width: 560px;
+    }
+}
+
+@media (max-width: 520px) {
+    .tela-dividida-editorial {
+        padding: 22px;
+    }
+
+    .tela-dividida-editorial .frase {
+        max-width: none;
+        font-size: 1.35rem;
+    }
+
+    .tela-dividida-formulario {
+        align-items: flex-start;
+        padding: 28px 16px 34px;
+    }
+
+    .tela-dividida-formulario .miolo {
+        width: 100%;
+    }
+
+    .rodape-autenticacao {
+        font-size: .88rem;
+    }
 }

@@ -55,7 +55,7 @@ $sessoes = $repo->sessoesEmUso();
 <body class="pagina-station-demo">
     <main class="station-shell">
         <header class="station-topo">
-            <a class="station-marca" href="<?= Url::escapar('/') ?>">Eco<em>Drop</em></a>
+            <a class="station-marca" href="<?= Url::escapar('/app/inicio/') ?>">Eco<em>Drop</em></a>
             <a class="botao botao-secundario" href="<?= Url::escapar('/app/inicio/') ?>">App do usuário</a>
         </header>
 
