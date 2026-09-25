@@ -1,44 +1,39 @@
 /*
- * EcoDrop — Design tokens
- *
- * Paleta enraizada no próprio produto: fundo em tom de papel reciclado,
- * verde-musgo como cor de marca, e as quatro cores de material (plástico,
- * papel, vidro, óleo) como acentos funcionais — não decorativos.
+ * EcoDrop - Design tokens
+ * Paleta funcional para sustentabilidade sem cara de template.
  */
 
 :root {
-    /* Base */
-    --papel: #f6f3e9;
-    --papel-forte: #e6e6d9;
-    --superficie: #fffdf6;
-    --tinta: #17241c;
-    --tinta-suave: #4b5a50;
-    --linha: #d8d8cb;
+    --papel: #f4f1e8;
+    --papel-forte: #e7e1d1;
+    --superficie: #fffdf7;
+    --superficie-2: #f8f6ef;
+    --tinta: #17211b;
+    --tinta-suave: #5b665e;
+    --tinta-fraca: #7b857d;
+    --linha: #d8d2c3;
 
-    /* Marca */
-    --musgo: #286044;
-    --musgo-escuro: #173f32;
-    --musgo-claro: #dde8de;
+    --musgo: #2f6b4f;
+    --musgo-escuro: #163d31;
+    --musgo-claro: #dce9df;
+    --folha: #7b9b56;
+    --solido: #c49a43;
 
-    /* Materiais (RN001-RN008 — plástico, papel, vidro, óleo) */
-    --m-plastico: #c1573f;
-    --m-papel: #3465a4;
-    --m-vidro: #3e8e6b;
-    --m-oleo: #a9722e;
+    --m-plastico: #b85b46;
+    --m-papel: #456f9e;
+    --m-vidro: #3f8b68;
+    --m-oleo: #a87532;
 
-    /* Feedback semântico */
-    --sucesso: #2f5d42;
-    --sucesso-fundo: #e3ede6;
-    --erro: #a23b2b;
-    --erro-fundo: #f5e6e2;
-    --aviso: #8a5a17;
-    --aviso-fundo: #f3e9d6;
+    --sucesso: #2f6b4f;
+    --sucesso-fundo: #e2efe6;
+    --erro: #a14132;
+    --erro-fundo: #f6e6e2;
+    --aviso: #8a641e;
+    --aviso-fundo: #f4ead5;
 
-    /* Tipografia */
     --fonte-titulo: 'Fraunces', Georgia, 'Times New Roman', serif;
     --fonte-corpo: 'Work Sans', 'Segoe UI', system-ui, sans-serif;
 
-    /* Espaçamento */
     --espaco-1: 4px;
     --espaco-2: 8px;
     --espaco-3: 12px;
@@ -49,10 +44,11 @@
     --espaco-8: 72px;
     --espaco-9: 104px;
 
-    /* Raio — discreto, não uma pílula em tudo */
-    --raio-sm: 10px;
-    --raio-md: 24px;
+    --raio-sm: 8px;
+    --raio-md: 14px;
+    --raio-lg: 22px;
 
-    --largura-conteudo: 1160px;
-    --largura-leitura: 60ch;
+    --sombra-baixa: 0 10px 30px rgba(23, 33, 27, .08);
+    --largura-conteudo: 1180px;
+    --largura-leitura: 62ch;
 }

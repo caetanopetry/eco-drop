@@ -27,6 +27,16 @@ final class Validator
         return filter_var($valor, FILTER_VALIDATE_EMAIL) !== false;
     }
 
+    public static function emailNormalizado(string $valor): string
+    {
+        return mb_strtolower(trim($valor));
+    }
+
+    public static function normalizarEspacos(string $valor): string
+    {
+        return preg_replace('/\s+/', ' ', trim($valor)) ?? '';
+    }
+
     public static function senhaForteMinima(string $valor): bool
     {
         // Mínimo técnico razoável. Política de senha mais rígida não está definida na documentação.

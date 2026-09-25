@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS estacoes (
     longitude       DECIMAL(10, 7)      NULL,
     status          ENUM('ativa', 'inativa', 'manutencao') NOT NULL DEFAULT 'ativa',
     criado_em       DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    atualizado_em   DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    atualizado_em   DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_estacoes_nome (nome)
 ) ENGINE = InnoDB;
 
 -- Sessões temporárias da estação + QR Code (RF010-RF014, RN018-RN020, RNF008)
@@ -88,7 +89,8 @@ CREATE TABLE IF NOT EXISTS sessoes_estacao (
     CONSTRAINT fk_sessao_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE SET NULL,
     UNIQUE KEY uq_sessao_token (token),
     KEY idx_sessao_estacao (estacao_id),
-    KEY idx_sessao_status (status)
+    KEY idx_sessao_status (status),
+    KEY idx_sessao_expira (expira_em)
 ) ENGINE = InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -150,7 +152,8 @@ CREATE TABLE IF NOT EXISTS movimentacoes_pontos (
     CONSTRAINT fk_movimentacao_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE RESTRICT,
     KEY idx_movimentacao_usuario (usuario_id),
     KEY idx_movimentacao_origem (origem, origem_id),
-    KEY idx_movimentacao_criado (criado_em)
+    KEY idx_movimentacao_criado (criado_em),
+    KEY idx_movimentacao_ranking (tipo, origem, criado_em)
 ) ENGINE = InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -176,7 +179,8 @@ CREATE TABLE IF NOT EXISTS parceiros (
     descricao       VARCHAR(255)    NULL,
     contato         VARCHAR(150)    NULL,
     status          ENUM('ativo', 'inativo') NOT NULL DEFAULT 'ativo',
-    criado_em       DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP
+    criado_em       DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_parceiros_nome (nome)
 ) ENGINE = InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -194,7 +198,8 @@ CREATE TABLE IF NOT EXISTS recompensas (
     status          ENUM('ativo', 'inativo') NOT NULL DEFAULT 'ativo',
     criado_em       DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_recompensa_parceiro FOREIGN KEY (parceiro_id) REFERENCES parceiros (id) ON DELETE SET NULL
+    CONSTRAINT fk_recompensa_parceiro FOREIGN KEY (parceiro_id) REFERENCES parceiros (id) ON DELETE SET NULL,
+    UNIQUE KEY uq_recompensas_nome (nome)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS resgates (
@@ -222,7 +227,8 @@ CREATE TABLE IF NOT EXISTS vouchers (
     CONSTRAINT fk_voucher_resgate FOREIGN KEY (resgate_id) REFERENCES resgates (id) ON DELETE RESTRICT,
     CONSTRAINT fk_voucher_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE RESTRICT,
     UNIQUE KEY uq_voucher_codigo (codigo),
-    UNIQUE KEY uq_voucher_qr (qr_code_token)
+    UNIQUE KEY uq_voucher_qr (qr_code_token),
+    KEY idx_voucher_usuario (usuario_id)
 ) ENGINE = InnoDB;
 
 -- ---------------------------------------------------------------------

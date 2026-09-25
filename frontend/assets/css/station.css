@@ -1,27 +1,182 @@
-/*
- * EcoDrop Station — interface de totem/tela cheia (seção 19 do briefing).
- * Grande, poucos elementos, alto contraste. Detalhada na Fase 2.
- */
-
-.pagina-station {
+.pagina-station-demo {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: var(--musgo-escuro);
     color: #fff;
-    padding: var(--espaco-6);
+    background: var(--musgo-escuro);
 }
 
-.station-marca { font-family: var(--fonte-titulo); font-size: 1.4rem; margin-bottom: var(--espaco-6); }
-.station-titulo { font-family: var(--fonte-titulo); font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; }
-.station-botao-principal { font-size: 1.2rem; padding: 20px 42px; }
+.station-shell {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 26px 0 54px;
+}
 
-.pagina-station { position: relative; isolation: isolate; overflow: hidden; }
-.pagina-station::before { content: ''; width: min(440px, 80vw); height: 300px; background: url('../img/ciclo.svg') center / contain no-repeat; margin-bottom: 24px; }
-.station-titulo { max-width: 22ch; font-size: clamp(2rem, 5vw, 3.8rem); }
-.station-botao-principal { background: #e6be62; color: #173f32; border-radius: 14px; min-height: 64px; }
-.station-botao-principal:hover:not(:disabled) { background: #f0cf85; color: #173f32; }
-.pagina-station p { color: #d0dfc1; }
+.station-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-4);
+    margin-bottom: var(--espaco-7);
+}
+
+.station-marca {
+    color: #fff;
+    font-family: var(--fonte-titulo);
+    font-size: 1.45rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+.station-marca em {
+    color: #b9d3bd;
+    font-style: normal;
+}
+
+.station-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(340px, .75fr);
+    gap: var(--espaco-6);
+    align-items: end;
+    margin-bottom: var(--espaco-5);
+}
+
+.station-etiqueta {
+    margin: 0 0 var(--espaco-3);
+    color: #e5cb84 !important;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.station-hero h1 {
+    max-width: 11ch;
+    color: #fff;
+    font-size: clamp(2.8rem, 7vw, 5.4rem);
+}
+
+.station-hero p {
+    color: #d6e1d4;
+    font-size: 1.04rem;
+}
+
+.station-form,
+.station-operacao,
+.station-qr {
+    padding: 24px;
+    border-radius: var(--raio-lg);
+    color: var(--tinta);
+    background: var(--superficie);
+}
+
+.station-form {
+    display: grid;
+    gap: var(--espaco-4);
+}
+
+.station-form label,
+.station-grid-form label {
+    display: grid;
+    gap: var(--espaco-2);
+    color: var(--tinta);
+    font-weight: 800;
+}
+
+.station-form select,
+.station-grid-form select,
+.station-grid-form input {
+    min-height: 58px;
+    width: 100%;
+    padding: 0 14px;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-sm);
+    color: var(--tinta);
+    background: #fffef9;
+    font-size: 1.05rem;
+}
+
+.station-botao-principal {
+    min-height: 62px;
+    width: 100%;
+    border: 0;
+    color: var(--musgo-escuro);
+    background: #e2bd68;
+    font-size: 1.05rem;
+}
+.station-botao-principal:hover:not(:disabled) { background: #eccb7e; }
+
+.pagina-station-demo .alerta {
+    margin: var(--espaco-5) 0;
+    background: var(--superficie);
+}
+
+.station-qr {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: var(--espaco-5);
+    align-items: center;
+    margin: var(--espaco-5) 0;
+}
+
+.station-qr h2,
+.station-operacao h2 { margin-bottom: var(--espaco-2); }
+.station-qr p,
+.station-operacao p { color: var(--tinta-suave); }
+
+.station-qr code {
+    display: block;
+    margin-top: var(--espaco-3);
+    color: var(--tinta-suave);
+    overflow-wrap: anywhere;
+}
+
+.qr-falso {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    width: 220px;
+    height: 220px;
+    padding: 12px;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-md);
+    background: #fff;
+}
+.qr-falso span { border-radius: 3px; background: #eef1e8; }
+.qr-falso span.preto { background: var(--musgo-escuro); }
+
+.station-operacao {
+    display: grid;
+    gap: var(--espaco-5);
+    margin-top: var(--espaco-5);
+}
+
+.station-grid-form {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr .7fr auto;
+    gap: var(--espaco-4);
+    align-items: end;
+}
+
+@media (max-width: 900px) {
+    .station-topo,
+    .station-hero,
+    .station-qr,
+    .station-grid-form {
+        grid-template-columns: 1fr;
+    }
+    .station-topo {
+        display: grid;
+        align-items: stretch;
+    }
+    .station-hero h1 { max-width: 12ch; }
+}
+
+@media (max-width: 560px) {
+    .station-shell { width: min(100% - 28px, 1180px); }
+    .station-form,
+    .station-operacao,
+    .station-qr { padding: 18px; }
+    .qr-falso {
+        width: min(220px, 100%);
+        height: auto;
+        aspect-ratio: 1;
+    }
+}

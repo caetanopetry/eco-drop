@@ -5,11 +5,18 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../../backend/core/Auth.php';
 require_once __DIR__ . '/../../../backend/core/Url.php';
 require_once __DIR__ . '/../../../backend/repositories/AdminDashboardRepository.php';
+require_once __DIR__ . '/../../../backend/repositories/EcoDropRepository.php';
 
 Auth::iniciarSessao();
 $usuario = Auth::exigirPapelPagina('admin', Url::para('/admin/login/'));
 
+$repo = new EcoDropRepository();
+$repo->prepararDemo();
+
 $indicadores = (new AdminDashboardRepository())->indicadores();
+$materiais = $repo->materiaisAtivos();
+$recompensas = $repo->recompensasAtivas();
+$ranking = $repo->rankingMensal();
 $paginaAtual = 'dashboard';
 ?>
 <!doctype html>
@@ -17,7 +24,7 @@ $paginaAtual = 'dashboard';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard — EcoDrop Admin</title>
+    <title>Dashboard - EcoDrop Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -34,10 +41,11 @@ $paginaAtual = 'dashboard';
             <div class="admin-cabecalho">
                 <div>
                     <h1>Dashboard</h1>
-                    <p class="texto-suave" style="margin:0;">Visão geral da plataforma.</p>
+                    <p class="texto-suave" style="margin:0;">Visão geral operacional do MVP fictício em funcionamento.</p>
                 </div>
                 <div class="flex itens-centro gap-3">
                     <span class="texto-suave"><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></span>
+                    <a class="botao botao-secundario" href="<?= Url::escapar('/station/') ?>">Estação demo</a>
                     <a class="botao botao-secundario" href="<?= Url::escapar('/app/logout/') ?>">Sair</a>
                 </div>
             </div>
@@ -65,7 +73,65 @@ $paginaAtual = 'dashboard';
                 </div>
             </section>
 
-            <p class="texto-suave" style="max-width:60ch;">A gestão de usuários, estações, materiais, recompensas, parceiros, vouchers, ranking e premiações é liberada nas próximas fases de implementação.</p>
+            <section class="admin-grade">
+                <div class="admin-painel">
+                    <h2>Materiais e pontuação</h2>
+                    <div class="tabela-wrapper">
+                        <table class="tabela-ecodrop">
+                            <thead><tr><th>Material</th><th>Minimo</th><th>Pontos/unidade</th></tr></thead>
+                            <tbody>
+                                <?php foreach ($materiais as $material): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($material['nome'], ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= number_format((float) $material['quantidade_minima'], 3, ',', '.') ?> <?= htmlspecialchars($material['unidade'], ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= number_format((float) $material['pontos_por_unidade'], 0, ',', '.') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-painel">
+                    <h2>Ranking mensal</h2>
+                    <div class="tabela-wrapper">
+                        <table class="tabela-ecodrop">
+                            <thead><tr><th>#</th><th>Usuario</th><th>Pontos</th></tr></thead>
+                            <tbody>
+                                <?php foreach ($ranking as $indice => $linha): ?>
+                                    <tr>
+                                        <td><?= $indice + 1 ?></td>
+                                        <td><?= htmlspecialchars(EcoDropRepository::nomeRanking($linha['nome']), ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= number_format((int) $linha['pontos_mes'], 0, ',', '.') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <?php if (empty($ranking)): ?>
+                                    <tr><td colspan="3">Sem pontuação no mês.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-painel admin-painel-largo">
+                    <h2>Recompensas ficticias</h2>
+                    <div class="tabela-wrapper">
+                        <table class="tabela-ecodrop">
+                            <thead><tr><th>Recompensa</th><th>Parceiro</th><th>Custo</th><th>Estoque</th></tr></thead>
+                            <tbody>
+                                <?php foreach ($recompensas as $recompensa): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($recompensa['nome'], ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= htmlspecialchars($recompensa['parceiro'] ?? 'EcoDrop', ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= number_format((int) $recompensa['custo_pontos'], 0, ',', '.') ?> pts</td>
+                                        <td><?= $recompensa['estoque'] === null ? 'Ilimitado' : number_format((int) $recompensa['estoque'], 0, ',', '.') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 </body>

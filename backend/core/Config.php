@@ -44,6 +44,10 @@ final class Config
             throw new RuntimeException('Arquivo de configuracao invalido.');
         }
 
+        if (!empty($dados['app']['timezone'])) {
+            date_default_timezone_set((string) $dados['app']['timezone']);
+        }
+
         self::$dados = $dados;
         return self::$dados;
     }

@@ -10,7 +10,7 @@ function linkAdminAtivo(string $chave, string $atual): string
 }
 ?>
 <aside class="admin-sidebar">
-    <a class="marca" href="<?= Url::escapar('/admin/dashboard/') ?>">Eco<em>Drop</em> <span style="opacity:.6; font-size:.8rem;">Admin</span></a>
+    <a class="marca" href="<?= Url::escapar('/admin/dashboard/') ?>">Eco<em>Drop</em> <span>Admin</span></a>
     <nav aria-label="Navegação administrativa">
         <ul>
             <li><a href="<?= Url::escapar('/admin/dashboard/') ?>" <?= linkAdminAtivo('dashboard', $paginaAtual) ?>>Dashboard</a></li>

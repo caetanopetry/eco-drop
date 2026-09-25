@@ -25,6 +25,8 @@ final class AuthService
     public function registrar(string $nome, string $email, string $cpf, string $senha): array
     {
         $campos = [];
+        $nome = Validator::normalizarEspacos($nome);
+        $email = Validator::emailNormalizado($email);
         $cpfLimpo = Validator::somenteDigitos($cpf);
 
         if (!Validator::obrigatorio($nome)) {
@@ -66,7 +68,16 @@ final class AuthService
         }
 
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-        $id = $this->usuarios->criar($nome, $email, $cpfLimpo, $senhaHash, 'usuario');
+
+        try {
+            $id = $this->usuarios->criar($nome, $email, $cpfLimpo, $senhaHash, 'usuario');
+        } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                return ['sucesso' => false, 'mensagem' => 'E-mail ou CPF ja cadastrado.'];
+            }
+
+            throw $e;
+        }
 
         return [
             'sucesso' => true,
@@ -84,6 +95,8 @@ final class AuthService
      */
     public function autenticar(string $email, string $senha): array
     {
+        $email = Validator::emailNormalizado($email);
+
         if (!Validator::obrigatorio($email) || !Validator::obrigatorio($senha)) {
             return ['sucesso' => false, 'mensagem' => 'Informe e-mail e senha.'];
         }

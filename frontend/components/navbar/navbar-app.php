@@ -1,7 +1,7 @@
 <?php
 /**
- * @var array $usuario Usuário autenticado (id, nome, email, papel) — vem de Auth::usuarioLogado().
- * @var string $paginaAtual Identificador da página atual, para destacar o link ativo.
+ * @var array $usuario Usuario autenticado (id, nome, email, papel).
+ * @var string $paginaAtual Identificador da pagina atual.
  */
 $paginaAtual = $paginaAtual ?? '';
 ?>
@@ -10,6 +10,7 @@ $paginaAtual = $paginaAtual ?? '';
         <a class="navbar-marca" href="<?= Url::escapar('/app/inicio/') ?>">Eco<em>Drop</em></a>
         <ul class="navbar-links">
             <li><a href="<?= Url::escapar('/app/inicio/') ?>" <?= $paginaAtual === 'inicio' ? 'aria-current="page"' : '' ?>>Início</a></li>
+            <li><a href="<?= Url::escapar('/station/') ?>">Estação demo</a></li>
         </ul>
         <div class="navbar-usuario">
             <span class="texto-suave"><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></span>

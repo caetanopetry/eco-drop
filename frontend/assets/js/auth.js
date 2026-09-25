@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function configurarFormulario(formulario, endpoint) {
-    const areaFeedback = formulario.querySelector('[data-area-feedback]');
+    const areaFeedback = formulario.querySelector('[data-area-feedback]')
+        || formulario.parentElement?.querySelector('[data-area-feedback]')
+        || document.querySelector('[data-area-feedback]');
     const botaoEnviar = formulario.querySelector('[type="submit"]');
 
     formulario.addEventListener('submit', async (evento) => {

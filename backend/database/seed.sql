@@ -1,57 +1,86 @@
 -- =====================================================================
--- EcoDrop — Dados iniciais (seed)
--- =====================================================================
--- Contém apenas o que já está definido na documentação (docs/visao-geral.md,
--- docs/escopo.md). Valores comerciais/pontuação NÃO são inventados: ficam
--- NULL, prontos para configuração futura pelo Admin (RN008, RN017, RN039).
+-- EcoDrop - Dados iniciais para desenvolvimento local
 -- =====================================================================
 
 USE ecodrop;
-
--- Garante que o cliente que está executando este script (linha de comando, phpMyAdmin, etc.)
--- envie os dados como utf8mb4, independentemente do charset padrão da ferramenta usada.
--- Sem isso, nomes com acento podem ser gravados com "double encoding".
 SET NAMES utf8mb4;
 
--- ---------------------------------------------------------------------
--- Materiais iniciais (docs/visao-geral.md)
--- ---------------------------------------------------------------------
+-- Materiais aceitos no MVP. Os pontos sao ficticios para a demo local.
 INSERT INTO materiais (nome, slug, unidade, quantidade_minima, pontos_por_unidade, status)
 VALUES
-    ('Plástico', 'plastico', 'kg', 0.100, NULL, 'ativo'),
-    ('Papel', 'papel', 'kg', 0.100, NULL, 'ativo'),
-    ('Vidro', 'vidro', 'kg', 0.100, NULL, 'ativo'),
-    ('Óleo de cozinha usado', 'oleo-cozinha-usado', 'l', 0.500, NULL, 'ativo')
-ON DUPLICATE KEY UPDATE nome = VALUES(nome);
+    ('Plastico', 'plastico', 'kg', 0.100, 150, 'ativo'),
+    ('Papel', 'papel', 'kg', 0.100, 90, 'ativo'),
+    ('Vidro', 'vidro', 'kg', 0.100, 120, 'ativo'),
+    ('Oleo de cozinha usado', 'oleo-cozinha-usado', 'l', 0.500, 220, 'ativo')
+ON DUPLICATE KEY UPDATE
+    nome = VALUES(nome),
+    unidade = VALUES(unidade),
+    quantidade_minima = VALUES(quantidade_minima),
+    pontos_por_unidade = COALESCE(materiais.pontos_por_unidade, VALUES(pontos_por_unidade)),
+    status = VALUES(status);
 
--- ---------------------------------------------------------------------
--- Configurações pendentes de definição de negócio (docs/escopo.md, RN017)
--- ---------------------------------------------------------------------
 INSERT INTO configuracoes (chave, valor, descricao)
 VALUES
-    ('bonus_primeiro_descarte_pontos', NULL, 'Valor do bônus concedido no primeiro descarte válido do usuário (RN016/RN017). PENDENTE.'),
-    ('qr_code_validade_segundos', '120', 'Validade do QR Code/sessão temporária da estação, em segundos (RN018).')
-ON DUPLICATE KEY UPDATE descricao = VALUES(descricao);
+    ('bonus_primeiro_descarte_pontos', '100', 'Bonus ficticio concedido uma unica vez no primeiro descarte valido.'),
+    ('qr_code_validade_segundos', '120', 'Validade do QR Code/sessao temporaria da estacao, em segundos.')
+ON DUPLICATE KEY UPDATE
+    valor = COALESCE(configuracoes.valor, VALUES(valor)),
+    descricao = VALUES(descricao);
 
--- ---------------------------------------------------------------------
--- Estação de demonstração, para permitir testes locais (Fase 2 em diante)
--- ---------------------------------------------------------------------
-INSERT INTO estacoes (nome, endereco, status)
-VALUES ('Estação EcoDrop — Demonstração', 'Endereço de demonstração para testes locais', 'ativa')
-ON DUPLICATE KEY UPDATE nome = VALUES(nome);
+INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
+SELECT 'Estacao EcoDrop Demo', 'Endereco de demonstracao para testes locais', -23.5505200, -46.6333080, 'ativa'
+WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'Estacao EcoDrop Demo');
 
--- ---------------------------------------------------------------------
--- Usuários de teste
--- ---------------------------------------------------------------------
--- Senha em texto puro (apenas para uso em ambiente LOCAL de desenvolvimento):
---   Administrador -> admin@ecodrop.local     / EcoDrop@123
---   Usuário comum -> usuario@ecodrop.local   / Usuario@123
--- Os hashes abaixo foram gerados com o mesmo algoritmo bcrypt usado por
--- password_hash()/password_verify() do PHP.
+INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
+SELECT 'EcoDrop Centro', 'Praca Central, 100', -23.5505200, -46.6333080, 'ativa'
+WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Centro');
+
+INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
+SELECT 'EcoDrop Parque Verde', 'Rua das Arvores, 42', -23.5558000, -46.6401000, 'ativa'
+WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Parque Verde');
+
+UPDATE estacoes
+SET status = 'ativa'
+WHERE nome IN ('Estacao EcoDrop Demo', 'EcoDrop Centro', 'EcoDrop Parque Verde');
+
+INSERT INTO parceiros (nome, descricao, contato, status)
+SELECT 'Mercado Verde', 'Parceiro ficticio para recompensas do MVP.', 'contato@mercadoverde.local', 'ativo'
+WHERE NOT EXISTS (SELECT 1 FROM parceiros WHERE nome = 'Mercado Verde');
+
+INSERT INTO parceiros (nome, descricao, contato, status)
+SELECT 'Cafe Circular', 'Parceiro ficticio para vouchers sustentaveis.', 'contato@cafecircular.local', 'ativo'
+WHERE NOT EXISTS (SELECT 1 FROM parceiros WHERE nome = 'Cafe Circular');
+
+UPDATE parceiros
+SET status = 'ativo'
+WHERE nome IN ('Mercado Verde', 'Cafe Circular');
+
+INSERT INTO recompensas (parceiro_id, nome, descricao, custo_pontos, estoque, validade_dias, status)
+SELECT p.id, 'Cupom Mercado Verde', 'Desconto ficticio de R$ 10 em compras selecionadas.', 450, 25, 30, 'ativo'
+FROM parceiros p
+WHERE p.nome = 'Mercado Verde'
+    AND NOT EXISTS (SELECT 1 FROM recompensas WHERE nome = 'Cupom Mercado Verde');
+
+INSERT INTO recompensas (parceiro_id, nome, descricao, custo_pontos, estoque, validade_dias, status)
+SELECT p.id, 'Cafe sustentavel', 'Voucher ficticio para uma bebida pequena.', 300, 40, 15, 'ativo'
+FROM parceiros p
+WHERE p.nome = 'Cafe Circular'
+    AND NOT EXISTS (SELECT 1 FROM recompensas WHERE nome = 'Cafe sustentavel');
+
+UPDATE recompensas
+SET status = 'ativo'
+WHERE nome IN ('Cupom Mercado Verde', 'Cafe sustentavel');
+
+-- Senhas em texto puro apenas para ambiente LOCAL:
+-- Administrador: admin@ecodrop.local / EcoDrop@123
+-- Usuario comum: usuario@ecodrop.local / Usuario@123
 INSERT INTO usuarios (nome, email, cpf, senha_hash, papel, status)
 VALUES
     ('Administrador EcoDrop', 'admin@ecodrop.local', '00000000000',
      '$2b$10$0V93FoLI7st9VPuj6EChvuk8Rk6cph4TgWFDRTJ2xBoZNeZDhroJG', 'admin', 'ativo'),
-    ('Usuário de Teste', 'usuario@ecodrop.local', '11111111111',
+    ('Usuario de Teste', 'usuario@ecodrop.local', '11111111111',
      '$2b$10$e0b51RoeEChn/weq311nLelQXPP6k60E0cG0/T0SFTbQlBzk/2BH2', 'usuario', 'ativo')
-ON DUPLICATE KEY UPDATE nome = VALUES(nome);
+ON DUPLICATE KEY UPDATE
+    nome = VALUES(nome),
+    papel = VALUES(papel),
+    status = VALUES(status);
