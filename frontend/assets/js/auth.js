@@ -11,9 +11,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (formularioCadastro) {
+        const campoCpf = formularioCadastro.querySelector('[name="cpf"]');
+        campoCpf?.addEventListener('input', formatarCpf);
         configurarFormulario(formularioCadastro, '/backend/api/auth/register.php');
     }
 });
+
+function formatarCpf(evento) {
+    const campo = evento.currentTarget;
+    const posicaoOriginal = campo.selectionStart ?? campo.value.length;
+    const digitosAteCursor = campo.value.slice(0, posicaoOriginal).replace(/\D/g, '').length;
+    const digitos = campo.value.replace(/\D/g, '').slice(0, 11);
+    let cpfFormatado = digitos;
+
+    if (digitos.length > 3) {
+        cpfFormatado = `${digitos.slice(0, 3)}.${digitos.slice(3)}`;
+    }
+    if (digitos.length > 6) {
+        cpfFormatado = `${digitos.slice(0, 3)}.${digitos.slice(3, 6)}.${digitos.slice(6)}`;
+    }
+    if (digitos.length > 9) {
+        cpfFormatado = `${digitos.slice(0, 3)}.${digitos.slice(3, 6)}.${digitos.slice(6, 9)}-${digitos.slice(9)}`;
+    }
+
+    campo.value = cpfFormatado;
+    let novaPosicao = 0;
+    let digitosPercorridos = 0;
+    while (novaPosicao < cpfFormatado.length && digitosPercorridos < digitosAteCursor) {
+        if (/\d/.test(cpfFormatado[novaPosicao])) digitosPercorridos++;
+        novaPosicao++;
+    }
+    while (novaPosicao < cpfFormatado.length && /[.-]/.test(cpfFormatado[novaPosicao])) {
+        novaPosicao++;
+    }
+    campo.setSelectionRange(novaPosicao, novaPosicao);
+}
 
 function configurarFormulario(formulario, endpoint) {
     const areaFeedback = formulario.querySelector('[data-area-feedback]')
