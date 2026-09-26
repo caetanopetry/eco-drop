@@ -12,7 +12,7 @@ if (!function_exists('linkAppAtivo')) {
 }
 ?>
 <aside class="app-sidebar">
-    <a class="app-marca" href="<?= Url::escapar('/app/inicio/') ?>">Eco<em>Drop</em></a>
+    <a class="app-marca eco-marca" href="<?= Url::escapar('/app/inicio/') ?>"><?php require __DIR__ . '/../brand/marca.php'; ?></a>
     <nav class="app-menu" aria-label="Navegacao do app">
         <span>Cliente</span>
         <a href="<?= Url::escapar('/app/inicio/') ?>" <?= linkAppAtivo('inicio', $paginaAtualApp) ?>>Visao geral</a>

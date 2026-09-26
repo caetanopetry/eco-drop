@@ -148,6 +148,28 @@
     gap: var(--espaco-5);
 }
 
+.eco-marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    width: fit-content;
+    max-width: 100%;
+}
+.eco-marca__icone {
+    flex-shrink: 0;
+    width: 28px;
+    height: 32px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: var(--musgo);
+}
+.eco-marca--clara .eco-marca__icone { color: #b7cf9d; }
+.eco-marca__nome { white-space: nowrap; }
+
 .navbar-marca,
 .marca {
     color: var(--tinta);
@@ -323,7 +345,11 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     background: var(--solido);
 }
 
-.tela-dividida-formulario h1 { margin-bottom: var(--espaco-1); }
+.tela-dividida-formulario h1 {
+    margin-bottom: var(--espaco-1);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    overflow-wrap: break-word;
+}
 .tela-dividida-formulario .subtitulo { margin-bottom: var(--espaco-5); }
 .rodape-autenticacao { margin-top: var(--espaco-5); color: var(--tinta-suave); font-size: .92rem; }
 .rodape-autenticacao a { font-weight: 700; text-underline-offset: 3px; }

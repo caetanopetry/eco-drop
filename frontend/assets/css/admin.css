@@ -13,13 +13,13 @@
 }
 
 .admin-sidebar .marca {
-    display: block;
+    display: inline-flex;
     margin: 0 10px var(--espaco-6);
     color: #fff;
     font-size: 1.2rem;
 }
 .admin-sidebar .marca em { color: #b9d3bd; }
-.admin-sidebar .marca span {
+.admin-sidebar .marca .marca-selo {
     color: rgba(255,255,255,.62);
     font-family: var(--fonte-corpo);
     font-size: .75rem;

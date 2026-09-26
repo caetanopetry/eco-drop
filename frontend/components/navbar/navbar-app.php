@@ -7,7 +7,7 @@ $paginaAtual = $paginaAtual ?? '';
 ?>
 <header class="navbar-ecodrop">
     <div class="container">
-        <a class="navbar-marca" href="<?= Url::escapar('/app/inicio/') ?>">Eco<em>Drop</em></a>
+        <a class="navbar-marca eco-marca" href="<?= Url::escapar('/app/inicio/') ?>"><?php require __DIR__ . '/../brand/marca.php'; ?></a>
         <ul class="navbar-links">
             <li><a href="<?= Url::escapar('/app/inicio/') ?>" <?= $paginaAtual === 'inicio' ? 'aria-current="page"' : '' ?>>Início</a></li>
             <li><a href="<?= Url::escapar('/station/') ?>">Estação demo</a></li>

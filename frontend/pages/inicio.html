@@ -14,12 +14,14 @@
   <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
   <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
   <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/site.css') ?>">
+  <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/hover-footer.css') ?>">
+  <script src="<?= Url::escapar('/frontend/assets/js/hover-footer.js') ?>" defer></script>
 </head>
 <body>
   <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
   <header class="site-cabecalho">
     <div class="container flex itens-centro justificar-entre">
-      <a class="navbar-marca" href="<?= Url::escapar('/') ?>" aria-label="EcoDrop, página inicial">Eco<em>Drop</em></a>
+      <a class="navbar-marca eco-marca" href="<?= Url::escapar('/') ?>" aria-label="EcoDrop, página inicial"><?php require __DIR__ . '/../components/brand/marca.php'; ?></a>
       <nav aria-label="Navegação principal" class="flex itens-centro gap-4">
         <a href="#como-funciona">Como funciona</a><a href="#materiais">Materiais</a><a href="<?= Url::escapar('/app/login/') ?>">Entrar</a><a href="<?= Url::escapar('/app/cadastro/') ?>" class="botao botao-primario">Criar conta</a>
       </nav>
@@ -61,6 +63,6 @@
     </section>
     <section class="secao-mvp"><div class="container"><div class="convite"><div><span class="sobretitulo">O próximo ciclo começa em casa</span><h2>Vamos dar um novo destino às coisas?</h2><p>Crie sua conta e venha fazer parte de uma comunidade que vê possibilidades no descarte.</p></div><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Começar meu ciclo</a></div><p class="nota-projeto">Estamos começando: nesta primeira versão, a estação funciona por simulação controlada. Estações físicas e novas funcionalidades fazem parte das próximas etapas.</p></div></section>
   </main>
-  <footer class="rodape-ecodrop"><div class="container rodape-grade"><a class="navbar-marca" href="<?= Url::escapar('/') ?>">Eco<em>Drop</em></a><p>Pequenas atitudes. Um mundo de possibilidades.</p><a href="#como-funciona">Conheça o projeto</a></div></footer>
+  <?php require __DIR__ . '/../components/footer/hover-footer.php'; ?>
 </body>
 </html>

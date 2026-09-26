@@ -59,7 +59,7 @@ $sessoes = $repo->sessoesEmUso();
 <body class="pagina-station-demo">
     <main class="station-shell">
         <header class="station-topo">
-            <a class="station-marca" href="<?= Url::escapar('/app/inicio/') ?>">Eco<em>Drop</em></a>
+            <a class="station-marca eco-marca eco-marca--clara" href="<?= Url::escapar('/app/inicio/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
         </header>
 
         <section class="station-hero">

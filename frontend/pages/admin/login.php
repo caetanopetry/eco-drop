@@ -30,7 +30,7 @@ if ($usuarioLogado !== null && $usuarioLogado['papel'] === 'admin') {
 <body>
     <div class="tela-dividida">
         <aside class="tela-dividida-editorial">
-            <a class="marca" href="<?= Url::escapar('/') ?>">Eco<em>Drop</em></a>
+            <a class="marca eco-marca eco-marca--clara" href="<?= Url::escapar('/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
             <p class="frase">Acesso restrito à equipe que mantém o EcoDrop rodando.</p>
             <p class="rodape-frase">Painel administrativo</p>
         </aside>

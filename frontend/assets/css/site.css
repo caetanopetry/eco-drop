@@ -91,6 +91,7 @@
 
 .hero-ilustracao img {
     width: 100%;
+    height: auto;
     margin: 0 auto;
 }
 
@@ -305,7 +306,12 @@
         padding-bottom: 4px;
         -webkit-overflow-scrolling: touch;
     }
-    .site-cabecalho nav a { flex: 0 0 auto; }
+    .site-cabecalho nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        flex: 0 0 auto;
+    }
     .site-cabecalho nav a:not(.botao) { font-size: .78rem; }
     .site-cabecalho nav .botao { padding: 9px 11px; font-size: .78rem; }
     .hero { padding: var(--espaco-6) 0; }

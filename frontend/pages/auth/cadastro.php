@@ -30,7 +30,7 @@ if ($usuarioLogado !== null) {
 <body>
     <div class="tela-dividida">
         <aside class="tela-dividida-editorial">
-            <a class="marca" href="<?= Url::escapar('/') ?>">Eco<em>Drop</em></a>
+            <a class="marca eco-marca eco-marca--clara" href="<?= Url::escapar('/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
             <p class="frase">Plástico, papel, vidro e óleo — cada um com seu valor.</p>
             <p class="rodape-frase">Coleta seletiva incentivada</p>
         </aside>
