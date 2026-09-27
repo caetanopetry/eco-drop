@@ -27,7 +27,7 @@ if ($usuarioLogado !== null) {
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/auth.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/auth.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/auth.css') ?>">
 </head>
 <body>
     <div class="auth-troca" data-auth-troca data-modo="<?= $modoAuth ?>">
@@ -113,6 +113,6 @@ if ($usuarioLogado !== null) {
     </script>
     <script src="<?= Url::escapar('/frontend/assets/js/api.js') ?>"></script>
     <script src="<?= Url::escapar('/frontend/assets/js/auth.js') ?>"></script>
-    <script src="<?= Url::escapar('/frontend/assets/js/auth-transicao.js') ?>"></script>
+    <script src="<?= Url::escapar('/frontend/assets/js/auth-transicao.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/auth-transicao.js') ?>"></script>
 </body>
 </html>

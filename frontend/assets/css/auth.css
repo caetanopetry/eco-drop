@@ -4,22 +4,21 @@
     min-height: 100svh;
     overflow: hidden;
     background: var(--papel);
-    --auth-duracao: 750ms;
-    --auth-curva: cubic-bezier(.77, 0, .18, 1);
+    --auth-duracao: 950ms;
+    --auth-curva: cubic-bezier(.65, 0, .2, 1);
 }
 
 .auth-formulario {
     width: 50%;
     min-height: 100svh;
     padding: 48px clamp(28px, 5vw, 88px);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 460px);
     justify-content: center;
     align-items: center;
-    transition: transform var(--auth-duracao) var(--auth-curva);
 }
 
-.auth-conteudo { width: min(100%, 460px); }
+.auth-conteudo { width: 100%; grid-area: 1 / 1; }
 .auth-conteudo[hidden] { display: none; }
 .auth-conteudo h1 { font-size: clamp(2rem, 3vw, 2.7rem); margin-bottom: 12px; }
 .auth-conteudo .subtitulo { margin-bottom: 28px; }
@@ -35,7 +34,6 @@
     overflow: hidden;
     padding: 48px;
     background: radial-gradient(ellipse at 25% 75%, #387757 0%, transparent 48%), linear-gradient(135deg, #194a3b, #0c3028);
-    transition: transform var(--auth-duracao) var(--auth-curva);
 }
 .auth-marca-painel::before {
     content: '';
@@ -51,23 +49,54 @@
 .auth-troca[data-modo="cadastro"] .auth-formulario { transform: translateX(100%); }
 .auth-troca[data-modo="cadastro"] .auth-marca-painel { transform: translateX(-100%); }
 
-.auth-troca.auth-animando .auth-conteudo { animation: auth-conteudo-entrar var(--auth-duracao) var(--auth-curva) both; }
-.auth-troca[data-modo="login"] { --auth-deslocamento: -36px; }
-.auth-troca[data-modo="cadastro"] { --auth-deslocamento: 36px; }
-@keyframes auth-conteudo-entrar {
-    0%, 25% { opacity: 0; transform: translateX(var(--auth-deslocamento)); }
-    100% { opacity: 1; transform: translateX(0); }
+.auth-pronta .auth-formulario,
+.auth-pronta .auth-marca-painel {
+    transition: transform var(--auth-duracao) var(--auth-curva);
+}
+.auth-pronta .auth-conteudo {
+    transition: opacity 550ms ease, transform var(--auth-duracao) var(--auth-curva);
+}
+/* Os dois formulários permanecem no mesmo espaço durante toda a travessia.
+   O painel inativo continua no layout para evitar saltos de altura. */
+.auth-interativa[data-modo="login"] [data-auth-painel="cadastro"] {
+    opacity: 0;
+    transform: translateX(64px);
+    pointer-events: none;
+}
+.auth-interativa[data-modo="cadastro"] [data-auth-painel="login"] {
+    opacity: 0;
+    transform: translateX(-64px);
+    pointer-events: none;
+}
+.auth-interativa[data-modo="login"] [data-auth-painel="login"],
+.auth-interativa[data-modo="cadastro"] [data-auth-painel="cadastro"] {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 180ms, 0ms;
 }
 
 @media (max-width: 800px) {
     .auth-troca { --auth-duracao: 320ms; }
-    .auth-formulario { width: 100%; padding: 32px 24px; }
+    .auth-formulario { width: 100%; padding: 32px 24px; align-content: center; }
+    .auth-conteudo { grid-area: 2 / 1; }
+    .auth-pronta .auth-conteudo { transition-duration: 320ms; transition-delay: 0ms; }
     .auth-troca[data-modo="cadastro"] .auth-formulario { transform: none; }
     .auth-marca-painel { display: none; }
-    .auth-marca-mobile { display: inline-flex; --marca-largura: 150px; margin-bottom: 32px; }
+    .auth-marca-mobile { display: inline-flex; grid-area: 1 / 1; justify-self: center; --marca-largura: 150px; margin-bottom: 32px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .auth-formulario, .auth-marca-painel { transition: none; }
-    .auth-troca.auth-animando .auth-conteudo { animation: none; }
+    /* Esta troca foi solicitada com movimento mesmo quando o Windows desativa
+       animações. A exceção fica restrita à autenticação; o restante do site
+       continua respeitando a preferência global. */
+    .auth-pronta .auth-formulario, .auth-pronta .auth-marca-painel {
+        transition-duration: var(--auth-duracao) !important;
+    }
+    .auth-pronta .auth-conteudo {
+        transition-duration: 550ms, var(--auth-duracao) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 800px) {
+    .auth-pronta .auth-conteudo { transition-duration: 320ms !important; }
 }
