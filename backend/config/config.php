@@ -12,11 +12,6 @@ declare(strict_types=1);
 
 return [
     'app' => [
-        'nome' => 'EcoDrop',
-        // 'development' | 'production'
-        'ambiente' => 'development',
-        // Exibir erros PHP na tela. Deve ser false em produção.
-        'debug' => true,
         // URL base da aplicação no XAMPP. Ajuste conforme a pasta do projeto.
         'url_base' => 'http://localhost/EcoDrop',
         'timezone' => 'America/Sao_Paulo',
@@ -38,14 +33,4 @@ return [
         'tempo_vida' => 60 * 60 * 8,
     ],
 
-    'estacao' => [
-        // RN018 - validade do QR Code / sessão temporária da estação, em segundos.
-        'qr_code_validade_segundos' => 120,
-    ],
-
-    // Integrações externas ainda não definidas pela documentação (RF008 / docs/decisoes/pendencias.md).
-    // Mantidas aqui, vazias, para não espalhar chaves secretas pelo frontend quando forem definidas.
-    'integracoes' => [
-        'google_maps_api_key' => '',
-    ],
 ];

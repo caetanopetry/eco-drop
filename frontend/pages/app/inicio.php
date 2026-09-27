@@ -81,7 +81,7 @@ $paginaAtualApp = 'inicio';
                 </div>
             <?php endif; ?>
 
-            <section class="dashboard-hero dashboard-hero-simples">
+            <section class="dashboard-hero">
                 <article class="cartao-principal">
                     <span class="etiqueta">Fluxo principal</span>
                     <h2>Descarte reciclaveis, acumule pontos e troque por beneficios.</h2>
@@ -123,7 +123,7 @@ $paginaAtualApp = 'inicio';
                 </a>
             </section>
 
-            <section class="bloco-operacao bloco-operacao-enxuto">
+            <section class="bloco-operacao">
                 <div>
                     <span class="etiqueta">Ultima atividade</span>
                     <h2><?= $ultimoDescarte ? 'Descarte registrado' : 'Nenhum descarte ainda' ?></h2>
@@ -143,7 +143,7 @@ $paginaAtualApp = 'inicio';
                     <h2>Top ranking mensal</h2>
                     <span>Resumo</span>
                 </div>
-                <ol class="ranking ranking-resumo">
+                <ol class="ranking">
                     <?php foreach (array_slice($ranking, 0, 3) as $indice => $linha): ?>
                         <li>
                             <span><?= $indice + 1 ?></span>

@@ -25,10 +25,6 @@
     font-weight: 600;
     text-decoration: none;
 }
-.station-marca em {
-    color: #b9d3bd;
-    font-style: normal;
-}
 
 .station-hero {
     display: grid;
@@ -166,9 +162,6 @@
     .station-topo {
         display: grid;
         align-items: stretch;
-    }
-    .station-topo .botao {
-        width: 100%;
     }
     .station-hero h1 { max-width: 12ch; }
 }

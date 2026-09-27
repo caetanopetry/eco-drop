@@ -15,7 +15,7 @@ $canais = [
       <?php if ($canal['url'] !== ''): ?>
         <a class="contato-cartao" href="<?= $escapar($canal['url']) ?>">
       <?php else: ?>
-        <article class="contato-cartao contato-cartao--pendente">
+        <article class="contato-cartao">
       <?php endif; ?>
         <div class="contato-cartao-topo">
           <span class="contato-icone"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><?= $canal['icone'] ?></svg></span>

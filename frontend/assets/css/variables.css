@@ -5,7 +5,6 @@
 
 :root {
     --papel: #f4f1e8;
-    --papel-forte: #e7e1d1;
     --superficie: #fffdf7;
     --superficie-2: #f8f6ef;
     --tinta: #17211b;
@@ -16,20 +15,13 @@
     --musgo: #2f6b4f;
     --musgo-escuro: #163d31;
     --musgo-claro: #dce9df;
-    --folha: #7b9b56;
     --solido: #c49a43;
-
-    --m-plastico: #b85b46;
-    --m-papel: #456f9e;
-    --m-vidro: #3f8b68;
-    --m-oleo: #a87532;
 
     --sucesso: #2f6b4f;
     --sucesso-fundo: #e2efe6;
     --erro: #a14132;
     --erro-fundo: #f6e6e2;
     --aviso: #8a641e;
-    --aviso-fundo: #f4ead5;
 
     --fonte-titulo: 'Fraunces', Georgia, 'Times New Roman', serif;
     --fonte-corpo: 'Work Sans', 'Segoe UI', system-ui, sans-serif;
@@ -41,14 +33,10 @@
     --espaco-5: 24px;
     --espaco-6: 32px;
     --espaco-7: 48px;
-    --espaco-8: 72px;
-    --espaco-9: 104px;
 
     --raio-sm: 8px;
     --raio-md: 14px;
     --raio-lg: 22px;
-
-    --sombra-baixa: 0 10px 30px rgba(23, 33, 27, .08);
     --largura-conteudo: 1180px;
     --largura-leitura: 62ch;
 }

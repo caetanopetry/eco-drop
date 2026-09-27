@@ -25,11 +25,6 @@ final class Url
         return $base . $caminho;
     }
 
-    public static function asset(string $caminho): string
-    {
-        return self::para($caminho);
-    }
-
     public static function escapar(string $caminho = '/'): string
     {
         return htmlspecialchars(self::para($caminho), ENT_QUOTES, 'UTF-8');

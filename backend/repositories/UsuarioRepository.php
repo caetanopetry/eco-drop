@@ -35,20 +35,6 @@ final class UsuarioRepository
         return $usuario ?: null;
     }
 
-    public function buscarPorId(int $id): ?array
-    {
-        $stmt = Database::conexao()->prepare(
-            'SELECT id, nome, email, cpf, papel, status, criado_em
-             FROM usuarios
-             WHERE id = :id
-             LIMIT 1'
-        );
-        $stmt->execute(['id' => $id]);
-        $usuario = $stmt->fetch();
-
-        return $usuario ?: null;
-    }
-
     public function criar(string $nome, string $email, string $cpf, string $senhaHash, string $papel = 'usuario'): int
     {
         $stmt = Database::conexao()->prepare(

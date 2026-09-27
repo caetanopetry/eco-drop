@@ -38,11 +38,6 @@
     border-color: var(--musgo);
 }
 
-.botao-perigo {
-    color: #fff;
-    background: var(--erro);
-}
-
 .botao-bloco { width: 100%; }
 
 /* Formulários -------------------------------------------------------- */
@@ -94,7 +89,6 @@
 
 .alerta-sucesso { color: var(--sucesso); background: var(--sucesso-fundo); border-color: var(--sucesso); }
 .alerta-erro { color: var(--erro); background: var(--erro-fundo); border-color: var(--erro); }
-.alerta-aviso { color: var(--aviso); background: var(--aviso-fundo); border-color: var(--aviso); }
 
 .badge {
     display: inline-flex;
@@ -108,45 +102,9 @@
 }
 
 .badge-sucesso { color: var(--sucesso); background: var(--sucesso-fundo); }
-.badge-erro { color: var(--erro); background: var(--erro-fundo); }
-.badge-aviso { color: var(--aviso); background: var(--aviso-fundo); }
 .badge-neutro { color: var(--musgo-escuro); background: var(--musgo-claro); }
 
-.chip-material {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--espaco-2);
-    font-size: .92rem;
-    font-weight: 700;
-}
-.chip-material::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--cor-chip, var(--musgo));
-}
-.chip-plastico { --cor-chip: var(--m-plastico); }
-.chip-papel { --cor-chip: var(--m-papel); }
-.chip-vidro { --cor-chip: var(--m-vidro); }
-.chip-oleo { --cor-chip: var(--m-oleo); }
-
-/* Navegação do app --------------------------------------------------- */
-.navbar-ecodrop {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    border-bottom: 1px solid var(--linha);
-    background: rgba(255, 253, 247, .96);
-}
-
-.navbar-ecodrop .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 70px;
-    gap: var(--espaco-5);
-}
+/* Marca compartilhada ----------------------------------------------- */
 
 .eco-marca {
     display: inline-flex;
@@ -155,6 +113,7 @@
     min-height: 44px;
     width: fit-content;
     max-width: 100%;
+    text-decoration: none;
 }
 .eco-marca__imagem {
     display: block;
@@ -168,52 +127,6 @@
 .eco-marca--clara .eco-marca__imagem { filter: brightness(0) invert(1); }
 .tela-dividida-editorial .eco-marca { --marca-largura: 216px; }
 .admin-sidebar .eco-marca { --marca-largura: 132px; }
-
-.navbar-marca,
-.marca {
-    color: var(--tinta);
-    font-family: var(--fonte-titulo);
-    font-size: 1.45rem;
-    font-weight: 600;
-    text-decoration: none;
-}
-.navbar-marca em,
-.marca em {
-    color: var(--musgo);
-    font-style: normal;
-}
-
-.navbar-links {
-    display: flex;
-    align-items: center;
-    gap: var(--espaco-2);
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.navbar-links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 38px;
-    padding: 8px 12px;
-    border-radius: var(--raio-sm);
-    color: var(--tinta-suave);
-    font-size: .92rem;
-    font-weight: 700;
-    text-decoration: none;
-}
-.navbar-links a:hover,
-.navbar-links a[aria-current="page"] {
-    color: var(--musgo-escuro);
-    background: var(--musgo-claro);
-}
-
-.navbar-usuario {
-    display: flex;
-    align-items: center;
-    gap: var(--espaco-3);
-}
 
 /* Tabelas ------------------------------------------------------------ */
 .tabela-wrapper {
@@ -257,35 +170,9 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     background: var(--superficie-2);
 }
 
-.carregando {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--espaco-2);
-    padding: var(--espaco-5);
-    color: var(--tinta-suave);
-}
-.spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--musgo-claro);
-    border-top-color: var(--musgo);
-    border-radius: 50%;
-    animation: girar .7s linear infinite;
-}
-@keyframes girar { to { transform: rotate(360deg); } }
-
-.rodape-ecodrop {
-    padding: var(--espaco-6) 0;
-    border-top: 1px solid var(--linha);
-    color: var(--tinta-suave);
-    background: var(--papel-forte);
-    font-size: .9rem;
-}
-
-/* Autenticação ------------------------------------------------------- */
 .tabela-dica { display: none; }
 
+/* Autenticação ------------------------------------------------------- */
 .tela-dividida {
     min-height: 100vh;
     display: grid;
@@ -305,8 +192,6 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
 .tela-dividida-editorial .marca {
     color: #fff;
 }
-
-.tela-dividida-editorial .marca em { color: #b9d3bd; }
 
 .tela-dividida-editorial .frase {
     max-width: 24ch;
@@ -374,29 +259,9 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
         text-align: center;
     }
 
-    .campo input, .campo select, .campo textarea { min-height: 48px; font-size: 16px; }
-
-    .botao-bloco {
-        width: 100%;
-    }
-
     .alerta {
         font-size: .88rem;
     }
-
-    .navbar-ecodrop .container {
-        flex-wrap: wrap;
-        padding-top: 14px;
-        padding-bottom: 14px;
-        gap: var(--espaco-3);
-    }
-    .navbar-links { order: 3; width: 100%; overflow-x: auto; }
-    .navbar-usuario {
-        width: 100%;
-        justify-content: space-between;
-        font-size: .86rem;
-    }
-    .navbar-usuario > span { overflow-wrap: anywhere; }
     .tela-dividida-formulario { padding: 36px 20px; }
 
     .tabela-wrapper {
@@ -418,7 +283,8 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
 
     .tela-dividida-editorial .frase {
         max-width: none;
-        font-size: 1.35rem;
+        margin: 0;
+        font-size: 1.2rem;
     }
 
     .tela-dividida-formulario {
@@ -432,7 +298,6 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     }
 
     .tela-dividida-editorial .rodape-frase { display: none; }
-    .tela-dividida-editorial .frase { margin: 0; font-size: 1.2rem; }
     .rodape-autenticacao a { display: inline-flex; align-items: center; min-height: 44px; }
 
     .rodape-autenticacao {

@@ -12,22 +12,18 @@ const EcoDropApi = (() => {
         return caminho.startsWith('/') ? `${base}${caminho}` : caminho;
     }
 
-    async function chamar(caminho, { metodo = 'GET', corpo = null } = {}) {
+    async function post(caminho, corpo) {
         const opcoes = {
-            method: metodo,
-            headers: {},
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'same-origin',
+            body: JSON.stringify(corpo),
         };
-
-        if (corpo !== null) {
-            opcoes.headers['Content-Type'] = 'application/json';
-            opcoes.body = JSON.stringify(corpo);
-        }
 
         let resposta;
         try {
             resposta = await fetch(caminhoComBase(caminho), opcoes);
-        } catch (erroRede) {
+        } catch {
             return {
                 sucesso: false,
                 erro: { mensagem: 'Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.' },
@@ -37,7 +33,7 @@ const EcoDropApi = (() => {
         let json;
         try {
             json = await resposta.json();
-        } catch (erroParse) {
+        } catch {
             return {
                 sucesso: false,
                 erro: { mensagem: 'Resposta inesperada do servidor.' },
@@ -47,8 +43,5 @@ const EcoDropApi = (() => {
         return json;
     }
 
-    return {
-        post: (caminho, corpo) => chamar(caminho, { metodo: 'POST', corpo }),
-        get: (caminho) => chamar(caminho, { metodo: 'GET' }),
-    };
+    return { post };
 })();

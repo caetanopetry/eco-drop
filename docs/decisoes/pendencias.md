@@ -15,7 +15,7 @@
 | Custo em pontos de cada recompensa | `recompensas.custo_pontos` (NULL) | docs/escopo.md |
 | Premiações do Top 3 do ranking mensal | `premiacoes_ranking` (tabela vazia) | RF040, RN034, RN035 |
 | Parceiros comerciais específicos | `parceiros` (tabela vazia) | docs/escopo.md |
-| Integração definitiva com Google Maps | `integracoes.google_maps_api_key` (vazio) | RF008 |
+| Integração definitiva com Google Maps | Ainda não implementada; sem configuração ativa | RF008 |
 
 **Enquanto esses valores não forem definidos, as funcionalidades dependentes deles
 devem ser implementadas de forma que "pendente" seja um estado visível e tratado**

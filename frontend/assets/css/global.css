@@ -71,14 +71,11 @@ textarea:focus-visible,
 }
 
 .flex { display: flex; }
-.flex-coluna { display: flex; flex-direction: column; }
 .itens-centro { align-items: center; }
 .justificar-entre { justify-content: space-between; }
-.gap-2 { gap: var(--espaco-2); }
 .gap-3 { gap: var(--espaco-3); }
 .gap-4 { gap: var(--espaco-4); }
 .texto-suave { color: var(--tinta-suave); }
-.texto-centro { text-align: center; }
 
 .pular-conteudo {
     position: fixed;

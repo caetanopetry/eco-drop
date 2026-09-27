@@ -24,11 +24,17 @@ campos (nome, e-mail, senha) e simplifica a autenticação (`AuthService` único
 ### Saldo de pontos é calculado, não armazenado
 
 Não existe coluna `usuarios.saldo`. O saldo é sempre `SUM(créditos) - SUM(débitos)`
-em `movimentacoes_pontos` (ver `PontosRepository::saldoDoUsuario`). Isso segue RNF015
+em `movimentacoes_pontos` (ver `EcoDropRepository::saldoDoUsuario`). Isso segue RNF015
 ("crédito/débito de pontos não deve depender de valor enviado livremente pelo
 cliente") e RNF006 (integridade): um saldo em cache poderia divergir do extrato em
 caso de falha parcial. Se o desempenho exigir, um cache pode ser adicionado depois
 como coluna derivada, recalculada a partir do extrato — nunca como fonte de verdade.
+
+### Validade das sessões da estação
+
+A validade das sessões da estação é lida de `configuracoes.chave =
+'qr_code_validade_segundos'`, com padrão de 120 segundos quando não há valor
+numérico. Não existe uma configuração paralela desse prazo no arquivo PHP.
 
 ### `movimentacoes_pontos` como extrato único
 

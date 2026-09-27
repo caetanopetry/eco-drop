@@ -127,7 +127,6 @@
 .eco-footer__bottom p { margin: 0; font-size: .7rem; }
 .eco-footer__legal { display: flex; flex-wrap: wrap; gap: 4px 20px; }
 .eco-footer__legal a { display: inline-flex; align-items: center; min-height: 44px; font-size: .75rem; }
-.eco-footer__credit span { color: var(--musgo-claro); white-space: nowrap; }
 .eco-footer__bottom > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: .7rem; }
 .eco-footer__bottom > a svg { width: 15px; height: 15px; }
 

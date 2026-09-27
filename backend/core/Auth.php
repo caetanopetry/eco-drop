@@ -75,42 +75,6 @@ final class Auth
         return $_SESSION['usuario'] ?? null;
     }
 
-    public static function estaAutenticado(): bool
-    {
-        return self::usuarioLogado() !== null;
-    }
-
-    public static function possuiPapel(string $papel): bool
-    {
-        $usuario = self::usuarioLogado();
-        return $usuario !== null && $usuario['papel'] === $papel;
-    }
-
-    /**
-     * Usado por endpoints da API: interrompe a requisição com erro 401 se não autenticado.
-     */
-    public static function exigirAutenticacaoApi(): array
-    {
-        $usuario = self::usuarioLogado();
-
-        if ($usuario === null) {
-            Response::erro('Sessão não autenticada.', 401);
-        }
-
-        return $usuario;
-    }
-
-    public static function exigirPapelApi(string $papel): array
-    {
-        $usuario = self::exigirAutenticacaoApi();
-
-        if ($usuario['papel'] !== $papel) {
-            Response::erro('Acesso não autorizado para este perfil.', 403);
-        }
-
-        return $usuario;
-    }
-
     /**
      * Usado por páginas HTML: redireciona para o login apropriado se não autenticado.
      */

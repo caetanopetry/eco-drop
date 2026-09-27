@@ -4,10 +4,8 @@
 .pagina-site .botao { border-radius: 999px; padding: 15px 24px; transition: background .2s, box-shadow .2s, transform .2s; }
 .pagina-site .botao:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 18px #173f3214; }
 .pagina-site [id] { scroll-margin-top: 100px; }
-.pagina-site [hidden] { display: none !important; }
 .site-cabecalho { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid #193e3012; background: #fffef9f5; backdrop-filter: blur(16px); }
 .site-cabecalho .container { min-height: 88px; gap: 24px; }
-.site-cabecalho .navbar-marca { font-size: 1.7rem; letter-spacing: -.055em; }
 .site-cabecalho nav { flex-wrap: wrap; gap: 26px; }
 .site-cabecalho nav a:not(.botao) { position: relative; padding: 12px 0; color: var(--tinta-suave); font-size: .86rem; font-weight: 500; text-decoration: none; }
 .site-cabecalho nav a:not(.botao)::after { content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 2px; background: var(--musgo); transform: scaleX(0); transform-origin: left; transition: transform .2s; }
@@ -75,8 +73,6 @@
 .convite .botao-primario { flex-shrink: 0; color: var(--musgo-escuro); background: var(--lima, #d4ed83); }
 .convite .botao-primario:hover { color: var(--musgo-escuro); background: #e5f5b7; }
 .nota-projeto { max-width: 95ch; margin: 22px auto 0; font-size: .76rem; text-align: center; line-height: 1.7; }
-.rodape-grade { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.rodape-grade p { margin: 0; font-size: .88rem; }
 
 @keyframes flutuar { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1deg); } }
 @keyframes aparecer { from { opacity: .35; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

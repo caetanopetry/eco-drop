@@ -46,25 +46,4 @@ final class Request
         return is_string($valor) ? trim($valor) : $padrao;
     }
 
-    public static function numero(string $chave, float $padrao = 0.0): float
-    {
-        $valor = self::corpo()[$chave] ?? $_GET[$chave] ?? $padrao;
-
-        if (is_numeric($valor)) {
-            return (float) $valor;
-        }
-
-        return $padrao;
-    }
-
-    public static function inteiro(string $chave, int $padrao = 0): int
-    {
-        $valor = self::corpo()[$chave] ?? $_GET[$chave] ?? $padrao;
-        return is_numeric($valor) ? (int) $valor : $padrao;
-    }
-
-    public static function todos(): array
-    {
-        return self::corpo();
-    }
 }

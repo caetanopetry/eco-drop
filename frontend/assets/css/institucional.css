@@ -1,35 +1,15 @@
-﻿/* Páginas institucionais: identidade compartilhada e leitura confortável. */
-.institucional-hero { position: relative; padding: 30px 0 58px; overflow: hidden; background: #e9eedc; border-bottom: 1px solid #d6dfc5; }
-.caminho-pagina { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 35px; color: var(--tinta-suave); font-size: .76rem; }
+/* Páginas institucionais: identidade compartilhada e leitura confortável. */
+.institucional-cabecalho { padding-top: 36px; padding-bottom: 28px; }
+.institucional-cabecalho h1 { margin: 0; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.15; overflow-wrap: anywhere; }
+.caminho-pagina { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 20px; color: var(--tinta-suave); font-size: .76rem; }
 .caminho-pagina a { color: var(--tinta-suave); text-underline-offset: 4px; }
 .caminho-pagina [aria-current] { color: var(--tinta); }
-.institucional-hero-grade { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 65px; align-items: center; }
-.institucional-hero .sobretitulo { margin-bottom: 15px; }
-.institucional-hero h1 { max-width: 22ch; margin-bottom: 20px; font-size: clamp(2.6rem, 4.5vw, 4.1rem); line-height: 1.08; }
-.institucional-hero .institucional-chamada { color: var(--musgo); font-family: var(--fonte-titulo); font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 400; }
-.institucional-hero-texto > p:last-child { margin-bottom: 0; max-width: 60ch; font-size: .94rem; line-height: 1.75; }
-.institucional-emblema { position: relative; display: grid; place-items: center; width: 240px; height: 240px; border: 1px solid #a8ba8e; border-radius: 50%; transform: rotate(12deg); }
-.institucional-emblema::before { content: ''; position: absolute; inset: 13px; border: 1px dashed #a8ba8e; border-radius: 50%; }
-.emblema-flor { color: var(--musgo); font-size: 12rem; line-height: 1; }
-.emblema-miolo { position: absolute; display: grid; place-items: center; width: 90px; height: 90px; border-radius: 50%; background: var(--lima); color: var(--musgo-escuro); font-family: var(--fonte-titulo); font-size: 3.3rem; transform: rotate(-12deg); }
-.emblema-legenda { position: absolute; bottom: 24px; padding: 4px 8px; background: #e9eedc; color: var(--musgo-escuro); font-size: .54rem; font-weight: 600; letter-spacing: .09em; }
-.pagina-contato .institucional-hero { background: #f1e5d5; }
-.pagina-contato .emblema-legenda { background: #f1e5d5; }
-.pagina-contato .emblema-flor { color: #b85b40; }
-.pagina-contato .emblema-miolo { background: #f9e9c1; font-size: 2.5rem; }
-.pagina-perguntas-frequentes .institucional-hero { background: #e3ebe8; }
-.pagina-perguntas-frequentes .emblema-legenda { background: #e3ebe8; }
-.institucional-navegacao { border-bottom: 1px solid var(--linha); background: var(--superficie); }
-.institucional-navegacao .container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 30px; padding-top: 16px; padding-bottom: 16px; }
-.institucional-navegacao a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 0; color: var(--tinta-suave); font-size: .8rem; text-decoration: none; }
-.institucional-navegacao a:hover { color: var(--musgo); text-decoration: underline; text-underline-offset: 5px; }
-.institucional-navegacao a[aria-current] { padding-inline: 17px; border-radius: 999px; color: var(--musgo-escuro); background: #e8efdb; font-weight: 600; }
-.institucional-conteudo { padding-top: 64px; padding-bottom: 88px; overflow-wrap: anywhere; }
+.institucional-conteudo { padding-top: 20px; padding-bottom: 88px; overflow-wrap: anywhere; }
 .institucional-dupla { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 80px; }
 .institucional-dupla > *, .institucional-documento > *, .institucional-cards > *, .sobre-jornada > * { min-width: 0; }
 .institucional-texto h2 { max-width: 25ch; margin-bottom: 20px; font-size: clamp(1.8rem, 2.6vw, 2.5rem); line-height: 1.2; }
 .institucional-texto p { line-height: 1.85; font-size: .94rem; }
-.institucional-texto a:not(.botao), .institucional-card a:not(.botao), .institucional-nota a:not(.botao) { text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.institucional-texto a:not(.botao), .institucional-nota a:not(.botao) { text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .institucional-texto .botao { margin-top: 12px; }
 .institucional-ilustracao { position: relative; margin: 0; padding: 26px; border: 1px solid #d4ddc3; border-radius: 100px 24px 24px 24px; background: #e8eed8; }
 .institucional-ilustracao img { width: 100%; height: auto; max-height: 340px; object-fit: contain; }
@@ -98,11 +78,6 @@
 .faq-item p { margin: 0; font-size: .9rem; line-height: 1.85; }
 @media (hover: hover) { .institucional-card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px #193e300c; } }
 @media (max-width: 940px) {
-    .institucional-hero-grade { gap: 30px; grid-template-columns: minmax(0, 1fr) 200px; }
-    .institucional-emblema { width: 190px; height: 190px; }
-    .emblema-flor { font-size: 9.5rem; }
-    .emblema-miolo { width: 70px; height: 70px; font-size: 2.7rem; }
-    .emblema-legenda { bottom: 13px; font-size: .47rem; }
     .institucional-dupla, .sobre-jornada { gap: 36px; }
     .institucional-documento { grid-template-columns: 205px minmax(0, 1fr); gap: 30px; }
     .institucional-cards { gap: 14px; }
@@ -119,17 +94,9 @@
     .valor-icone { margin-bottom: 20px; }
 }
 @media (max-width: 600px) {
-    .institucional-hero { padding: 23px 0 36px; }
-    .caminho-pagina { margin-bottom: 28px; }
-    .institucional-hero-grade { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    .institucional-emblema { display: none; }
-    .institucional-hero h1 { font-size: clamp(2.3rem, 9.5vw, 3.2rem); }
-    .institucional-hero .sobretitulo { font-size: .64rem; }
-    .institucional-hero-texto > p:last-child { font-size: .87rem; }
-    .institucional-navegacao .container { gap: 7px 20px; padding-block: 12px; }
-    .institucional-navegacao a { font-size: .74rem; }
-    .institucional-navegacao a[aria-current] { padding-inline: 12px; }
-    .institucional-conteudo { padding-top: 36px; padding-bottom: 48px; }
+    .institucional-cabecalho { padding-top: 24px; padding-bottom: 20px; }
+    .caminho-pagina { margin-bottom: 16px; }
+    .institucional-conteudo { padding-top: 12px; padding-bottom: 48px; }
     .institucional-secao { margin-top: 48px; }
     .sobre-jornada { grid-template-columns: 1fr; padding: 32px 0; }
     .jornada-etapas { padding-left: 7px; }
