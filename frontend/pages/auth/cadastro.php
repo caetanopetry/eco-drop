@@ -17,6 +17,7 @@ if ($usuarioLogado !== null) {
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Criar conta — EcoDrop</title>
@@ -70,6 +71,7 @@ if ($usuarioLogado !== null) {
                         <span class="campo-erro-texto" data-erro-campo></span>
                     </div>
 
+                    <p class="campo-ajuda">Antes de criar sua conta, consulte os <a href="<?= Url::escapar('/termos-de-uso/') ?>">Termos de uso</a> e a <a href="<?= Url::escapar('/politica-de-privacidade/') ?>">Política de privacidade</a>.</p>
                     <button type="submit" class="botao botao-primario botao-bloco">Criar conta</button>
                 </form>
 

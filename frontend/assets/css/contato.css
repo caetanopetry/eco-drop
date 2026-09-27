@@ -1,0 +1,107 @@
+/*
+ * EcoDrop — Página de contato. Usa os tokens e componentes institucionais;
+ * este arquivo cobre apenas o que é específico desta página.
+ */
+
+.contato-grade { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 44px; align-items: start; }
+
+/* Canais de contato ------------------------------------------------------------*/
+.contato-canais { display: flex; flex-direction: column; gap: 14px; }
+
+.contato-cartao {
+    display: block;
+    padding: 25px 28px;
+    border: 1px solid #d4ddc8;
+    border-radius: 18px;
+    background: #e9efdf;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+a.contato-cartao:hover { border-color: var(--musgo); transform: translateY(-3px); box-shadow: 0 10px 25px #193e3010; }
+.contato-cartao:nth-child(2) { background: #e1ece5; border-color: #ceded3; }
+.contato-cartao:nth-child(3) { background: #f2e4d7; border-color: #e3d3c2; }
+
+.contato-cartao-topo { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.contato-icone {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: #fffef9b3;
+    color: var(--musgo-escuro);
+}
+.contato-icone svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.contato-seta { width: 18px; height: 18px; stroke: var(--tinta-suave); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s ease; }
+a.contato-cartao:hover .contato-seta { transform: translateX(3px); stroke: var(--musgo); }
+.contato-em-breve { font-size: .7rem; font-weight: 500; color: var(--tinta-suave); border: 1px solid #193e3026; border-radius: 999px; padding: 4px 11px; }
+
+.contato-cartao h2 { font-size: 1.4rem; margin-bottom: 6px; }
+.contato-cartao p { margin-bottom: 8px; font-size: .9rem; color: var(--tinta-suave); }
+.contato-cartao-acao { font-size: .86rem; font-weight: 600; color: var(--musgo); }
+
+.contato-duvidas {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 8px;
+    padding: 18px 4px;
+    border-top: 1px solid var(--linha);
+    color: var(--tinta);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: .93rem;
+}
+.contato-duvidas span { display: block; margin-top: 3px; font-weight: 400; color: var(--musgo); font-size: .88rem; }
+.contato-duvidas:hover span { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Formulário --------------------------------------------------------------------*/
+.contato-painel { position: relative; padding: 38px; border: 1px solid var(--linha); border-radius: 24px; background: var(--superficie); box-shadow: 0 16px 40px #193e3006; }
+.contato-painel::before { content: ''; display: block; width: 45px; height: 5px; margin-bottom: 24px; border-radius: 999px; background: var(--terracota); }
+.contato-painel h2 { margin-bottom: 8px; }
+.contato-introducao { color: var(--tinta-suave); margin-bottom: 24px; }
+.contato-disponibilidade {
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-left: 3px solid var(--aviso, #8a5a17);
+    background: var(--papel);
+    font-size: .9rem;
+    color: var(--tinta);
+}
+
+.contato-formulario fieldset { border: none; padding: 0; margin: 0; }
+.contato-formulario fieldset:disabled :is(input, select, textarea) { background: #f0f0e8; color: #63705f; cursor: not-allowed; }
+.contato-campos-duplos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.contato-formulario .campo { margin-bottom: 18px; }
+.contato-formulario label { display: block; margin-bottom: 6px; font-weight: 600; font-size: .88rem; }
+.contato-formulario input,
+.contato-formulario select,
+.contato-formulario textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-md);
+    font-family: inherit;
+    font-size: .96rem;
+    background: var(--papel);
+    color: var(--tinta);
+}
+.contato-formulario input:focus,
+.contato-formulario select:focus,
+.contato-formulario textarea:focus { outline: 2px solid var(--musgo); outline-offset: 1px; border-color: var(--musgo); }
+.contato-formulario textarea { resize: vertical; min-height: 110px; }
+
+.contato-enviar { display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; }
+.contato-enviar svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.contato-formulario-nota { margin: 14px 0 0; font-size: .85rem; color: var(--tinta-suave); }
+.contato-privacidade { margin: 18px 0 0; font-size: .85rem; color: var(--tinta-suave); }
+.contato-privacidade a { color: var(--musgo); font-weight: 600; }
+
+@media (max-width: 940px) {
+    .contato-grade { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .contato-painel { padding: 28px; }
+}
+@media (max-width: 560px) {
+    .contato-campos-duplos { grid-template-columns: 1fr; gap: 0; }
+    .contato-painel { padding: 22px; }
+    .contato-cartao { padding: 18px; }
+    .contato-duvidas { flex-direction: column; align-items: flex-start; gap: 4px; }
+}

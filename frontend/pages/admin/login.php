@@ -17,6 +17,7 @@ if ($usuarioLogado !== null && $usuarioLogado['papel'] === 'admin') {
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Acesso administrativo — EcoDrop</title>

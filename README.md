@@ -80,7 +80,15 @@ ver `docs/decisoes/pendencias.md` e a seção "Próximos passos" abaixo.
 
 ### Rotas disponíveis nesta fase
 
+As URLs institucionais são encaminhadas pelo `.htaccess` ao controlador
+principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
+
 - `/` — página institucional
+- `/sobre/` — proposta e estágio atual do EcoDrop
+- `/perguntas-frequentes/` — dúvidas sobre a demonstração e a conta
+- `/contato/` — orientações e canal de atendimento
+- `/termos-de-uso/` — condições da versão demonstrativa
+- `/politica-de-privacidade/` — dados, cookies e informações de privacidade
 - `/app/cadastro/` — criar conta
 - `/app/login/` — entrar
 - `/app/inicio/` — dashboard do usuário (protegida)
@@ -89,6 +97,18 @@ ver `docs/decisoes/pendencias.md` e a seção "Próximos passos" abaixo.
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
 
 ## Próximos passos recomendados
+
+As páginas públicas compartilham cabeçalho e rodapé. Para publicar o e-mail de
+atendimento, defina `contato.email` em `backend/config/config.php`, conforme o
+exemplo. O formulário prepara a mensagem no aplicativo de e-mail do visitante,
+que revisa e envia por lá; não há envio pelo servidor. Sem um e-mail válido,
+o formulário fica desabilitado com o aviso “Envio em breve”. Os cartões de
+WhatsApp e Instagram usam `contato.whatsapp` (código do país, DDD e número) e
+`contato.instagram` (nome do perfil); canais não configurados exibem “Em breve”.
+Os textos institucionais
+descrevem a demonstração atual. A identificação do responsável pelo tratamento,
+o canal de privacidade e os prazos de retenção precisam ser completados antes da
+operação pública.
 
 1. FASE 2 — estações, sessão temporária + QR Code, fluxo de descarte, cálculo de pontos.
 2. FASE 3 — histórico, extrato, ranking mensal.

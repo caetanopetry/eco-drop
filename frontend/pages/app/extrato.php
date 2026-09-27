@@ -27,6 +27,7 @@ $paginaAtualApp = 'extrato';
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Extrato - EcoDrop</title>
@@ -76,7 +77,8 @@ $paginaAtualApp = 'extrato';
                     <?php if (empty($descartes)): ?>
                         <p class="estado-vazio">Nenhum descarte registrado.</p>
                     <?php else: ?>
-                        <div class="tabela-wrapper">
+                        <p class="tabela-dica">Deslize a tabela para ver todas as colunas.</p>
+                        <div class="tabela-wrapper" role="region" aria-label="Histórico de descartes, tabela com rolagem horizontal" tabindex="0">
                             <table class="tabela-ecodrop">
                                 <thead><tr><th>Data</th><th>Material</th><th>Quantidade</th><th>Estacao</th><th>Pontos</th></tr></thead>
                                 <tbody>

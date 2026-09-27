@@ -156,19 +156,18 @@
     width: fit-content;
     max-width: 100%;
 }
-.eco-marca__icone {
-    flex-shrink: 0;
-    width: 28px;
-    height: 32px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    color: var(--musgo);
+.eco-marca__imagem {
+    display: block;
+    width: var(--marca-largura, 174px);
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 1;
+    object-fit: contain;
 }
-.eco-marca--clara .eco-marca__icone { color: #b7cf9d; }
-.eco-marca__nome { white-space: nowrap; }
+/* Versão monocromática para contraste em superfícies escuras. */
+.eco-marca--clara .eco-marca__imagem { filter: brightness(0) invert(1); }
+.tela-dividida-editorial .eco-marca { --marca-largura: 216px; }
+.admin-sidebar .eco-marca { --marca-largura: 132px; }
 
 .navbar-marca,
 .marca {
@@ -285,6 +284,8 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
 }
 
 /* Autenticação ------------------------------------------------------- */
+.tabela-dica { display: none; }
+
 .tela-dividida {
     min-height: 100vh;
     display: grid;
@@ -368,7 +369,12 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     .botao {
         min-height: 46px;
         padding: 12px 14px;
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
     }
+
+    .campo input, .campo select, .campo textarea { min-height: 48px; font-size: 16px; }
 
     .botao-bloco {
         width: 100%;
@@ -394,18 +400,20 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     .tela-dividida-formulario { padding: 36px 20px; }
 
     .tabela-wrapper {
-        margin-left: -2px;
-        margin-right: -2px;
+        max-width: 100%;
+        overscroll-behavior-x: contain;
     }
 
     table.tabela-ecodrop {
         min-width: 560px;
     }
+    .tabela-dica { display: block; margin-bottom: 10px; color: var(--tinta-suave); font-size: .8rem; }
 }
 
 @media (max-width: 520px) {
     .tela-dividida-editorial {
-        padding: 22px;
+        padding: 20px;
+        gap: 18px;
     }
 
     .tela-dividida-editorial .frase {
@@ -420,7 +428,12 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
 
     .tela-dividida-formulario .miolo {
         width: 100%;
+        min-width: 0;
     }
+
+    .tela-dividida-editorial .rodape-frase { display: none; }
+    .tela-dividida-editorial .frase { margin: 0; font-size: 1.2rem; }
+    .rodape-autenticacao a { display: inline-flex; align-items: center; min-height: 44px; }
 
     .rodape-autenticacao {
         font-size: .88rem;

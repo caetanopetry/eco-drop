@@ -11,6 +11,7 @@
       <nav class="eco-footer__nav" aria-labelledby="footer-projeto">
         <h2 id="footer-projeto">Conheça o ciclo</h2>
         <ul>
+          <li><a href="<?= Url::escapar('/sobre/') ?>">Sobre o EcoDrop</a></li>
           <li><a href="<?= Url::escapar('/') ?>#como-funciona">Como funciona</a></li>
           <li><a href="<?= Url::escapar('/') ?>#materiais">Materiais recicláveis</a></li>
           <li><a href="<?= Url::escapar('/station/') ?>">Estação demonstrativa <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li>
@@ -23,6 +24,8 @@
           <li><a href="<?= Url::escapar('/app/cadastro/') ?>">Criar minha conta</a></li>
           <li><a href="<?= Url::escapar('/app/login/') ?>">Entrar no EcoDrop</a></li>
           <li><a href="<?= Url::escapar('/app/inicio/') ?>">Meu painel</a></li>
+          <li><a href="<?= Url::escapar('/perguntas-frequentes/') ?>">Perguntas frequentes</a></li>
+          <li><a href="<?= Url::escapar('/contato/') ?>">Contato</a></li>
         </ul>
       </nav>
 
@@ -33,30 +36,28 @@
     </div>
 
     <div class="eco-footer__wordmark" data-footer-wordmark aria-hidden="true">
-      <svg viewBox="0 0 1120 210" focusable="false">
+      <svg viewBox="0 0 1120 300" focusable="false">
         <defs>
-          <linearGradient id="eco-footer-colors" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop class="eco-footer__stop-leaf" offset="0%"/>
-            <stop class="eco-footer__stop-cream" offset="50%"/>
-            <stop class="eco-footer__stop-gold" offset="100%"/>
-          </linearGradient>
-          <radialGradient id="eco-footer-reveal" gradientUnits="userSpaceOnUse" cx="560" cy="105" r="260">
+          <radialGradient id="eco-footer-reveal" gradientUnits="userSpaceOnUse" cx="560" cy="150" r="260">
             <stop offset="0%" stop-color="white"/>
             <stop offset="35%" stop-color="white" stop-opacity=".85"/>
             <stop offset="100%" stop-color="black"/>
           </radialGradient>
-          <mask id="eco-footer-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1120" height="210">
-            <rect width="1120" height="210" fill="url(#eco-footer-reveal)"/>
+          <mask id="eco-footer-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1120" height="300">
+            <rect width="1120" height="300" fill="url(#eco-footer-reveal)"/>
           </mask>
         </defs>
-        <text class="eco-footer__outline" x="560" y="169" text-anchor="middle" textLength="1080" lengthAdjust="spacingAndGlyphs">ECODROP</text>
-        <text class="eco-footer__reveal" x="560" y="169" text-anchor="middle" textLength="1080" lengthAdjust="spacingAndGlyphs" stroke="url(#eco-footer-colors)" mask="url(#eco-footer-mask)">ECODROP</text>
+        <image class="eco-footer__nome-base" href="<?= Url::escapar('/frontend/assets/img/logos/nome.png') ?>" x="0" y="0" width="1120" height="300" preserveAspectRatio="xMidYMid meet"/>
+        <image class="eco-footer__reveal" href="<?= Url::escapar('/frontend/assets/img/logos/nome.png') ?>" x="0" y="0" width="1120" height="300" preserveAspectRatio="xMidYMid meet" mask="url(#eco-footer-mask)"/>
       </svg>
     </div>
 
     <div class="eco-footer__bottom">
       <p>&copy; <?= date('Y') ?> EcoDrop. Um novo ciclo começa com você.</p>
-      <p class="eco-footer__credit">Desenvolvido no programa <span>JEDI · Join.Valle</span></p>
+      <nav class="eco-footer__legal" aria-label="Informações legais">
+        <a href="<?= Url::escapar('/termos-de-uso/') ?>">Termos de uso</a>
+        <a href="<?= Url::escapar('/politica-de-privacidade/') ?>">Política de privacidade</a>
+      </nav>
       <a href="#conteudo">Voltar ao topo <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4m-6 6 6-6 6 6"/></svg></a>
     </div>
   </div>

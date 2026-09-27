@@ -41,7 +41,8 @@ p {
 a { color: var(--musgo); }
 img, svg { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; }
-input, select, textarea { max-width: 100%; }
+input, select, textarea { min-width: 0; max-width: 100%; }
+button, a, summary { -webkit-tap-highlight-color: rgba(47, 107, 79, .15); }
 
 a:focus-visible,
 button:focus-visible,
@@ -101,9 +102,10 @@ textarea:focus-visible,
 
 @media (max-width: 680px) {
     body {
-        font-size: 15px;
-        overflow-x: hidden;
+        font-size: 16px;
     }
+
+    input, select, textarea { font-size: 16px; }
 
     .container {
         padding-left: var(--espaco-4);

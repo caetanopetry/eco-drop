@@ -22,6 +22,15 @@ return [
         'timezone' => 'America/Sao_Paulo',
     ],
 
+    'contato' => [
+        // E-mail público de atendimento. Vazio mantém o formulário indisponível.
+        'email' => '',
+        // Número completo com código do país e DDD, somente dígitos.
+        'whatsapp' => '',
+        // Nome do perfil, sem URL. O @ é opcional.
+        'instagram' => '',
+    ],
+
     'database' => [
         'driver' => 'mysql',
         'host' => '127.0.0.1',

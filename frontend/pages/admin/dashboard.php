@@ -22,6 +22,7 @@ $paginaAtual = 'dashboard';
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard - EcoDrop Admin</title>
@@ -76,7 +77,8 @@ $paginaAtual = 'dashboard';
             <section class="admin-grade">
                 <div class="admin-painel">
                     <h2>Materiais e pontuação</h2>
-                    <div class="tabela-wrapper">
+                    <p class="tabela-dica">Deslize a tabela para ver todas as colunas.</p>
+                    <div class="tabela-wrapper" role="region" aria-label="Materiais e pontuação, tabela com rolagem horizontal" tabindex="0">
                         <table class="tabela-ecodrop">
                             <thead><tr><th>Material</th><th>Minimo</th><th>Pontos/unidade</th></tr></thead>
                             <tbody>
@@ -94,7 +96,8 @@ $paginaAtual = 'dashboard';
 
                 <div class="admin-painel">
                     <h2>Ranking mensal</h2>
-                    <div class="tabela-wrapper">
+                    <p class="tabela-dica">Deslize a tabela para ver todas as colunas.</p>
+                    <div class="tabela-wrapper" role="region" aria-label="Ranking mensal, tabela com rolagem horizontal" tabindex="0">
                         <table class="tabela-ecodrop">
                             <thead><tr><th>#</th><th>Usuario</th><th>Pontos</th></tr></thead>
                             <tbody>
@@ -115,7 +118,8 @@ $paginaAtual = 'dashboard';
 
                 <div class="admin-painel admin-painel-largo">
                     <h2>Recompensas ficticias</h2>
-                    <div class="tabela-wrapper">
+                    <p class="tabela-dica">Deslize a tabela para ver todas as colunas.</p>
+                    <div class="tabela-wrapper" role="region" aria-label="Recompensas, tabela com rolagem horizontal" tabindex="0">
                         <table class="tabela-ecodrop">
                             <thead><tr><th>Recompensa</th><th>Parceiro</th><th>Custo</th><th>Estoque</th></tr></thead>
                             <tbody>

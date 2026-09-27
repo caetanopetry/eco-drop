@@ -154,6 +154,7 @@
     gap: var(--espaco-4);
     align-items: end;
 }
+.station-hero > *, .station-grid-form > *, .station-qr > * { min-width: 0; }
 
 @media (max-width: 900px) {
     .station-topo,
@@ -203,6 +204,9 @@
         padding: 16px;
         border-radius: 10px;
     }
+
+    .station-qr .botao { width: 100%; }
+    .station-form select, .station-grid-form select { text-overflow: ellipsis; }
 
     .station-form select,
     .station-grid-form select,

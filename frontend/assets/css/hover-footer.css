@@ -67,8 +67,7 @@
     line-height: 1;
 }
 
-.eco-footer__logo em { color: #b7cf9d; font-style: normal; }
-.eco-footer__logo > svg { width: 28px; height: 32px; color: #b7cf9d; }
+.eco-footer__logo { --marca-largura: 180px; }
 .eco-footer svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 .eco-footer__nav h2 {
@@ -108,20 +107,9 @@
 }
 
 .eco-footer__wordmark > svg { width: 100%; height: auto; overflow: visible; }
-.eco-footer__wordmark text {
-    font-family: var(--fonte-corpo);
-    font-size: 184px;
-    font-weight: 700;
-    stroke-width: 1;
-    stroke-linejoin: round;
-}
-
-.eco-footer__wordmark .eco-footer__outline { fill: rgba(220, 233, 223, .025); stroke: #a2bea0; stroke-opacity: .22; }
+.eco-footer__nome-base { filter: brightness(0) invert(1); opacity: .07; }
 .eco-footer__reveal { opacity: .2; transition: opacity .35s ease; }
 .eco-footer__wordmark.is-hovered .eco-footer__reveal { opacity: .5; }
-.eco-footer__stop-leaf { stop-color: var(--folha); }
-.eco-footer__stop-cream { stop-color: var(--musgo-claro); }
-.eco-footer__stop-gold { stop-color: var(--solido); }
 
 .eco-footer__bottom {
     position: relative;
@@ -137,6 +125,8 @@
 }
 
 .eco-footer__bottom p { margin: 0; font-size: .7rem; }
+.eco-footer__legal { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.eco-footer__legal a { display: inline-flex; align-items: center; min-height: 44px; font-size: .75rem; }
 .eco-footer__credit span { color: var(--musgo-claro); white-space: nowrap; }
 .eco-footer__bottom > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: .7rem; }
 .eco-footer__bottom > a svg { width: 15px; height: 15px; }
@@ -160,11 +150,16 @@
     .eco-footer__nav a { display: flex; width: 100%; font-size: .875rem; }
     .eco-footer__cta { font-size: .875rem; }
     .eco-footer__wordmark { top: 45%; }
-    .eco-footer__wordmark text { stroke-width: 2; }
     .eco-footer__bottom { align-items: flex-start; flex-direction: column; gap: 4px; padding: 12px 0; }
     .eco-footer__bottom p, .eco-footer__bottom > a { font-size: .75rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .eco-footer *, .eco-footer *::before { transition: none; }
+}
+
+@media (max-width: 380px) {
+    .eco-footer__grid { grid-template-columns: minmax(0, 1fr); }
+    .eco-footer__nav + .eco-footer__nav { padding-top: 16px; border-top: 1px solid var(--footer-line); }
+    .eco-footer__legal { flex-direction: column; gap: 0; }
 }

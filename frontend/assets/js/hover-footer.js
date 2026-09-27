@@ -18,8 +18,8 @@
         window.cancelAnimationFrame(frame);
         frame = 0;
         wordmark.classList.remove('is-hovered');
-        gradient.setAttribute('cx', '560');
-        gradient.setAttribute('cy', '105');
+        gradient.setAttribute('cx', String(svg.viewBox.baseVal.width / 2));
+        gradient.setAttribute('cy', String(svg.viewBox.baseVal.height / 2));
     };
 
     const update = () => {

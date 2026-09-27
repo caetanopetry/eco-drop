@@ -151,6 +151,8 @@
     .admin-sidebar nav li {
         flex: 0 0 auto;
     }
+    .admin-sidebar nav a { min-height: 44px; }
+    .admin-sidebar nav ul { overscroll-behavior-x: contain; }
     .admin-conteudo { padding: 28px 20px; }
     .admin-grade { grid-template-columns: 1fr; }
 }
@@ -172,6 +174,7 @@
         align-items: stretch;
         flex-direction: column;
     }
+    .admin-cabecalho > *, .admin-cabecalho .flex > * { min-width: 0; overflow-wrap: anywhere; }
     .regua-indicadores { grid-template-columns: 1fr; }
     .regua-indicadores .item {
         border-right: 0;
