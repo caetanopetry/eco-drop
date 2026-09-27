@@ -57,15 +57,29 @@
 .documento-texto li { margin-bottom: 10px; line-height: 1.8; font-size: .92rem; }
 
 /* Busca e perguntas: details funciona também sem JavaScript. */
-.faq-busca { max-width: 740px; margin: 0 auto 48px; }
-.faq-busca > label { display: block; margin-bottom: 12px; color: var(--tinta); font-family: var(--fonte-titulo); font-size: 1.5rem; letter-spacing: -.03em; }
-.faq-busca-campo { display: flex; align-items: center; gap: 14px; padding: 8px 18px; border: 1px solid #b5c3a8; border-radius: 14px; background: var(--superficie); }
+.faq-busca { margin: 0 0 36px; }
+.faq-busca > label { display: block; margin-bottom: 8px; color: var(--tinta); font-family: var(--fonte-titulo); font-size: 1.5rem; letter-spacing: -.03em; }
+.faq-busca-ajuda { margin: 0 0 16px; font-size: .86rem; }
+.faq-busca-campo { display: flex; align-items: center; gap: 14px; padding: 10px 18px; border: 1px solid #b5c3a8; border-radius: 14px; background: var(--superficie); transition: border-color .2s, box-shadow .2s; }
+.faq-busca-campo:hover { border-color: var(--musgo); }
 .faq-busca-campo:focus-within { outline: 2px solid var(--musgo); outline-offset: 3px; }
 .faq-busca-campo svg { flex-shrink: 0; width: 22px; height: 22px; fill: none; stroke: var(--musgo); stroke-width: 1.6; stroke-linecap: round; }
 .faq-busca-campo input { width: 100%; min-width: 0; min-height: 44px; border: 0; color: var(--tinta); background: transparent; font-size: 1rem; }
 .faq-busca-campo input:focus-visible { outline: none; }
-.faq-busca-campo button { min-height: 44px; padding: 0 8px; border: 0; border-radius: 6px; color: var(--musgo); background: #e8eed8; font-size: .8rem; cursor: pointer; }
-.faq-contagem { margin: 10px 0 0; min-height: 24px; font-size: .8rem; }
+.faq-busca-campo input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.faq-busca-campo button { flex-shrink: 0; min-height: 44px; padding: 0 12px; border: 0; border-radius: 8px; color: var(--musgo); background: #e8eed8; font-size: .8rem; cursor: pointer; }
+.faq-sugestoes { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; margin-top: 8px; font-size: .8rem; }
+.faq-sugestoes > span { color: var(--tinta-suave); }
+.faq-sugestoes button, .faq-alternar { min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: var(--musgo); font-size: .8rem; font-weight: 500; cursor: pointer; text-underline-offset: 4px; }
+.faq-sugestoes button:hover, .faq-alternar:hover:not(:disabled) { text-decoration: underline; }
+.faq-ferramentas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--linha); }
+.faq-ferramentas .faq-contagem { flex: 1 1 220px; margin: 0; font-size: .8rem; line-height: 1.6; }
+.faq-alternar { flex-shrink: 0; }
+.faq-alternar:disabled { opacity: .5; cursor: default; }
+.faq-vazio { padding: 12px 0 20px; }
+.faq-vazio h2 { font-size: 1.5rem; }
+.faq-item mark[data-faq-destaque] { padding: 0; border-radius: 2px; color: inherit; background: #e4edb8; text-decoration: underline; text-decoration-color: var(--musgo); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.faq-item summary > span { min-width: 0; }
 .faq-grupo + .faq-grupo { margin-top: 38px; }
 .faq-grupo h2 { margin-bottom: 22px; font-size: 1.75rem; }
 .faq-item { margin: 12px 0; border: 1px solid var(--linha); border-radius: 14px; background: var(--superficie); transition: border-color .2s, background .2s; }

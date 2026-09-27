@@ -1,0 +1,73 @@
+/* Entrada e cadastro compartilham o mesmo painel deslizante. */
+.auth-troca {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--papel);
+    --auth-duracao: 750ms;
+    --auth-curva: cubic-bezier(.77, 0, .18, 1);
+}
+
+.auth-formulario {
+    width: 50%;
+    min-height: 100svh;
+    padding: 48px clamp(28px, 5vw, 88px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform var(--auth-duracao) var(--auth-curva);
+}
+
+.auth-conteudo { width: min(100%, 460px); }
+.auth-conteudo[hidden] { display: none; }
+.auth-conteudo h1 { font-size: clamp(2rem, 3vw, 2.7rem); margin-bottom: 12px; }
+.auth-conteudo .subtitulo { margin-bottom: 28px; }
+.auth-conteudo .rodape-autenticacao { text-align: center; }
+.auth-conteudo .rodape-autenticacao a { display: inline-flex; align-items: center; min-height: 44px; }
+.auth-voltar { display: table; margin: 8px auto 0; padding: 10px 0; font-size: .88rem; text-underline-offset: 4px; }
+
+.auth-marca-painel {
+    position: absolute;
+    inset: 0 0 0 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    padding: 48px;
+    background: radial-gradient(ellipse at 25% 75%, #387757 0%, transparent 48%), linear-gradient(135deg, #194a3b, #0c3028);
+    transition: transform var(--auth-duracao) var(--auth-curva);
+}
+.auth-marca-painel::before {
+    content: '';
+    position: absolute;
+    width: 84%;
+    aspect-ratio: 1;
+    border: 1px solid rgb(218 232 163 / 15%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.auth-marca-painel .eco-marca { position: relative; --marca-largura: clamp(230px, 25vw, 420px); }
+.auth-marca-mobile { display: none; }
+.auth-troca[data-modo="cadastro"] .auth-formulario { transform: translateX(100%); }
+.auth-troca[data-modo="cadastro"] .auth-marca-painel { transform: translateX(-100%); }
+
+.auth-troca.auth-animando .auth-conteudo { animation: auth-conteudo-entrar var(--auth-duracao) var(--auth-curva) both; }
+.auth-troca[data-modo="login"] { --auth-deslocamento: -36px; }
+.auth-troca[data-modo="cadastro"] { --auth-deslocamento: 36px; }
+@keyframes auth-conteudo-entrar {
+    0%, 25% { opacity: 0; transform: translateX(var(--auth-deslocamento)); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 800px) {
+    .auth-troca { --auth-duracao: 320ms; }
+    .auth-formulario { width: 100%; padding: 32px 24px; }
+    .auth-troca[data-modo="cadastro"] .auth-formulario { transform: none; }
+    .auth-marca-painel { display: none; }
+    .auth-marca-mobile { display: inline-flex; --marca-largura: 150px; margin-bottom: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-formulario, .auth-marca-painel { transition: none; }
+    .auth-troca.auth-animando .auth-conteudo { animation: none; }
+}
