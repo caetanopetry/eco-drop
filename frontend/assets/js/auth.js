@@ -7,15 +7,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const formularioCadastro = document.querySelector('[data-formulario="cadastro"]');
 
     if (formularioLogin) {
+        configurarVisualizadoresSenha(formularioLogin);
         configurarFormulario(formularioLogin, '/backend/api/auth/login.php');
     }
 
     if (formularioCadastro) {
         const campoCpf = formularioCadastro.querySelector('[name="cpf"]');
         campoCpf?.addEventListener('input', formatarCpf);
+        configurarVisualizadoresSenha(formularioCadastro);
         configurarFormulario(formularioCadastro, '/backend/api/auth/register.php');
     }
 });
+
+function configurarVisualizadoresSenha(formulario) {
+    formulario.querySelectorAll('[data-toggle-senha]').forEach((botao) => {
+        botao.addEventListener('click', () => {
+            const campo = document.getElementById(botao.getAttribute('aria-controls'));
+            if (!campo) return;
+
+            const mostrar = campo.type === 'password';
+            campo.type = mostrar ? 'text' : 'password';
+            botao.dataset.visivel = String(mostrar);
+            botao.setAttribute('aria-label', `${mostrar ? 'Ocultar' : 'Mostrar'} senha`);
+            botao.setAttribute('aria-pressed', String(mostrar));
+            botao.title = `${mostrar ? 'Ocultar' : 'Mostrar'} senha`;
+        });
+    });
+}
 
 function formatarCpf(evento) {
     const campo = evento.currentTarget;

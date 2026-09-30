@@ -33,7 +33,7 @@ final class AuthService
             $campos['nome'] = 'Informe o nome completo.';
         }
 
-        if (!Validator::obrigatorio($email) || !Validator::email($email)) {
+        if (!Validator::obrigatorio($email) || !Validator::email($email) || mb_strlen($email) > 190) {
             $campos['email'] = 'Informe um e-mail válido.';
         }
 

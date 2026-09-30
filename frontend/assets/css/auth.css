@@ -25,6 +25,31 @@
 .auth-conteudo .rodape-autenticacao { text-align: center; }
 .auth-conteudo .rodape-autenticacao a { display: inline-flex; align-items: center; min-height: 44px; }
 .auth-voltar { display: table; margin: 8px auto 0; padding: 10px 0; font-size: .88rem; text-underline-offset: 4px; }
+.campo-senha-controle { position: relative; }
+.campo-senha-controle input { padding-right: 88px; }
+.alternar-senha {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    min-width: 44px;
+    min-height: 40px;
+    padding: 8px;
+    border: 0;
+    border-radius: var(--raio-sm);
+    color: var(--musgo-escuro);
+    background: transparent;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+.alternar-senha svg { display: block; width: 20px; height: 20px; }
+.alternar-senha .icone-olho--aberto { display: none; }
+.alternar-senha[data-visivel="true"] .icone-olho--aberto { display: block; }
+.alternar-senha[data-visivel="true"] .icone-olho--fechado { display: none; }
+.alternar-senha:focus-visible { outline: 2px solid var(--musgo); outline-offset: 1px; }
+.auth-termos { margin: 0 0 var(--espaco-4); }
 
 .auth-marca-painel {
     position: absolute;

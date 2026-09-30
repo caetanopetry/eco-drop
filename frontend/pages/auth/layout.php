@@ -27,7 +27,7 @@ if ($usuarioLogado !== null) {
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/auth.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/auth.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/auth.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/auth.css') ?>-<?= filesize(__DIR__ . '/../../assets/css/auth.css') ?>">
 </head>
 <body>
     <div class="auth-troca" data-auth-troca data-modo="<?= $modoAuth ?>">
@@ -50,7 +50,13 @@ if ($usuarioLogado !== null) {
 
                     <div class="campo" data-campo="senha">
                         <label for="login-senha">Senha</label>
-                        <input type="password" id="login-senha" name="senha" required autocomplete="current-password">
+                        <div class="campo-senha-controle">
+                            <input type="password" id="login-senha" name="senha" required autocomplete="current-password">
+                            <button type="button" class="alternar-senha" data-toggle-senha data-visivel="false" aria-controls="login-senha" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+                                <svg class="icone-olho--aberto" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="icone-olho--fechado" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a13.8 13.8 0 0 1-3.1 3.8M6.2 6.2C3.5 8.1 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 3-.4"/></svg>
+                            </button>
+                        </div>
                         <span class="campo-erro-texto" data-erro-campo></span>
                     </div>
 
@@ -67,7 +73,7 @@ if ($usuarioLogado !== null) {
 
                 <?php $id = 'feedback-cadastro'; include __DIR__ . '/../../components/alerts/alert.php'; ?>
 
-                <form data-formulario="cadastro" novalidate>
+                <form data-formulario="cadastro">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(Csrf::token(), ENT_QUOTES, 'UTF-8') ?>">
 
                     <div class="campo" data-campo="nome">
@@ -78,24 +84,30 @@ if ($usuarioLogado !== null) {
 
                     <div class="campo" data-campo="email">
                         <label for="cadastro-email">E-mail</label>
-                        <input type="email" id="cadastro-email" name="email" required autocomplete="email">
+                        <input type="email" id="cadastro-email" name="email" required maxlength="190" autocomplete="email">
                         <span class="campo-erro-texto" data-erro-campo></span>
                     </div>
 
                     <div class="campo" data-campo="cpf">
                         <label for="cadastro-cpf">CPF</label>
-                        <input type="text" id="cadastro-cpf" name="cpf" required inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
+                        <input type="text" id="cadastro-cpf" name="cpf" required inputmode="numeric" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" title="Informe um CPF no formato 000.000.000-00">
                         <span class="campo-erro-texto" data-erro-campo></span>
                     </div>
 
                     <div class="campo" data-campo="senha">
                         <label for="cadastro-senha">Senha</label>
-                        <input type="password" id="cadastro-senha" name="senha" required minlength="8" autocomplete="new-password">
-                        <span class="campo-ajuda">Mínimo de 8 caracteres.</span>
+                        <div class="campo-senha-controle">
+                            <input type="password" id="cadastro-senha" name="senha" required minlength="8" autocomplete="new-password" aria-describedby="cadastro-senha-ajuda">
+                            <button type="button" class="alternar-senha" data-toggle-senha data-visivel="false" aria-controls="cadastro-senha" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+                                <svg class="icone-olho--aberto" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="icone-olho--fechado" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a13.8 13.8 0 0 1-3.1 3.8M6.2 6.2C3.5 8.1 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 3-.4"/></svg>
+                            </button>
+                        </div>
+                        <span class="campo-ajuda" id="cadastro-senha-ajuda">Mínimo de 8 caracteres.</span>
                         <span class="campo-erro-texto" data-erro-campo></span>
                     </div>
 
-                    <p class="campo-ajuda">Antes de criar sua conta, consulte os <a href="<?= Url::escapar('/termos-de-uso/') ?>">Termos de uso</a> e a <a href="<?= Url::escapar('/politica-de-privacidade/') ?>">Política de privacidade</a>.</p>
+                    <p class="campo-ajuda auth-termos">Consulte a <a href="<?= Url::escapar('/politica-de-privacidade/') ?>" target="_blank" rel="noopener">Política de privacidade</a> para saber como seus dados são tratados e os <a href="<?= Url::escapar('/termos-de-uso/') ?>" target="_blank" rel="noopener">Termos de uso</a>.</p>
                     <button type="submit" class="botao botao-primario botao-bloco">Criar conta</button>
                 </form>
 
@@ -112,7 +124,7 @@ if ($usuarioLogado !== null) {
         window.EcoDropBaseUrl = <?= json_encode(Url::para('/'), JSON_UNESCAPED_SLASHES) ?>;
     </script>
     <script src="<?= Url::escapar('/frontend/assets/js/api.js') ?>"></script>
-    <script src="<?= Url::escapar('/frontend/assets/js/auth.js') ?>"></script>
+    <script src="<?= Url::escapar('/frontend/assets/js/auth.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/auth.js') ?>"></script>
     <script src="<?= Url::escapar('/frontend/assets/js/auth-transicao.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/auth-transicao.js') ?>"></script>
 </body>
 </html>
