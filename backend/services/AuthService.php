@@ -22,7 +22,13 @@ final class AuthService
     /**
      * @return array{sucesso: bool, mensagem?: string, campos?: array<string,string>, usuario?: array}
      */
-    public function registrar(string $nome, string $email, string $cpf, string $senha): array
+    public function registrar(
+        string $nome,
+        string $email,
+        string $cpf,
+        string $senha,
+        ?string $googleSub = null
+    ): array
     {
         $campos = [];
         $nome = Validator::normalizarEspacos($nome);
@@ -43,6 +49,10 @@ final class AuthService
 
         if (!Validator::senhaForteMinima($senha)) {
             $campos['senha'] = 'A senha deve ter no mínimo 8 caracteres.';
+        }
+
+        if ($googleSub !== null && ($googleSub === '' || mb_strlen($googleSub) > 255)) {
+            $campos['google'] = 'Não foi possível validar a identidade Google.';
         }
 
         if (!empty($campos)) {
@@ -70,10 +80,13 @@ final class AuthService
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
         try {
-            $id = $this->usuarios->criar($nome, $email, $cpfLimpo, $senhaHash, 'usuario');
+            $id = $this->usuarios->criar($nome, $email, $cpfLimpo, $senhaHash, 'usuario', $googleSub);
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
-                return ['sucesso' => false, 'mensagem' => 'E-mail ou CPF ja cadastrado.'];
+                $mensagem = $googleSub === null
+                    ? 'E-mail ou CPF ja cadastrado.'
+                    : 'E-mail, CPF ou conta Google ja associados.';
+                return ['sucesso' => false, 'mensagem' => $mensagem];
             }
 
             throw $e;
@@ -88,6 +101,55 @@ final class AuthService
                 'papel' => 'usuario',
             ],
         ];
+    }
+
+    /**
+     * @return array{sucesso: bool, encontrado: bool, mensagem?: string, usuario?: array}
+     */
+    public function autenticarGoogle(string $googleSub): array
+    {
+        $usuario = $this->usuarios->buscarPorGoogleSub($googleSub);
+
+        if ($usuario === null) {
+            return ['sucesso' => false, 'encontrado' => false];
+        }
+
+        if ($usuario['status'] !== 'ativo') {
+            return [
+                'sucesso' => false,
+                'encontrado' => true,
+                'mensagem' => 'Esta conta está inativa. Procure o suporte.',
+            ];
+        }
+
+        return [
+            'sucesso' => true,
+            'encontrado' => true,
+            'usuario' => [
+                'id' => $usuario['id'],
+                'nome' => $usuario['nome'],
+                'email' => $usuario['email'],
+                'papel' => $usuario['papel'],
+            ],
+        ];
+    }
+
+    public function buscarPorEmail(string $email): ?array
+    {
+        return $this->usuarios->buscarPorEmail(Validator::emailNormalizado($email));
+    }
+
+    public function vincularGoogle(int $usuarioId, string $googleSub): bool
+    {
+        try {
+            return $this->usuarios->vincularGoogle($usuarioId, $googleSub);
+        } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                return false;
+            }
+
+            throw $e;
+        }
     }
 
     /**

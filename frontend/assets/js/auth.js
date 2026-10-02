@@ -5,6 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const formularioLogin = document.querySelector('[data-formulario="login"]');
     const formularioCadastro = document.querySelector('[data-formulario="cadastro"]');
+    const formularioGoogle = document.querySelector('[data-formulario="google-completar"]');
 
     if (formularioLogin) {
         configurarVisualizadoresSenha(formularioLogin);
@@ -16,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
         campoCpf?.addEventListener('input', formatarCpf);
         configurarVisualizadoresSenha(formularioCadastro);
         configurarFormulario(formularioCadastro, '/backend/api/auth/register.php');
+    }
+
+    if (formularioGoogle) {
+        const campoCpf = formularioGoogle.querySelector('[name="cpf"]');
+        campoCpf?.addEventListener('input', formatarCpf);
+        configurarVisualizadoresSenha(formularioGoogle);
+        configurarFormulario(formularioGoogle, '/backend/api/auth/google-completar.php');
     }
 });
 

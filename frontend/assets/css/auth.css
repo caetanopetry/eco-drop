@@ -25,6 +25,8 @@
 .auth-conteudo .rodape-autenticacao { text-align: center; }
 .auth-conteudo .rodape-autenticacao a { display: inline-flex; align-items: center; min-height: 44px; }
 .auth-voltar { display: table; margin: 8px auto 0; padding: 10px 0; font-size: .88rem; text-underline-offset: 4px; }
+.auth-google { margin-top: var(--espaco-3); }
+.auth-google__icone { width: 20px; height: 20px; flex: 0 0 20px; }
 .campo-senha-controle { position: relative; }
 .campo-senha-controle input { padding-right: 88px; }
 .alternar-senha {

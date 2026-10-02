@@ -8,6 +8,12 @@ require_once __DIR__ . '/../../../backend/core/Url.php';
 
 Auth::iniciarSessao();
 
+$erroGoogle = null;
+if ($modoAuth === 'login' && isset($_SESSION['google_oauth_erro'])) {
+    $erroGoogle = (string) $_SESSION['google_oauth_erro'];
+    unset($_SESSION['google_oauth_erro']);
+}
+
 $usuarioLogado = Auth::usuarioLogado();
 if ($usuarioLogado !== null) {
     header('Location: ' . ($usuarioLogado['papel'] === 'admin' ? Url::para('/admin/dashboard/') : Url::para('/app/inicio/')));
@@ -38,6 +44,11 @@ if ($usuarioLogado !== null) {
                 <p class="subtitulo texto-suave">Acompanhe seus pontos e recompensas.</p>
 
                 <?php $id = 'feedback-login'; include __DIR__ . '/../../components/alerts/alert.php'; ?>
+                <?php if ($erroGoogle !== null): ?>
+                    <div class="alerta alerta-erro" role="alert">
+                        <?= htmlspecialchars($erroGoogle, ENT_QUOTES, 'UTF-8') ?>
+                    </div>
+                <?php endif; ?>
 
                 <form data-formulario="login" novalidate>
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(Csrf::token(), ENT_QUOTES, 'UTF-8') ?>">
@@ -62,6 +73,16 @@ if ($usuarioLogado !== null) {
 
                     <button type="submit" class="botao botao-primario botao-bloco">Entrar</button>
                 </form>
+
+                <a class="botao botao-secundario botao-bloco auth-google" href="<?= Url::escapar('/auth/google') ?>">
+                    <svg class="auth-google__icone" aria-hidden="true" viewBox="0 0 48 48" focusable="false">
+                        <path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11c-.5 2.5-2 4.6-4.2 6l6.8 5.3c4-3.7 6-9.1 6-15Z"/>
+                        <path fill="#34A853" d="M24 44c5.5 0 10.2-1.8 13.6-4.9l-6.8-5.3c-1.8 1.2-4.1 2-6.8 2-5.2 0-9.6-3.5-11.2-8.2l-7 5.4C7.7 39.6 15.3 44 24 44Z"/>
+                        <path fill="#FBBC05" d="M12.8 27.6c-.4-1.1-.7-2.3-.7-3.6s.2-2.5.7-3.6l-7-5.4C4.6 17.5 4 20.6 4 24s.6 6.5 1.8 9l7-5.4Z"/>
+                        <path fill="#EA4335" d="M24 12.6c3 0 5.7 1 7.8 3l5.9-5.9C34.2 6.2 29.4 4 24 4 15.3 4 7.7 8.4 5.8 15l7 5.4c1.6-4.7 6-7.8 11.2-7.8Z"/>
+                    </svg>
+                    <span>Entrar com Google</span>
+                </a>
 
                 <p class="rodape-autenticacao">Ainda não tem conta? <a data-auth-modo="cadastro" href="<?= Url::escapar('/app/cadastro/') ?>">Criar conta</a></p>
 
@@ -110,6 +131,16 @@ if ($usuarioLogado !== null) {
                     <p class="campo-ajuda auth-termos">Consulte a <a href="<?= Url::escapar('/politica-de-privacidade/') ?>" target="_blank" rel="noopener">Política de privacidade</a> para saber como seus dados são tratados e os <a href="<?= Url::escapar('/termos-de-uso/') ?>" target="_blank" rel="noopener">Termos de uso</a>.</p>
                     <button type="submit" class="botao botao-primario botao-bloco">Criar conta</button>
                 </form>
+
+                <a class="botao botao-secundario botao-bloco auth-google" href="<?= Url::escapar('/auth/google') ?>">
+                    <svg class="auth-google__icone" aria-hidden="true" viewBox="0 0 48 48" focusable="false">
+                        <path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11c-.5 2.5-2 4.6-4.2 6l6.8 5.3c4-3.7 6-9.1 6-15Z"/>
+                        <path fill="#34A853" d="M24 44c5.5 0 10.2-1.8 13.6-4.9l-6.8-5.3c-1.8 1.2-4.1 2-6.8 2-5.2 0-9.6-3.5-11.2-8.2l-7 5.4C7.7 39.6 15.3 44 24 44Z"/>
+                        <path fill="#FBBC05" d="M12.8 27.6c-.4-1.1-.7-2.3-.7-3.6s.2-2.5.7-3.6l-7-5.4C4.6 17.5 4 20.6 4 24s.6 6.5 1.8 9l7-5.4Z"/>
+                        <path fill="#EA4335" d="M24 12.6c3 0 5.7 1 7.8 3l5.9-5.9C34.2 6.2 29.4 4 24 4 15.3 4 7.7 8.4 5.8 15l7 5.4c1.6-4.7 6-7.8 11.2-7.8Z"/>
+                    </svg>
+                    <span>Entrar com Google</span>
+                </a>
 
                 <p class="rodape-autenticacao">Já tem conta? <a data-auth-modo="login" href="<?= Url::escapar('/app/login/') ?>">Entrar</a></p>
 

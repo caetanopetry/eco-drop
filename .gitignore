@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+vendor/
+composer.lock
+google-*.json
+**/google-*.json
+**/*oauth*.json
+client_secret.json
+**/client_secret.json
+credentials.json
+**/credentials.json
+cookiejar.txt
+**/cookiejar.txt
+*.log
+*.tmp
+*.temp

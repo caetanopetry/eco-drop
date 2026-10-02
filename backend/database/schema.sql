@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email           VARCHAR(190)        NOT NULL,
     cpf             CHAR(11)            NOT NULL,
     senha_hash      VARCHAR(255)        NOT NULL,
+    google_sub      VARCHAR(255)        NULL,
     -- 'usuario' (AT01) ou 'admin' (AT02). Sem tabela separada de administradores:
     -- decisão registrada em docs/decisoes/arquitetura-tecnica.md.
     papel           ENUM('usuario', 'admin') NOT NULL DEFAULT 'usuario',
@@ -42,7 +43,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     criado_em       DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em   DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE KEY uq_usuarios_email (email),
-    UNIQUE KEY uq_usuarios_cpf (cpf)
+    UNIQUE KEY uq_usuarios_cpf (cpf),
+    UNIQUE KEY uq_usuarios_google_sub (google_sub)
 ) ENGINE = InnoDB;
 
 -- RF005 - Recuperação de acesso. Fluxo/canal detalhado é PENDENTE (docs/casos-de-uso UC003);
