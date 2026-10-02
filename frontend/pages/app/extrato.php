@@ -20,8 +20,6 @@ $repo->prepararDemo();
 $saldo = $repo->saldoDoUsuario((int) $usuario['id']);
 $descartes = $repo->descartesDoUsuario((int) $usuario['id']);
 $extrato = $repo->extratoDoUsuario((int) $usuario['id']);
-$primeiroNome = explode(' ', $usuario['nome'])[0];
-$iniciais = strtoupper(substr($primeiroNome, 0, 1));
 $paginaAtualApp = 'extrato';
 ?>
 <!doctype html>
@@ -37,7 +35,8 @@ $paginaAtualApp = 'extrato';
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/app.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/app.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/app.css') ?>">
+    <script src="<?= Url::escapar('/frontend/assets/js/conta.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/conta.js') ?>" defer></script>
 </head>
 <body>
     <div class="app-shell">
@@ -49,10 +48,7 @@ $paginaAtualApp = 'extrato';
                     <h1>Extrato</h1>
                     <p>Movimentacoes de pontos e historico de descartes.</p>
                 </div>
-                <div class="perfil-pill">
-                    <span><?= htmlspecialchars($iniciais, ENT_QUOTES, 'UTF-8') ?></span>
-                    <strong><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></strong>
-                </div>
+                <?php include __DIR__ . '/../../components/app/perfil.php'; ?>
             </div>
 
             <section class="pagina-cabecalho">

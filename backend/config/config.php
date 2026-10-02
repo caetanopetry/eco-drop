@@ -19,8 +19,8 @@ return [
 
     'database' => [
         'driver' => 'mysql',
-        'host' => '127.0.0.1',
-        'port' => '3307',
+        'host' => 'localhost',
+        'port' => '3306',
         'database' => 'ecodrop',
         'usuario' => 'root',
         'senha' => '',

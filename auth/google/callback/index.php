@@ -48,6 +48,7 @@ try {
     $googleSub = trim((string) ($claims['sub'] ?? ''));
     $emailGoogle = mb_strtolower(trim((string) ($claims['email'] ?? '')));
     $nomeGoogle = trim((string) ($claims['name'] ?? ''));
+    $fotoGoogle = isset($claims['picture']) && is_string($claims['picture']) ? $claims['picture'] : null;
     $emailVerificado = ($claims['email_verified'] ?? false) === true;
 
     if (
@@ -66,6 +67,7 @@ try {
     $resultadoGoogle = $authService->autenticarGoogle($googleSub);
 
     if ($resultadoGoogle['sucesso']) {
+        (new UsuarioRepository())->salvarFotoGoogle((int) $resultadoGoogle['usuario']['id'], $fotoGoogle);
         unset($_SESSION['google_onboarding'], $_SESSION['google_user']);
         Auth::autenticar($resultadoGoogle['usuario']);
         $destino = $resultadoGoogle['usuario']['papel'] === 'admin'
@@ -87,6 +89,7 @@ try {
     $_SESSION['google_onboarding'] = [
         'google_sub' => $googleSub,
         'nome' => $nomeGoogle,
+        'foto_google' => $fotoGoogle,
         'email' => $emailGoogle,
         'email_verified' => true,
         'criado_em' => time(),

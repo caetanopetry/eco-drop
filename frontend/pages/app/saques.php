@@ -35,8 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $saldo = $repo->saldoDoUsuario((int) $usuario['id']);
 $recompensas = $repo->recompensasAtivas();
 $vouchers = $repo->vouchersDoUsuario((int) $usuario['id']);
-$primeiroNome = explode(' ', $usuario['nome'])[0];
-$iniciais = strtoupper(substr($primeiroNome, 0, 1));
 $paginaAtualApp = 'saques';
 ?>
 <!doctype html>
@@ -52,7 +50,8 @@ $paginaAtualApp = 'saques';
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/app.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/app.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/app.css') ?>">
+    <script src="<?= Url::escapar('/frontend/assets/js/conta.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/conta.js') ?>" defer></script>
 </head>
 <body>
     <div class="app-shell">
@@ -64,10 +63,7 @@ $paginaAtualApp = 'saques';
                     <h1>Saques</h1>
                     <p>Troque pontos por recompensas e acompanhe seus vouchers.</p>
                 </div>
-                <div class="perfil-pill">
-                    <span><?= htmlspecialchars($iniciais, ENT_QUOTES, 'UTF-8') ?></span>
-                    <strong><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></strong>
-                </div>
+                <?php include __DIR__ . '/../../components/app/perfil.php'; ?>
             </div>
 
             <?php if ($mensagem !== null): ?>
