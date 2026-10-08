@@ -65,7 +65,7 @@ servidor via `expira_em`, nunca confiando em um timestamp vindo do cliente.
 | Tabela | RFs/RNs principais |
 | --- | --- |
 | `usuarios` | RF001-RF005, RN014, RN015, RNF002 |
-| `recuperacoes_acesso` | RF005 (fluxo detalhado PENDENTE) |
+| `recuperacoes_acesso` | RF005 (hash do token, validade e utilização única) |
 | `estacoes` | RF006-RF009, RF045 |
 | `sessoes_estacao` | RF010-RF014, RN018-RN020, RNF008 |
 | `materiais` | RN001-RN008 |

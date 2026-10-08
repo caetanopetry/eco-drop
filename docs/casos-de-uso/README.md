@@ -45,13 +45,13 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | Ator principal | AT01 — Usuário |
 | Atores secundários | Sistema |
 | Pré-condições | Conta cadastrada. |
-| Pós-condições | Solicitação de recuperação é tratada pelo mecanismo definido pelo sistema. |
-| Fluxo principal | 1. Usuário solicita recuperação. 2. Sistema inicia o mecanismo de recuperação. |
+| Pós-condições | Um link de redefinição de uso único é enviado ao e-mail cadastrado, quando houver conta ativa. |
+| Fluxo principal | 1. Usuário informa o e-mail. 2. Sistema sempre apresenta uma resposta que não revela se a conta existe. 3. Para uma conta ativa, o sistema armazena o hash de um token temporário e envia o link por e-mail. 4. O usuário define uma nova senha. |
 | Fluxos alternativos | — |
 | Exceções | Dados insuficientes ou não reconhecidos impedem a conclusão da solicitação. |
 | Regras | — |
 | RFs | RF005 |
-| Observações | Canal, validações e etapas de recuperação estão PENDENTES. |
+| Observações | O link expira em 60 minutos; o token é invalidado após a redefinição. A senha é armazenada com `password_hash()`. |
 
 ## UC004 — Consultar estações
 

@@ -14,6 +14,11 @@ if ($modoAuth === 'login' && isset($_SESSION['google_oauth_erro'])) {
     unset($_SESSION['google_oauth_erro']);
 }
 
+$feedbackLogin = $modoAuth === 'login' ? ($_SESSION['feedback_login'] ?? null) : null;
+if ($modoAuth === 'login') {
+    unset($_SESSION['feedback_login']);
+}
+
 $usuarioLogado = Auth::usuarioLogado();
 if ($usuarioLogado !== null) {
     header('Location: ' . ($usuarioLogado['papel'] === 'admin' ? Url::para('/admin/dashboard/') : Url::para('/app/inicio/')));
@@ -43,6 +48,11 @@ if ($usuarioLogado !== null) {
                 <h1 tabindex="-1">Entrar</h1>
                 <p class="subtitulo texto-suave">Acompanhe seus pontos e recompensas.</p>
 
+                <?php if (is_array($feedbackLogin)): ?>
+                    <div class="alerta alerta-<?= htmlspecialchars((string) $feedbackLogin['tipo'], ENT_QUOTES, 'UTF-8') ?>" role="status">
+                        <?= htmlspecialchars((string) $feedbackLogin['mensagem'], ENT_QUOTES, 'UTF-8') ?>
+                    </div>
+                <?php endif; ?>
                 <?php $id = 'feedback-login'; include __DIR__ . '/../../components/alerts/alert.php'; ?>
                 <?php if ($erroGoogle !== null): ?>
                     <div class="alerta alerta-erro" role="alert">
@@ -71,6 +81,7 @@ if ($usuarioLogado !== null) {
                         <span class="campo-erro-texto" data-erro-campo></span>
                     </div>
 
+                    <p class="auth-esqueci-senha"><a href="<?= Url::escapar('/app/esqueci-senha/') ?>">Esqueci minha senha</a></p>
                     <button type="submit" class="botao botao-primario botao-bloco">Entrar</button>
                 </form>
 

@@ -12,19 +12,9 @@ declare(strict_types=1);
 
 return [
     'app' => [
-        // URL base da aplicação no XAMPP. Ajuste conforme a pasta do projeto.
-        'url_base' => 'http://localhost/EcoDrop',
+        // URL base da aplicação no ambiente local de teste.
+        'url_base' => 'http://localhost:9999/EcoDrop',
         'timezone' => 'America/Sao_Paulo',
-    ],
-
-    'database' => [
-        'driver' => 'mysql',
-        'host' => '127.0.0.1',
-        'port' => '3307',
-        'database' => 'ecodrop',
-        'usuario' => 'root',
-        'senha' => '',
-        'charset' => 'utf8mb4',
     ],
 
     'sessao' => [

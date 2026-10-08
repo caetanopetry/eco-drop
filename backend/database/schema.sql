@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     UNIQUE KEY uq_usuarios_google_sub (google_sub)
 ) ENGINE = InnoDB;
 
--- RF005 - Recuperação de acesso. Fluxo/canal detalhado é PENDENTE (docs/casos-de-uso UC003);
--- estrutura mínima de token deixada pronta para quando o mecanismo for definido.
+-- RF005 - Recuperação de acesso. O token aleatório é armazenado somente como hash;
+-- expiração e utilização são verificadas pelo servidor antes de redefinir a senha.
 CREATE TABLE IF NOT EXISTS recuperacoes_acesso (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     usuario_id      INT UNSIGNED        NOT NULL,
@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS recuperacoes_acesso (
     utilizado_em    DATETIME            NULL,
     criado_em       DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_recuperacao_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE,
+    UNIQUE KEY uq_recuperacao_token_hash (token_hash),
     KEY idx_recuperacao_usuario (usuario_id)
 ) ENGINE = InnoDB;
 

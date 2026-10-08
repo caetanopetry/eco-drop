@@ -18,6 +18,10 @@
     align-items: center;
 }
 
+.auth-recuperacao .auth-formulario { transform: none !important; }
+.auth-esqueci-senha { margin: -8px 0 var(--espaco-4); text-align: right; font-size: .88rem; }
+.auth-esqueci-senha a { text-underline-offset: 3px; }
+
 .auth-conteudo { width: 100%; grid-area: 1 / 1; }
 .auth-conteudo[hidden] { display: none; }
 .auth-conteudo h1 { font-size: clamp(2rem, 3vw, 2.7rem); margin-bottom: 12px; }
