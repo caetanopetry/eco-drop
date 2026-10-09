@@ -64,6 +64,11 @@ ver `docs/decisoes/pendencias.md` e a seção "Próximos passos" abaixo.
    execute, nesta ordem:
    - `backend/database/schema.sql`
    - `backend/database/seed.sql`
+   Para bancos já existentes, não execute novamente o `schema.sql`: aplique,
+   uma única vez e em ordem cronológica, cada migração ainda pendente em
+   `backend/database/migrations/`. Em particular, a migração
+   `20261002_add_fotos_to_usuarios.sql` adiciona as colunas de fotos usadas
+   pelo perfil e pelos fluxos de login.
 3. Instale as dependências na raiz do projeto com `composer install`.
    O carregamento do `.env` depende de `vlucas/phpdotenv`, instalado em `vendor/`.
    Se o Composer informar que falta suporte a ZIP, habilite `extension=zip` no
