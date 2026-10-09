@@ -77,6 +77,7 @@ if ($acao === 'cadastrar') {
         );
     }
 
+    (new UsuarioRepository())->salvarFotoGoogle((int) $resultado['usuario']['id'], $pendente['foto_google'] ?? null);
     unset($_SESSION['google_onboarding']);
     Auth::autenticar($resultado['usuario']);
 
@@ -104,6 +105,7 @@ if ($acao === 'vincular') {
         Response::erro('Esta conta Google já está vinculada a outra conta EcoDrop.', 409);
     }
 
+    (new UsuarioRepository())->salvarFotoGoogle((int) $resultado['usuario']['id'], $pendente['foto_google'] ?? null);
     unset($_SESSION['google_onboarding']);
     Auth::autenticar($resultado['usuario']);
 

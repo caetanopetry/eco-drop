@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     cpf             CHAR(11)            NOT NULL,
     senha_hash      VARCHAR(255)        NOT NULL,
     google_sub      VARCHAR(255)        NULL,
+    foto_google     VARCHAR(2048)       NULL,
+    foto_personalizada MEDIUMTEXT       NULL,
     -- 'usuario' (AT01) ou 'admin' (AT02). Sem tabela separada de administradores:
     -- decisão registrada em docs/decisoes/arquitetura-tecnica.md.
     papel           ENUM('usuario', 'admin') NOT NULL DEFAULT 'usuario',

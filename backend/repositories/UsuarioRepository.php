@@ -10,6 +10,34 @@ require_once __DIR__ . '/../core/Database.php';
  */
 final class UsuarioRepository
 {
+    public function buscarPerfil(int $usuarioId): ?array
+    {
+        $stmt = Database::conexao()->prepare(
+            'SELECT id, nome, email, cpf, papel, status, google_sub, criado_em,
+                    foto_google, foto_personalizada FROM usuarios WHERE id = :id LIMIT 1'
+        );
+        $stmt->execute(['id' => $usuarioId]);
+        return $stmt->fetch() ?: null;
+    }
+
+    public function salvarFotoGoogle(int $usuarioId, ?string $foto): void
+    {
+        // Somente URLs HTTPS vindas do perfil Google verificado.
+        if ($foto === null || strlen($foto) > 2048
+            || filter_var($foto, FILTER_VALIDATE_URL) === false
+            || parse_url($foto, PHP_URL_SCHEME) !== 'https') {
+            return;
+        }
+        $stmt = Database::conexao()->prepare('UPDATE usuarios SET foto_google = :foto WHERE id = :id');
+        $stmt->execute(['foto' => $foto, 'id' => $usuarioId]);
+    }
+
+    public function salvarFotoPersonalizada(int $usuarioId, string $foto): void
+    {
+        $stmt = Database::conexao()->prepare('UPDATE usuarios SET foto_personalizada = :foto WHERE id = :id');
+        $stmt->execute(['foto' => $foto, 'id' => $usuarioId]);
+    }
+
     public function buscarPorEmail(string $email): ?array
     {
         $stmt = Database::conexao()->prepare(
