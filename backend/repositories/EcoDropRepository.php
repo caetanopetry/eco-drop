@@ -148,7 +148,7 @@ final class EcoDropRepository
         return $stmt->fetchAll();
     }
 
-    public function rankingMensal(): array
+    public function rankingMensal(bool $limitar = true): array
     {
         return Database::conexao()
             ->query(
@@ -162,15 +162,14 @@ final class EcoDropRepository
                     AND MONTH(mp.criado_em) = MONTH(CURRENT_DATE())
                  WHERE u.papel = 'usuario'
                  GROUP BY u.id, u.nome
-                 ORDER BY pontos_mes DESC, u.nome
-                 LIMIT 10"
+                 ORDER BY pontos_mes DESC, u.nome, u.id " . ($limitar ? 'LIMIT 10' : '')
             )
             ->fetchAll();
     }
 
     public function posicaoUsuarioNoMes(int $usuarioId): ?int
     {
-        foreach ($this->rankingMensal() as $indice => $linha) {
+        foreach ($this->rankingMensal(false) as $indice => $linha) {
             if ((int) $linha['usuario_id'] === $usuarioId) {
                 return $indice + 1;
             }
@@ -267,13 +266,17 @@ final class EcoDropRepository
                 return ['sucesso' => false, 'mensagem' => 'Material invalido.'];
             }
 
-            if ($quantidade <= 0) {
-                return ['sucesso' => false, 'mensagem' => 'Informe uma quantidade maior que zero.'];
+            if (!is_finite($quantidade) || $quantidade <= 0 || $quantidade > 9999999.999) {
+                return ['sucesso' => false, 'mensagem' => 'Informe uma quantidade válida maior que zero.'];
             }
 
             $quantidadeValida = $quantidade >= (float) $material['quantidade_minima'];
             $pontosPorUnidade = (float) ($material['pontos_por_unidade'] ?? 0);
-            $pontos = $quantidadeValida ? (int) round($quantidade * $pontosPorUnidade) : 0;
+            $pontosCalculados = $quantidadeValida ? round($quantidade * $pontosPorUnidade) : 0;
+            if (!is_finite((float) $pontosCalculados) || $pontosCalculados < 0 || $pontosCalculados > 4294967295) {
+                return ['sucesso' => false, 'mensagem' => 'A quantidade excede o limite de pontuação por descarte.'];
+            }
+            $pontos = (int) $pontosCalculados;
             $status = $quantidadeValida ? 'valido' : 'invalido';
 
             $stmt = $pdo->prepare(
@@ -313,6 +316,12 @@ final class EcoDropRepository
     public function resgatarRecompensa(int $usuarioId, int $recompensaId): array
     {
         return Database::transacao(function (PDO $pdo) use ($usuarioId, $recompensaId): array {
+            // Serializa resgates da mesma carteira, inclusive de recompensas diferentes.
+            $bloquearUsuario = $pdo->prepare("SELECT id FROM usuarios WHERE id = :id AND status = 'ativo' FOR UPDATE");
+            $bloquearUsuario->execute(['id' => $usuarioId]);
+            if ($bloquearUsuario->fetch() === false) {
+                return ['sucesso' => false, 'mensagem' => 'Conta indisponivel para resgate.'];
+            }
             $stmt = $pdo->prepare("SELECT * FROM recompensas WHERE id = :id AND status = 'ativo' FOR UPDATE");
             $stmt->execute(['id' => $recompensaId]);
             $recompensa = $stmt->fetch();

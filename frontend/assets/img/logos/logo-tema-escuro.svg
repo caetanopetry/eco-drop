@@ -1,0 +1,7 @@
+<svg class="eco-marca__imagem eco-marca__escura" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" role="img" aria-label="EcoDrop" focusable="false">
+  <g fill="none" stroke="var(--accent, #4ade80)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M71 153C18 117 19 77 71 30c51 47 53 87 0 123Z"/>
+    <path d="M71 139V75m0 37-22-20m22 4 22-20"/>
+  </g>
+  <text x="130" y="133" font-family="Georgia, serif" font-size="100" font-weight="600" fill="var(--text, #e7f2ec)" stroke="none">Eco<tspan fill="var(--accent, #4ade80)">Drop</tspan></text>
+</svg>

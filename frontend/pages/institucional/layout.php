@@ -24,6 +24,7 @@ $escapar = static fn (string $texto): string => htmlspecialchars($texto, ENT_QUO
 <head>
   <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
   <meta charset="utf-8">
+    <?php require __DIR__ . '/../../components/theme/head.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173f32">
   <meta name="description" content="<?= $escapar($descricao) ?>">
@@ -32,11 +33,12 @@ $escapar = static fn (string $texto): string => htmlspecialchars($texto, ENT_QUO
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <?php foreach (['variables', 'global', 'components', 'site', 'institucional', 'hover-footer'] as $estilo): ?>
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/' . $estilo . '.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/' . $estilo . '.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/' . $estilo . '.css') ?>">
   <?php endforeach; ?>
-  <?php if ($paginaInstitucional === 'contato'): ?><link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/contato.css') ?>"><?php endif; ?>
+  <?php if ($paginaInstitucional === 'contato'): ?><link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/contato.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/contato.css') ?>"><?php endif; ?>
   <script src="<?= Url::escapar('/frontend/assets/js/hover-footer.js') ?>" defer></script>
   <script src="<?= Url::escapar('/frontend/assets/js/site.js') ?>" defer></script>
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
 <body class="pagina-site">
   <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>

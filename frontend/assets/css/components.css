@@ -23,8 +23,8 @@
 }
 
 .botao-primario {
-    color: #fff;
-    background: var(--musgo-escuro);
+    color: var(--text-inverse);
+    background: var(--primary-bg);
 }
 .botao-primario:hover:not(:disabled) { background: var(--musgo); }
 
@@ -60,7 +60,7 @@
     border: 1px solid var(--linha);
     border-radius: var(--raio-sm);
     color: var(--tinta);
-    background: #fffef9;
+    background: var(--input-surface);
     font-size: 16px;
 }
 
@@ -68,7 +68,7 @@
 .campo select:focus,
 .campo textarea:focus {
     border-color: var(--musgo);
-    box-shadow: 0 0 0 3px rgba(47, 107, 79, .12);
+    box-shadow: 0 0 0 3px var(--focus-halo);
 }
 
 .campo input::placeholder { color: var(--tinta-fraca); }
@@ -185,24 +185,24 @@ table.tabela-ecodrop tr:last-child td { border-bottom: 0; }
     justify-content: space-between;
     min-height: 100vh;
     padding: 42px;
-    color: #fff;
-    background: var(--musgo-escuro);
+    color: var(--text-inverse);
+    background: var(--brand-panel-bg);
 }
 
 .tela-dividida-editorial .marca {
-    color: #fff;
+    color: var(--text-inverse);
 }
 
 .tela-dividida-editorial .frase {
     max-width: 24ch;
-    color: #fff;
+    color: var(--text-inverse);
     font-family: var(--fonte-titulo);
     font-size: clamp(1.8rem, 3vw, 2.8rem);
     line-height: 1.16;
 }
 
 .tela-dividida-editorial .rodape-frase {
-    color: rgba(255,255,255,.7);
+    color: var(--panel-text-muted);
     font-size: .78rem;
     font-weight: 800;
     letter-spacing: .08em;

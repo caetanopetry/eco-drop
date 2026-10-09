@@ -1,7 +1,7 @@
 .pagina-station-demo {
     min-height: 100vh;
-    color: #fff;
-    background: var(--musgo-escuro);
+    color: var(--text-inverse);
+    background: var(--brand-panel-bg);
 }
 
 .station-shell {
@@ -19,7 +19,7 @@
 }
 
 .station-marca {
-    color: #fff;
+    color: var(--text-inverse);
     font-family: var(--fonte-titulo);
     font-size: 1.45rem;
     font-weight: 600;
@@ -36,7 +36,7 @@
 
 .station-etiqueta {
     margin: 0 0 var(--espaco-3);
-    color: #e5cb84 !important;
+    color: var(--station-label) !important;
     font-size: .78rem;
     font-weight: 800;
     letter-spacing: .08em;
@@ -45,12 +45,12 @@
 
 .station-hero h1 {
     max-width: 11ch;
-    color: #fff;
+    color: var(--text-inverse);
     font-size: clamp(2.8rem, 7vw, 5.4rem);
 }
 
 .station-hero p {
-    color: #d6e1d4;
+    color: var(--station-text-muted);
     font-size: 1.04rem;
 }
 
@@ -85,7 +85,7 @@
     border: 1px solid var(--linha);
     border-radius: var(--raio-sm);
     color: var(--tinta);
-    background: #fffef9;
+    background: var(--input-surface);
     font-size: 1.05rem;
 }
 
@@ -94,10 +94,10 @@
     width: 100%;
     border: 0;
     color: var(--musgo-escuro);
-    background: #e2bd68;
+    background: var(--station-action);
     font-size: 1.05rem;
 }
-.station-botao-principal:hover:not(:disabled) { background: #eccb7e; }
+.station-botao-principal:hover:not(:disabled) { background: var(--station-action-hover); }
 
 .pagina-station-demo .alerta {
     margin: var(--espaco-5) 0;
@@ -133,10 +133,10 @@
     padding: 12px;
     border: 1px solid var(--linha);
     border-radius: var(--raio-md);
-    background: #fff;
+    background: var(--surface-plain);
 }
-.qr-falso span { border-radius: 3px; background: #eef1e8; }
-.qr-falso span.preto { background: var(--musgo-escuro); }
+.qr-falso span { border-radius: 3px; background: var(--qr-cell); }
+.qr-falso span.preto { background: var(--brand-panel-bg); }
 
 .station-operacao {
     display: grid;

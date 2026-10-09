@@ -64,14 +64,14 @@
     place-items: center;
     overflow: hidden;
     padding: 48px;
-    background: radial-gradient(ellipse at 25% 75%, #387757 0%, transparent 48%), linear-gradient(135deg, #194a3b, #0c3028);
+    background: radial-gradient(ellipse at 25% 75%, var(--auth-glow) 0%, transparent 48%), linear-gradient(135deg, var(--auth-gradient-start), var(--auth-gradient-end));
 }
 .auth-marca-painel::before {
     content: '';
     position: absolute;
     width: 84%;
     aspect-ratio: 1;
-    border: 1px solid rgb(218 232 163 / 15%);
+    border: 1px solid var(--auth-ring);
     border-radius: 50%;
     pointer-events: none;
 }

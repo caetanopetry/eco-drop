@@ -42,7 +42,7 @@ a { color: var(--musgo); }
 img, svg { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; }
 input, select, textarea { min-width: 0; max-width: 100%; }
-button, a, summary { -webkit-tap-highlight-color: rgba(47, 107, 79, .15); }
+button, a, summary { -webkit-tap-highlight-color: var(--tap-highlight); }
 
 a:focus-visible,
 button:focus-visible,
@@ -83,14 +83,14 @@ textarea:focus-visible,
     left: 16px;
     z-index: 100;
     padding: 12px 18px;
-    color: #fff;
-    background: var(--musgo-escuro);
+    color: var(--text-inverse);
+    background: var(--brand-panel-bg);
     transform: translateY(-160%);
 }
 .pular-conteudo:focus { transform: translateY(0); }
 
 [hidden] { display: none !important; }
-::selection { background: #dcc27a; color: var(--musgo-escuro); }
+::selection { background: var(--selection-bg); color: var(--musgo-escuro); }
 
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }

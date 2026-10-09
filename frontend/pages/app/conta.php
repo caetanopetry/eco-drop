@@ -27,7 +27,7 @@ unset($_SESSION['conta_sucesso']);
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     $token = $_POST['csrf_token'] ?? null;
     if (!is_string($token) || !Csrf::validar($token)) {
-        http_response_code(419);
+        http_response_code(403);
         $erro = 'Recarregue a página e tente novamente.';
     } else {
         try {
@@ -64,6 +64,7 @@ $dados = [
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
+    <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Conta - EcoDrop</title>
     <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
@@ -71,10 +72,11 @@ $dados = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <?php foreach (['variables', 'global', 'components', 'app'] as $css): ?>
-        <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/' . $css . '.css') ?>">
+        <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/' . $css . '.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/' . $css . '.css') ?>">
     <?php endforeach; ?>
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/conta.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/conta.css') ?>">
     <script src="<?= Url::escapar('/frontend/assets/js/conta.js') ?>" defer></script>
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
 <body>
 <div class="app-shell">
@@ -82,7 +84,7 @@ $dados = [
     <main class="conteudo-app pagina-conta">
         <header class="conta-cabecalho">
             <div><span class="conta-sobretitulo">Meu perfil</span><h1>Conta</h1><p>Seu espaço no EcoDrop. Todos os seus dados em um só lugar.</p></div>
-            <span class="conta-status"><span aria-hidden="true"></span>Conta ativa</span>
+            <div class="perfil-controles"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?><span class="conta-status"><span aria-hidden="true"></span>Conta ativa</span></div>
         </header>
         <?php if ($erro !== null): ?>
             <div class="alerta alerta-erro" role="alert"><?= $esc($erro) ?></div>

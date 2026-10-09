@@ -1,5 +1,5 @@
 body {
-    background: #f3f6f4;
+    background: var(--app-bg);
 }
 
 .app-shell {
@@ -16,8 +16,8 @@ body {
     flex-direction: column;
     height: 100vh;
     padding: 22px 16px;
-    border-right: 1px solid #dde4df;
-    background: #fff;
+    border-right: 1px solid var(--app-border);
+    background: var(--surface-plain);
 }
 
 .app-marca {
@@ -60,13 +60,13 @@ body {
 .app-menu a:hover,
 .app-menu a[aria-current="page"] {
     color: var(--musgo-escuro);
-    background: #e8f3ed;
+    background: var(--menu-active);
 }
 
 .app-sidebar-rodape {
     margin-top: auto;
     padding-top: 18px;
-    border-top: 1px solid #edf1ee;
+    border-top: 1px solid var(--divider-subtle);
 }
 
 .conteudo-app {
@@ -102,10 +102,10 @@ body {
     gap: 10px;
     max-width: 260px;
     padding: 8px 12px 8px 8px;
-    border: 1px solid #dde4df;
+    border: 1px solid var(--app-border);
     border-radius: 999px;
-    background: #fff;
-    box-shadow: 0 8px 20px rgba(23, 33, 27, .06);
+    background: var(--surface-plain);
+    box-shadow: 0 8px 20px var(--shadow-card);
 }
 
 .perfil-pill span {
@@ -114,8 +114,8 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    color: #fff;
-    background: var(--musgo-escuro);
+    color: var(--text-inverse);
+    background: var(--brand-panel-bg);
     font-size: .82rem;
     font-weight: 800;
 }
@@ -143,18 +143,18 @@ body {
 .cartao-resumo,
 .painel-app,
 .bloco-operacao {
-    border: 1px solid #dce4df;
+    border: 1px solid var(--card-border);
     border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 12px 28px rgba(23, 33, 27, .06);
+    background: var(--surface-plain);
+    box-shadow: 0 12px 28px var(--shadow-card);
 }
 
 .cartao-principal {
     min-height: 206px;
     padding: 24px;
     background:
-        linear-gradient(135deg, rgba(226, 246, 236, .96), rgba(249, 253, 250, .9)),
-        radial-gradient(circle at 92% 12%, rgba(47, 107, 79, .18), transparent 28%);
+        linear-gradient(135deg, var(--hero-start), var(--hero-end)),
+        radial-gradient(circle at 92% 12%, var(--hero-glow), transparent 28%);
 }
 
 .etiqueta {
@@ -164,7 +164,7 @@ body {
     padding: 4px 8px;
     border-radius: 999px;
     color: var(--musgo-escuro);
-    background: #dff2e8;
+    background: var(--tag-surface);
     font-size: .72rem;
     font-weight: 800;
 }
@@ -233,12 +233,12 @@ body {
     gap: 8px;
     min-height: 132px;
     padding: 18px;
-    border: 1px solid #dce4df;
+    border: 1px solid var(--card-border);
     border-radius: 8px;
     color: var(--tinta);
-    background: #fff;
+    background: var(--surface-plain);
     text-decoration: none;
-    box-shadow: 0 12px 28px rgba(23, 33, 27, .06);
+    box-shadow: 0 12px 28px var(--shadow-card);
 }
 
 .atalho-card:hover {
@@ -278,7 +278,7 @@ body {
     gap: 18px;
     margin-bottom: 14px;
     padding: 18px 20px;
-    background: linear-gradient(90deg, #fff, #edf8f3);
+    background: linear-gradient(90deg, var(--surface-plain), var(--activity-end));
 }
 
 .bloco-operacao h2 {
@@ -357,7 +357,7 @@ table.tabela-ecodrop td {
     gap: 12px;
     min-height: 48px;
     padding: 10px 0;
-    border-bottom: 1px solid #edf1ee;
+    border-bottom: 1px solid var(--divider-subtle);
     color: var(--tinta-suave);
     font-size: .9rem;
 }
@@ -396,7 +396,7 @@ table.tabela-ecodrop td {
     align-items: center;
     min-height: 46px;
     padding: 9px 0;
-    border-bottom: 1px solid #edf1ee;
+    border-bottom: 1px solid var(--divider-subtle);
 }
 
 .ranking li:last-child {
@@ -441,9 +441,9 @@ table.tabela-ecodrop td {
     display: grid;
     gap: 8px;
     padding: 14px;
-    border: 1px solid #edf1ee;
+    border: 1px solid var(--divider-subtle);
     border-radius: 8px;
-    background: #fbfdfc;
+    background: var(--reward-surface);
 }
 
 .grade-recompensas h3,
@@ -494,7 +494,7 @@ table.tabela-ecodrop td {
         height: auto;
         padding: 14px 18px;
         border-right: 0;
-        border-bottom: 1px solid #dde4df;
+        border-bottom: 1px solid var(--app-border);
     }
 
     .app-marca {
@@ -568,7 +568,7 @@ table.tabela-ecodrop td {
     .painel-app,
     .bloco-operacao,
     .atalho-card {
-        box-shadow: 0 8px 18px rgba(23, 33, 27, .05);
+        box-shadow: 0 8px 18px var(--shadow-card-mobile);
     }
 
     .cartao-principal h2 {

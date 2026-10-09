@@ -1,7 +1,7 @@
 /* Inspirado no Hover Footer do 21st.dev, com os tokens e a stack do EcoDrop. */
 .eco-footer {
-    --footer-muted: #d0dbcd;
-    --footer-line: rgba(220, 233, 223, .18);
+    --footer-muted: var(--footer-text-muted);
+    --footer-line: var(--footer-divider);
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -9,7 +9,7 @@
     border: 1px solid var(--musgo);
     border-radius: 28px;
     color: var(--papel);
-    background: var(--musgo-escuro);
+    background: var(--brand-panel-bg);
 }
 
 .eco-footer::before {
@@ -18,8 +18,8 @@
     z-index: -1;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(ellipse at 50% 115%, rgba(123, 155, 86, .25), transparent 65%),
-                radial-gradient(ellipse at 100% 0%, rgba(196, 154, 67, .08), transparent 50%);
+    background: radial-gradient(ellipse at 50% 115%, var(--footer-green-glow), transparent 65%),
+                radial-gradient(ellipse at 100% 0%, var(--footer-gold-glow), transparent 50%);
 }
 
 .eco-footer__inner {
@@ -35,7 +35,7 @@
     grid-template-columns: .8fr 1fr .9fr 1.15fr;
     gap: clamp(24px, 3vw, 48px);
     padding-bottom: 24px;
-    text-shadow: 0 1px 8px var(--musgo-escuro), 0 0 20px var(--musgo-escuro);
+    text-shadow: 0 1px 8px var(--brand-panel-bg), 0 0 20px var(--brand-panel-bg);
 }
 
 .eco-footer__grid > * { min-width: 0; }
@@ -52,8 +52,8 @@
     transition: color .2s ease, background-color .2s ease;
 }
 
-.eco-footer a:hover { color: #e5cb89; }
-.eco-footer a:focus-visible { outline: 2px solid #e5cb89; outline-offset: 5px; border-radius: 4px; }
+.eco-footer a:hover { color: var(--footer-accent); }
+.eco-footer a:focus-visible { outline: 2px solid var(--footer-accent); outline-offset: 5px; border-radius: 4px; }
 
 .eco-footer__logo {
     display: inline-flex;
@@ -121,7 +121,7 @@
     gap: 12px 24px;
     padding: 10px 0;
     border-top: 1px solid var(--footer-line);
-    text-shadow: 0 1px 8px var(--musgo-escuro);
+    text-shadow: 0 1px 8px var(--brand-panel-bg);
 }
 
 .eco-footer__bottom p { margin: 0; font-size: .7rem; }

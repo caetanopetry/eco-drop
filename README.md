@@ -49,13 +49,15 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 
 ## Estado atual
 
-**Fase 1 implementada:** estrutura base, configuração centralizada, conexão MySQL,
-arquitetura em camadas, layout global/componentes e autenticação completa
-(cadastro, login, logout, sessão, controle de acesso por perfil).
+Implementados: autenticação local, integração Google, recuperação de senha por
+e-mail, perfil, estação demonstrativa com identificação temporária, descarte,
+pontos, extrato, ranking mensal, recompensas e vouchers. O admin possui dashboard
+e consulta de usuários com indicadores e histórico de acessos reais do banco.
+O tema claro/escuro compartilha tokens e preferência persistida.
 
-Fases seguintes (estações/QR Code/descarte/pontos, histórico/ranking,
-recompensas/vouchers, Admin completo, refinamento) ainda não foram implementadas —
-ver `docs/decisoes/pendencias.md` e a seção "Próximos passos" abaixo.
+O projeto continua sendo uma demonstração: hardware, mapas, premiação automática
+e os demais cadastros administrativos ainda exigem implementação. Consulte a
+[revisão técnica](docs/revisao-tecnica-2026-10-08.md) para limites e validações.
 
 ## Como executar localmente (XAMPP)
 
@@ -69,6 +71,9 @@ ver `docs/decisoes/pendencias.md` e a seção "Próximos passos" abaixo.
    `backend/database/migrations/`. Em particular, a migração
    `20261002_add_fotos_to_usuarios.sql` adiciona as colunas de fotos usadas
    pelo perfil e pelos fluxos de login.
+   Aplique também `20261008_create_sessoes_acesso.sql` para o histórico do admin
+   e `20261008_add_unique_token_hash_to_recuperacoes_acesso.sql` para os tokens
+   de recuperação. Em uma instalação nova, essas estruturas já estão no schema.
 3. Instale as dependências na raiz do projeto com `composer install`.
    O carregamento do `.env` depende de `vlucas/phpdotenv`, instalado em `vendor/`.
    Se o Composer informar que falta suporte a ZIP, habilite `extension=zip` no
@@ -103,8 +108,14 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/login/` — entrar
 - `/app/inicio/` — dashboard do usuário (protegida)
 - `/app/logout/` — encerrar sessão
+- `/app/esqueci-senha/` e `/app/redefinir-senha/` — recuperação de acesso
+- `/app/saques/` — recompensas e vouchers
+- `/app/extrato/` — movimentações de pontos
+- `/app/conta/` — perfil e fotos
+- `/station/` — estação demonstrativa
 - `/admin/login/` — acesso administrativo
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
+- `/admin/usuarios/` — contas e histórico de acessos (papel `admin`)
 
 ## Próximos passos recomendados
 
@@ -120,11 +131,27 @@ descrevem a demonstração atual. A identificação do responsável pelo tratame
 o canal de privacidade e os prazos de retenção precisam ser completados antes da
 operação pública.
 
-1. FASE 2 — estações, sessão temporária + QR Code, fluxo de descarte, cálculo de pontos.
-2. FASE 3 — histórico, extrato, ranking mensal.
-3. FASE 4 — recompensas, resgate, vouchers.
-4. FASE 5 — Admin completo (usuários, estações, materiais, recompensas, parceiros, premiações).
-5. FASE 6 — refinamento visual, responsividade, acessibilidade, estados de erro, segurança, testes.
+1. Restringir a estação demonstrativa antes de operar pontos reais.
+2. Completar os cadastros administrativos e a premiação do ranking.
+3. Validar Google e SMTP com as credenciais do ambiente de destino.
+4. Definir limites de tentativas, política de sessões e implantação HTTPS.
+5. Conferir responsividade e acessibilidade visual em navegador.
+
+## Verificação automatizada
+
+Com Apache e MySQL locais ativos, execute na raiz:
+
+```sh
+php tests/integration.php
+php tests/http-smoke.php
+node --test tests/theme.test.cjs tests/admin-usuarios.test.cjs
+```
+
+O teste de integração cria e remove um banco temporário exclusivo; o usuário do
+MySQL precisa de permissão para isso. O teste HTTP usa a URL local configurada e
+precisa de contas ativas dos dois perfis. Não envia e-mails nem testa o provedor
+Google. Configure SMTP e Google conforme `.env.example`, mantendo os segredos
+somente no `.env`.
 
 ## Documentação
 
@@ -140,6 +167,8 @@ A documentação essencial do projeto está organizada em:
 - [`Arquitetura`](docs/arquitetura/README.md)
 - [`Casos de uso`](docs/casos-de-uso/README.md) · [`Fluxos`](docs/fluxos/README.md)
 - [`Decisões de implementação`](docs/decisoes/)
+- [`Revisão técnica e sincronização`](docs/revisao-tecnica-2026-10-08.md)
+- [`Tema claro e escuro`](docs/tema-escuro.md)
 
 ## Tecnologias
 

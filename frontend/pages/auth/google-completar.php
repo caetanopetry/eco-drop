@@ -58,17 +58,20 @@ $vinculacao = $contaExistente !== null;
 <head>
     <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
+    <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Concluir cadastro — EcoDrop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/variables.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/global.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/components.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/auth.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/auth.css') ?>-<?= filesize(__DIR__ . '/../../assets/css/auth.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
 <body>
+    <div class="tema-acesso"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?></div>
     <div class="auth-troca auth-pronta">
         <main class="auth-formulario">
             <a class="eco-marca auth-marca-mobile" href="<?= Url::escapar('/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>

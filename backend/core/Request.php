@@ -40,10 +40,10 @@ final class Request
         return strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
     }
 
-    public static function texto(string $chave, string $padrao = ''): string
+    public static function texto(string $chave, string $padrao = '', bool $aparar = true): string
     {
         $valor = self::corpo()[$chave] ?? $_GET[$chave] ?? $padrao;
-        return is_string($valor) ? trim($valor) : $padrao;
+        return is_string($valor) ? ($aparar ? trim($valor) : $valor) : $padrao;
     }
 
 }

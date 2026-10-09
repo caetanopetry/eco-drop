@@ -22,7 +22,9 @@ $mensagem = null;
 $tipoMensagem = 'sucesso';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!Csrf::validar($_POST['csrf_token'] ?? null)) {
+    $tokenCsrf = $_POST['csrf_token'] ?? null;
+    if (!is_string($tokenCsrf) || !Csrf::validar($tokenCsrf)) {
+        http_response_code(403);
         $mensagem = 'Token de seguranca invalido. Recarregue a pagina.';
         $tipoMensagem = 'erro';
     } elseif (($_POST['acao'] ?? '') === 'resgatar') {
@@ -42,16 +44,18 @@ $paginaAtualApp = 'saques';
 <head>
   <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
+    <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Saques - EcoDrop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/variables.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/global.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/components.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/app.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/app.css') ?>">
     <script src="<?= Url::escapar('/frontend/assets/js/conta.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/conta.js') ?>" defer></script>
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
 <body>
     <div class="app-shell">

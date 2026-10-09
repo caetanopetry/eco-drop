@@ -10,6 +10,8 @@ $fotoCabecalho = ($perfilCabecalho['foto_personalizada'] ?? null)
     ?: ($perfilCabecalho['foto_google'] ?? null);
 $inicialCabecalho = mb_strtoupper(mb_substr(trim($nomeCabecalho), 0, 1));
 ?>
+<div class="perfil-controles">
+<?php require __DIR__ . '/../theme/toggle.php'; ?>
 <a class="perfil-pill" href="<?= Url::escapar('/app/conta/') ?>" aria-label="Abrir minha conta">
     <span class="perfil-avatar" aria-hidden="true">
         <?= htmlspecialchars($inicialCabecalho, ENT_QUOTES, 'UTF-8') ?>
@@ -19,3 +21,5 @@ $inicialCabecalho = mb_strtoupper(mb_substr(trim($nomeCabecalho), 0, 1));
     </span>
     <strong><?= htmlspecialchars($nomeCabecalho, ENT_QUOTES, 'UTF-8') ?></strong>
 </a>
+
+</div>

@@ -16,13 +16,13 @@ if (Request::metodo() !== 'POST') {
 }
 
 if (!Csrf::validar(Request::texto('csrf_token'))) {
-    Response::erro('Token de segurança inválido. Recarregue a página e tente novamente.', 419);
+    Response::erro('Token de segurança inválido. Recarregue a página e tente novamente.', 403);
 }
 
 $nome = Request::texto('nome');
 $email = Request::texto('email');
 $cpf = Request::texto('cpf');
-$senha = Request::texto('senha');
+$senha = Request::texto('senha', '', false);
 
 $resultado = (new AuthService())->registrar($nome, $email, $cpf, $senha);
 

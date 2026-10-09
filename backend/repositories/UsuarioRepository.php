@@ -10,6 +10,15 @@ require_once __DIR__ . '/../core/Database.php';
  */
 final class UsuarioRepository
 {
+    public function buscarAcesso(int $usuarioId): ?array
+    {
+        $stmt = Database::conexao()->prepare(
+            'SELECT id, nome, email, papel, status, senha_hash FROM usuarios WHERE id = :id LIMIT 1'
+        );
+        $stmt->execute(['id' => $usuarioId]);
+        return $stmt->fetch() ?: null;
+    }
+
     public function buscarPerfil(int $usuarioId): ?array
     {
         $stmt = Database::conexao()->prepare(
@@ -173,9 +182,30 @@ final class UsuarioRepository
         $stmt->execute(['usuario_id' => $usuarioId]);
     }
 
+    public function invalidarRecuperacao(string $tokenHash): void
+    {
+        $stmt = Database::conexao()->prepare(
+            'UPDATE recuperacoes_acesso SET utilizado_em = UTC_TIMESTAMP()
+             WHERE token_hash = :token_hash AND utilizado_em IS NULL'
+        );
+        $stmt->execute(['token_hash' => $tokenHash]);
+    }
+
     public function redefinirSenhaComToken(string $tokenHash, string $senhaHash): bool
     {
         return Database::transacao(static function (PDO $pdo) use ($tokenHash, $senhaHash): bool {
+            // Mesma ordem de locks de criarRecuperacao: usuário antes dos tokens.
+            $identificar = $pdo->prepare('SELECT usuario_id FROM recuperacoes_acesso WHERE token_hash = :token_hash LIMIT 1');
+            $identificar->execute(['token_hash' => $tokenHash]);
+            $usuarioId = $identificar->fetchColumn();
+            if ($usuarioId === false) {
+                return false;
+            }
+            $bloquearUsuario = $pdo->prepare('SELECT id FROM usuarios WHERE id = :id FOR UPDATE');
+            $bloquearUsuario->execute(['id' => $usuarioId]);
+            if ($bloquearUsuario->fetch() === false) {
+                return false;
+            }
             $buscar = $pdo->prepare(
                 'SELECT id, usuario_id
                  FROM recuperacoes_acesso

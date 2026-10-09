@@ -16,11 +16,11 @@ if (Request::metodo() !== 'POST') {
 }
 
 if (!Csrf::validar(Request::texto('csrf_token'))) {
-    Response::erro('Token de segurança inválido. Recarregue a página e tente novamente.', 419);
+    Response::erro('Token de segurança inválido. Recarregue a página e tente novamente.', 403);
 }
 
 $email = Request::texto('email');
-$senha = Request::texto('senha');
+$senha = Request::texto('senha', '', false);
 // Indica se o login está sendo feito pela tela administrativa (RNF004: controle de acesso).
 $contextoAdmin = Request::texto('contexto') === 'admin';
 

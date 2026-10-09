@@ -16,7 +16,7 @@ if (Request::metodo() !== 'POST') {
 }
 
 if (!Csrf::validar(Request::texto('csrf_token'))) {
-    Response::erro('Token de segurança inválido. Recarregue a página e tente novamente.', 419);
+    Response::erro('Token de segurança inválido. Recarregue a página e tente novamente.', 403);
 }
 
 $pendente = $_SESSION['google_onboarding'] ?? null;
@@ -51,8 +51,8 @@ $authService = new AuthService();
 $acao = Request::texto('acao');
 
 if ($acao === 'cadastrar') {
-    $senha = Request::texto('senha');
-    $confirmarSenha = Request::texto('confirmar_senha');
+    $senha = Request::texto('senha', '', false);
+    $confirmarSenha = Request::texto('confirmar_senha', '', false);
     if ($confirmarSenha === '' || !hash_equals($senha, $confirmarSenha)) {
         Response::erro(
             'As senhas não conferem.',
@@ -91,7 +91,7 @@ if ($acao === 'cadastrar') {
 }
 
 if ($acao === 'vincular') {
-    $resultado = $authService->autenticar($email, Request::texto('senha'));
+    $resultado = $authService->autenticar($email, Request::texto('senha', '', false));
     if (!$resultado['sucesso']) {
         Response::erro($resultado['mensagem'], 401);
     }

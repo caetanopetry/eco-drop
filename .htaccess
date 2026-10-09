@@ -4,6 +4,12 @@ DirectoryIndex index.php
 
 RewriteEngine On
 
+# Arquivos de configuração, versionamento e banco não são recursos públicos.
+<FilesMatch "(^\.|\.(sql|log|bak|ini|phar|lock)$|^(composer|package)(-lock)?\.json$)">
+    Require all denied
+</FilesMatch>
+RewriteRule ^(\.git|vendor|tests|backend/(config|core|database|repositories|services))(/|$) - [F,L,NC]
+
 # Impede o acesso direto aos fragmentos de página usados pelo layout.
 RewriteRule ^frontend/pages/institucional/(layout|sobre|contato|perguntas-frequentes|termos-de-uso|politica-de-privacidade)\.php$ - [F,L,NC]
 

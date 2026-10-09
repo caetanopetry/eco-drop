@@ -21,7 +21,9 @@ if (($_GET['associado'] ?? '') === '1') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!Csrf::validar($_POST['csrf_token'] ?? null)) {
+    $tokenCsrf = $_POST['csrf_token'] ?? null;
+    if (!is_string($tokenCsrf) || !Csrf::validar($tokenCsrf)) {
+        http_response_code(403);
         $mensagem = 'Token de segurança inválido. Recarregue a página.';
         $tipoMensagem = 'erro';
     } elseif (($_POST['acao'] ?? '') === 'criar_sessao') {
@@ -47,20 +49,23 @@ $sessoes = $repo->sessoesEmUso();
 <head>
   <?php require __DIR__ . '/../../components/brand/favicon.php'; ?>
     <meta charset="utf-8">
+    <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Estação Demo - EcoDrop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>">
-    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/station.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/variables.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/variables.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/global.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/global.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/components.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/components.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/station.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/station.css') ?>">
+    <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
 <body class="pagina-station-demo">
     <main class="station-shell">
         <header class="station-topo">
             <a class="station-marca eco-marca eco-marca--clara" href="<?= Url::escapar('/app/inicio/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
+        <?php require __DIR__ . '/../../components/theme/toggle.php'; ?>
         </header>
 
         <section class="station-hero">

@@ -2,6 +2,7 @@
 <header class="site-cabecalho">
   <div class="container flex itens-centro justificar-entre">
     <a class="eco-marca" href="<?= Url::escapar('/') ?>" aria-label="EcoDrop, página inicial"><?php require __DIR__ . '/../brand/marca.php'; ?></a>
+    <?php require __DIR__ . '/../theme/toggle.php'; ?>
     <button class="site-menu-botao" type="button" aria-expanded="false" aria-controls="site-menu" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       <span>Menu</span>

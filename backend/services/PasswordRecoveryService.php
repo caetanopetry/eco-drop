@@ -42,7 +42,7 @@ final class PasswordRecoveryService
                 $this->linkRecuperacao($token)
             );
         } catch (EmailDeliveryException $e) {
-            $this->usuarios->invalidarRecuperacoesPendentes((int) $usuario['id']);
+            $this->usuarios->invalidarRecuperacao($tokenHash);
             throw $e;
         }
     }

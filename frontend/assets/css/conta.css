@@ -1,6 +1,6 @@
 .pagina-conta {
-    --conta-linha: #dde6df;
-    --conta-suave: #f7faf8;
+    --conta-linha: var(--account-border);
+    --conta-suave: var(--account-surface-soft);
 }
 
 .conta-perfil { overflow-wrap: anywhere; }
@@ -25,7 +25,7 @@
     padding: 26px 30px;
     border: 1px solid var(--conta-linha);
     border-radius: 10px;
-    background: #fff;
+    background: var(--surface-plain);
 }
 
 .conta-sobretitulo {
@@ -41,6 +41,7 @@
 .conta-status { display: inline-flex; align-items: center; gap: 8px; color: var(--musgo-escuro); font-size: .76rem; font-weight: 600; }
 .conta-status > span { flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--musgo); }
 .conta-cabecalho > .conta-status { flex-shrink: 0; padding: 9px 13px; border: 1px solid var(--conta-linha); border-radius: 999px; background: var(--conta-suave); }
+.conta-cabecalho > .perfil-controles > .conta-status { flex-shrink: 0; padding: 9px 13px; border: 1px solid var(--conta-linha); border-radius: 999px; background: var(--conta-suave); }
 
 .pagina-conta .conta-grade {
     display: grid;
@@ -50,8 +51,8 @@
     overflow: hidden;
     border: 1px solid var(--conta-linha);
     border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 12px 32px rgba(23, 33, 27, .04);
+    background: var(--surface-plain);
+    box-shadow: 0 12px 32px var(--shadow-account);
 }
 
 .pagina-conta .conta-perfil { padding: 32px 26px; border: 0; border-right: 1px solid var(--conta-linha); border-radius: 0; box-shadow: none; text-align: center; }
@@ -77,7 +78,7 @@
 .conta-informacoes { padding: 36px; }
 .conta-secao-cabecalho h2 { margin: 8px 0; font-family: var(--fonte-corpo); font-size: 1.2rem; }
 .pagina-conta .conta-dados { display: block; margin: 26px 0 30px; }
-.pagina-conta .conta-dados > div { display: grid; grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr); gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #edf1ee; }
+.pagina-conta .conta-dados > div { display: grid; grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr); gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--divider-subtle); }
 .pagina-conta .conta-dados dt { margin: 0; font-size: .78rem; font-weight: 400; }
 .pagina-conta .conta-dados dd { font-size: .84rem; font-weight: 500; }
 .conta-rodape-dados { padding: 18px 20px; border: 1px solid var(--conta-linha); border-radius: 8px; background: var(--conta-suave); }

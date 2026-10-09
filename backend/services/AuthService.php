@@ -35,8 +35,8 @@ final class AuthService
         $email = Validator::emailNormalizado($email);
         $cpfLimpo = Validator::somenteDigitos($cpf);
 
-        if (!Validator::obrigatorio($nome)) {
-            $campos['nome'] = 'Informe o nome completo.';
+        if (!Validator::obrigatorio($nome) || mb_strlen($nome) > 150) {
+            $campos['nome'] = 'Informe o nome completo com até 150 caracteres.';
         }
 
         if (!Validator::obrigatorio($email) || !Validator::email($email) || mb_strlen($email) > 190) {
