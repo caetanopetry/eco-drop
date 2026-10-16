@@ -20,9 +20,6 @@
 .perfil-controles { display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 100%; }
 .perfil-controles .perfil-pill { min-width: 0; }
 .tema-acesso { position: absolute; top: 16px; right: 16px; z-index: 5; }
-.eco-marca__escura { display: none; }
-[data-theme="dark"] .eco-marca__imagem { display: none; }
-[data-theme="dark"] .eco-marca__escura { display: block; filter: none; }
 
 /* Uniformiza o foco inclusive nos componentes com estilos próprios. */
 html :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {

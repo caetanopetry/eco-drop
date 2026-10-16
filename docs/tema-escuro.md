@@ -25,8 +25,7 @@ O projeto usa PHP, HTML, CSS e JavaScript sem framework de frontend. O tema clar
 | `frontend/components/theme/toggle.php` | Botão compartilhado com SVG decorativo e `aria-label` atualizado. |
 | `frontend/components/app/perfil.php` | Posiciona a alternância junto à pílula do usuário. |
 | `frontend/components/navbar/navbar-site.php` | Inclui a alternância no cabeçalho público. |
-| `frontend/components/brand/marca.php` | Conserva o PNG no claro e inclui o SVG no escuro. |
-| `frontend/assets/img/logos/logo-tema-escuro.svg` | Variante provisória transparente com “Eco” claro e “Drop” verde, usando tokens quando incluída na página. |
+| `frontend/components/brand/marca.php` | Usa a imagem original `logo-e-nome.png` nos dois temas, preservando o símbolo e a tipografia. |
 | `frontend/pages/app/{inicio,saques,extrato,conta}.php` | Recursos do tema e CSS versionados; botão no cabeçalho de Conta. |
 | `frontend/pages/admin/{dashboard,usuarios,login}.php` | Recursos do tema e botão de alternância. |
 | `frontend/pages/station/index.php` | Recursos do tema e botão no cabeçalho. |
@@ -42,7 +41,7 @@ As cores claras originais, inclusive o branco já utilizado, foram preservadas. 
 
 ## Decisões de identidade
 
-- Aprovar o SVG provisório ou fornecer uma versão oficial transparente do logo para o tema escuro. A tipografia e o símbolo provisórios não reproduzem exatamente o PNG.
+- A alternância de tema mantém a mesma imagem original da marca, incluindo seu símbolo e sua tipografia. O SVG provisório não é utilizado.
 - As fotos de usuários e ilustrações existentes mantêm suas cores. Variantes próprias de ilustração para o escuro podem ser adicionadas depois, se desejado.
 
 ## Como testar

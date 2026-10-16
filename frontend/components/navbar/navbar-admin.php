@@ -15,10 +15,10 @@ function linkAdminAtivo(string $chave, string $atual): string
         <ul>
             <li><a href="<?= Url::escapar('/admin/dashboard/') ?>" <?= linkAdminAtivo('dashboard', $paginaAtual) ?>>Dashboard</a></li>
             <li><a href="<?= Url::escapar('/admin/usuarios/') ?>" <?= linkAdminAtivo('usuarios', $paginaAtual) ?>>Usuários</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Estações</a></li>
+            <li><a href="<?= Url::escapar('/admin/estacoes/') ?>" <?= linkAdminAtivo('estacoes', $paginaAtual) ?>>Estações</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Materiais</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Recompensas</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Parceiros</a></li>
+            <li><a href="<?= Url::escapar('/admin/parceiros/') ?>" <?= linkAdminAtivo('parceiros', $paginaAtual) ?>>Parceiros</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Vouchers</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Ranking</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Premiações</a></li>

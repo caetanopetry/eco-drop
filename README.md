@@ -53,11 +53,13 @@ Implementados: autenticação local, integração Google, recuperação de senha
 e-mail, perfil, estação demonstrativa com identificação temporária, descarte,
 pontos, extrato, ranking mensal, recompensas e vouchers. O admin possui dashboard
 e consulta de usuários com indicadores e histórico de acessos reais do banco.
+As abas Estações e Parceiros incluem acompanhamento das coletas e avaliação
+de propostas, respectivamente, com dados persistidos no banco.
 O tema claro/escuro compartilha tokens e preferência persistida.
 
 O projeto continua sendo uma demonstração: hardware, mapas, premiação automática
 e os demais cadastros administrativos ainda exigem implementação. Consulte a
-[revisão técnica](docs/revisao-tecnica-2026-10-08.md) para limites e validações.
+[revisão técnica](docs/revisao-tecnica-2026-10-16.md) para limites e validações.
 
 ## Como executar localmente (XAMPP)
 
@@ -74,6 +76,8 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    Aplique também `20261008_create_sessoes_acesso.sql` para o histórico do admin
    e `20261008_add_unique_token_hash_to_recuperacoes_acesso.sql` para os tokens
    de recuperação. Em uma instalação nova, essas estruturas já estão no schema.
+   Para propostas de parceria, aplique também
+   `20261016_create_propostas_parceria.sql` em bancos existentes.
 3. Instale as dependências na raiz do projeto com `composer install`.
    O carregamento do `.env` depende de `vlucas/phpdotenv`, instalado em `vendor/`.
    Se o Composer informar que falta suporte a ZIP, habilite `extension=zip` no
@@ -116,6 +120,8 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/admin/login/` — acesso administrativo
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
 - `/admin/usuarios/` — contas e histórico de acessos (papel `admin`)
+- `/admin/estacoes/` — estações, descartes e volumes por material (papel `admin`)
+- `/admin/parceiros/` — propostas, avaliações e parceiros cadastrados (papel `admin`)
 
 ## Próximos passos recomendados
 
@@ -144,6 +150,7 @@ Com Apache e MySQL locais ativos, execute na raiz:
 ```sh
 php tests/integration.php
 php tests/http-smoke.php
+php tests/admin-parceiros.php
 node --test tests/theme.test.cjs tests/admin-usuarios.test.cjs
 ```
 
@@ -167,7 +174,8 @@ A documentação essencial do projeto está organizada em:
 - [`Arquitetura`](docs/arquitetura/README.md)
 - [`Casos de uso`](docs/casos-de-uso/README.md) · [`Fluxos`](docs/fluxos/README.md)
 - [`Decisões de implementação`](docs/decisoes/)
-- [`Revisão técnica e sincronização`](docs/revisao-tecnica-2026-10-08.md)
+- [`Revisão técnica e sincronização`](docs/revisao-tecnica-2026-10-16.md)
+- [`Propostas e avaliação de parceiros`](docs/parceiros.md)
 - [`Tema claro e escuro`](docs/tema-escuro.md)
 
 ## Tecnologias

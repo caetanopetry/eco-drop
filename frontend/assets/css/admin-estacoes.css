@@ -1,0 +1,27 @@
+.estacoes-sobretitulo, .estacoes-codigo { color: var(--accent); font-size: .72rem; font-weight: 700; letter-spacing: .1em; }
+.estacoes-nota { color: var(--text-muted); font-size: .82rem; }
+.estacoes-titulo { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.estacoes-titulo h2, .estacoes-titulo p { margin: 0 0 6px; }
+.estacoes-titulo > span { font-size: .82rem; }
+.estacoes-filtros { display: flex; align-items: end; flex-wrap: wrap; gap: 14px; padding: 22px 0; }
+.estacoes-filtros label { display: grid; gap: 7px; font-size: .82rem; font-weight: 600; flex: 1 1 190px; }
+.estacoes-filtros input, .estacoes-filtros select { width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: var(--raio-sm); background: var(--surface); color: var(--text); padding: 10px 12px; font: inherit; }
+.estacoes-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.estacoes-card { min-width: 0; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--raio-md); }
+.estacoes-card h3 { font-family: var(--fonte-titulo); font-size: 1.55rem; margin: 18px 0 6px; overflow-wrap: anywhere; }
+.estacoes-endereco { font-size: .88rem; min-height: 2.8em; overflow-wrap: anywhere; }
+.estacoes-status { border-radius: 30px; padding: 5px 11px; background: var(--surface-active); color: var(--text-muted); font-weight: 600; }
+.estacoes-status--ativa { background: var(--chip-bg); color: var(--accent); }
+.estacoes-metricas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 18px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.estacoes-metricas strong { display: block; font-size: 1.3rem; color: var(--accent); overflow-wrap: anywhere; }
+.estacoes-metricas small { font-size: .8rem; }
+.estacoes-metricas span { display: block; font-size: .75rem; color: var(--text-muted); }
+.estacoes-card summary { cursor: pointer; padding: 12px 0; color: var(--accent); font-weight: 600; font-size: .88rem; }
+.estacoes-materiais { list-style: none; padding: 0; margin: 0; }
+.estacoes-materiais li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); font-size: .85rem; }
+.estacoes-materiais small { display: block; color: var(--text-muted); }
+.estacoes-card footer { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 10px; color: var(--text-muted); font-size: .75rem; }
+.estacoes-historico { margin-top: 36px; }
+.estacoes-vazio { border: 1px dashed var(--border); border-radius: var(--raio-md); padding: 32px; text-align: center; }
+@media (max-width: 1150px) { .estacoes-grade { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .estacoes-card { padding: 18px; } .estacoes-metricas { grid-template-columns: 1fr; } .estacoes-filtros .botao { width: 100%; } }

@@ -15,6 +15,8 @@ require_once __DIR__ . '/../backend/services/PasswordRecoveryService.php';
 require_once __DIR__ . '/../backend/repositories/EcoDropRepository.php';
 require_once __DIR__ . '/../backend/repositories/AdminUsuariosRepository.php';
 require_once __DIR__ . '/../backend/repositories/AdminDashboardRepository.php';
+require_once __DIR__ . '/../backend/repositories/AdminEstacoesRepository.php';
+require_once __DIR__ . '/../backend/repositories/PropostasParceriaRepository.php';
 
 function conferir(bool $condicao, string $mensagem): void
 {
@@ -57,6 +59,18 @@ try {
     $pdo->exec($seed);
     $pdo->exec(file_get_contents(__DIR__ . '/../backend/database/migrations/20261008_create_sessoes_acesso.sql'));
     $testes[] = 'schema novo, seed e migração de acessos idempotente';
+    $pdo->exec(file_get_contents(__DIR__ . '/../backend/database/migrations/20261016_create_propostas_parceria.sql'));
+    $propostas = new PropostasParceriaRepository();
+    $propostaId = $propostas->receber(['organizacao'=>'Organização teste', 'responsavel'=>'Responsável',
+        'email'=>'parceria@example.com','telefone'=>'11999999999','cidade'=>'São Paulo / SP',
+        'segmento'=>'Comércio','tipo'=>'Recompensas','proposta'=>'Proposta temporária de integração.']);
+    $adminId = (int) $pdo->query("SELECT id FROM usuarios WHERE papel='admin' LIMIT 1")->fetchColumn();
+    $totalParceiros = (int) $pdo->query('SELECT COUNT(*) FROM parceiros')->fetchColumn();
+    $propostas->avaliar($propostaId, 'aprovada', 'Avaliação interna', $adminId);
+    $proposta = $propostas->listar()[0];
+    conferir($proposta['status'] === 'aprovada' && (int) $proposta['avaliado_por'] === $adminId, 'Avaliação de parceria incorreta');
+    conferir((int) $pdo->query('SELECT COUNT(*) FROM parceiros')->fetchColumn() === $totalParceiros, 'Avaliação criou um parceiro automaticamente');
+    $testes[] = 'migração de propostas idempotente e avaliação separada dos parceiros ativos';
 
     $auth = new AuthService();
     $cpf = cpfTeste('123456789');
@@ -135,6 +149,13 @@ try {
     conferir(count($eco->extratoDoUsuario($id)) === 3 && count($eco->descartesDoUsuario($id)) === 2, 'Extrato/histórico incorretos');
     conferir((new AdminDashboardRepository())->indicadores()['descartes_registrados'] === 2, 'Dashboard divergente');
     $testes[] = 'admin real, gráfico, saldo, descartes, extrato e ranking';
+    $rede = (new AdminEstacoesRepository())->visaoGeral();
+    $linhaEstacao = array_values(array_filter($rede['estacoes'], static fn($e)=>(int)$e['id']===$estacao))[0];
+    conferir((int)$linhaEstacao['registros'] === 2 && (int)$linhaEstacao['validos'] === 1, 'Contagem de descartes por estação incorreta');
+    conferir((float)$linhaEstacao['kg'] === 2.0 && (float)$linhaEstacao['litros'] === 0.0, 'Volume inválido somado ou unidades misturadas');
+    conferir(count($rede['estacoes']) === (int)$pdo->query('SELECT COUNT(*) FROM estacoes')->fetchColumn(), 'Estação sem descarte omitida');
+    conferir(count($rede['recentes']) === 2 && count($rede['materiais']) === 1, 'Detalhes de estações divergentes');
+    $testes[] = 'estações com e sem descartes, volumes válidos, materiais e histórico';
 
     Auth::iniciarSessao();
     Auth::autenticar($login['usuario']);

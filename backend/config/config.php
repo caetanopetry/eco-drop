@@ -5,9 +5,9 @@ declare(strict_types=1);
 /**
  * Configuração central do EcoDrop.
  *
- * Este arquivo é o EXEMPLO versionado no repositório.
- * Copie para "config.php" (mesma pasta) e ajuste os valores locais.
- * "config.php" está no .gitignore e nunca deve conter credenciais reais de produção.
+ * Este arquivo é versionado e contém configurações gerais sem credenciais.
+ * As credenciais do banco são carregadas do .env por Config.php.
+ * Nunca inclua segredos neste arquivo.
  */
 
 return [

@@ -35,7 +35,8 @@ function pagina(string $rota, ?string $cookie = null): void
     $html = status($rota, 200, $cookie);
     if (substr_count($html, '/frontend/assets/js/theme.js') !== 1
         || strpos($html, '/frontend/assets/js/theme.js') > strpos($html, 'rel="stylesheet"')
-        || !str_contains($html, 'data-theme-toggle') || !str_contains($html, 'eco-marca__escura')) {
+        || !str_contains($html, 'data-theme-toggle') || !str_contains($html, 'eco-marca__imagem')
+        || str_contains($html, 'eco-marca__escura')) {
         throw new RuntimeException('Integração do tema incompleta: ' . $rota);
     }
     preg_match_all('~(?:href|src)="(' . preg_quote(Url::para('/frontend/assets/'), '~') . '(?:css|js)/[^"<>]+)"~', $html, $assets);
@@ -50,7 +51,7 @@ $_SESSION = [];
 session_write_close();
 foreach (['/', '/sobre/', '/contato/', '/perguntas-frequentes/', '/termos-de-uso/', '/politica-de-privacidade/', '/app/login/', '/app/cadastro/', '/admin/login/', '/app/esqueci-senha/', '/app/redefinir-senha/', '/station/'] as $rota) pagina($rota);
 foreach (['/.env','/.git/HEAD','/backend/database/schema.sql','/backend/database/schema%20copy.sql','/backend/core/Auth.php','/backend/services/EmailService.php','/vendor/autoload.php','/composer.json','/tests/integration.php'] as $rota) status($rota,403);
-foreach (['/app/inicio/','/admin/dashboard/','/admin/usuarios/','/app/cadastro/google/'] as $rota) status($rota,302);
+foreach (['/app/inicio/','/admin/dashboard/','/admin/usuarios/','/admin/estacoes/','/admin/parceiros/','/app/cadastro/google/'] as $rota) status($rota,302);
 status('/backend/api/auth/me.php',401);
 status('/backend/api/auth/login.php',405);
 foreach (['login','register','google-completar'] as $endpoint) status('/backend/api/auth/'.$endpoint.'.php',403,null,['csrf_token'=>'invalido']);
@@ -58,7 +59,7 @@ status('/backend/api/status.php',200);
 status('/station/',403,null,['csrf_token'=>['invalido']],true);
 
 $pdo = Database::conexao();
-foreach (['usuario'=>['/app/inicio/','/app/saques/','/app/extrato/','/app/conta/'], 'admin'=>['/admin/dashboard/','/admin/usuarios/']] as $papel=>$rotas) {
+foreach (['usuario'=>['/app/inicio/','/app/saques/','/app/extrato/','/app/conta/'], 'admin'=>['/admin/dashboard/','/admin/usuarios/','/admin/estacoes/','/admin/parceiros/']] as $papel=>$rotas) {
     $stmt = $pdo->prepare("SELECT id,nome,email,papel FROM usuarios WHERE papel=? AND status='ativo' LIMIT 1"); $stmt->execute([$papel]);
     $usuario = $stmt->fetch();
     if (!$usuario) throw new RuntimeException('É necessária uma conta local ativa para testar o perfil ' . $papel);
@@ -71,11 +72,22 @@ foreach (['usuario'=>['/app/inicio/','/app/saques/','/app/extrato/','/app/conta/
         status('/backend/api/auth/me.php',200,$cookie);
         status($papel === 'usuario' ? '/admin/usuarios/' : '/app/inicio/',302,$cookie);
         if ($papel === 'usuario') {
+            status('/admin/estacoes/',302,$cookie);
+            status('/admin/parceiros/',302,$cookie);
+            status('/admin/parceiros/',302,$cookie,['acao'=>'receber','csrf_token'=>'invalido'],true);
             status('/app/conta/',403,$cookie,['csrf_token'=>'invalido']);
             status('/app/saques/',403,$cookie,['csrf_token'=>['invalido']],true);
+        } else {
+            foreach (['invalido', ['invalido']] as $tokenInvalido) {
+                status('/admin/parceiros/',403,$cookie,['acao'=>'receber','csrf_token'=>$tokenInvalido],true);
+            }
+            $html = status('/admin/estacoes/?busca=inexistente-xyz&status=ativa',200,$cookie);
+            if (!str_contains($html, 'Nenhuma estação encontrada')) throw new RuntimeException('Filtro de estações incorreto.');
+            $html = status('/admin/parceiros/?busca=inexistente-xyz&status=nova',200,$cookie);
+            if (!str_contains($html, '0 de ')) throw new RuntimeException('Filtro de parceiros incorreto.');
         }
     } finally {
         session_start(); $_SESSION=[]; session_destroy();
     }
 }
-echo "$verificacoes verificações HTTP aprovadas, incluindo 18 páginas, acesso por perfil e bloqueio de arquivos internos. Nenhum e-mail enviado.\n";
+echo "$verificacoes verificações HTTP aprovadas, incluindo 20 páginas, filtros, acesso por perfil, CSRF e bloqueio de arquivos internos. Nenhum e-mail enviado.\n";
