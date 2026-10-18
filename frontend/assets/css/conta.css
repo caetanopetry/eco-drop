@@ -99,3 +99,15 @@
 .conta-foto-form #foto-feedback:empty { display: none; }
 .conta-atalhos { display: flex; flex-wrap: wrap; gap: 12px; }
 .conta-atalhos .botao { gap: 12px; }
+
+.conta-nome-editor { margin: 0; }
+.conta-nome-editor > summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; list-style: none; cursor: pointer; }
+.conta-nome-editor > summary > span:first-child { min-width: 0; }
+.conta-nome-editor .conta-nome-acionar { min-height: 30px; padding: 6px 10px; font-size: .72rem; font-weight: 600; white-space: nowrap; }
+.conta-nome-editor > summary::-webkit-details-marker { display: none; }
+.conta-nome-form { display: grid; gap: 12px; margin-top: 16px; }
+.conta-nome-form input[type="text"] { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--conta-linha); border-radius: 6px; background: var(--conta-suave); color: var(--tinta); font: inherit; }
+.conta-nome-form p { margin: 0; color: var(--tinta-suave); font-size: .78rem; line-height: 1.6; }
+.conta-nome-form #nome-feedback:empty { display: none; }
+.conta-nome-acoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.conta-nome-acoes [aria-disabled="true"] { opacity: .6; cursor: wait; }

@@ -47,6 +47,12 @@ final class UsuarioRepository
         $stmt->execute(['foto' => $foto, 'id' => $usuarioId]);
     }
 
+    public function salvarNome(int $usuarioId, string $nome): void
+    {
+        $stmt = Database::conexao()->prepare('UPDATE usuarios SET nome = :nome WHERE id = :id');
+        $stmt->execute(['nome' => $nome, 'id' => $usuarioId]);
+    }
+
     public function buscarPorEmail(string $email): ?array
     {
         $stmt = Database::conexao()->prepare(
