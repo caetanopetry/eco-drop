@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../core/Database.php';
 
-/**
- * Controle simples de tentativas (rate limiting) para login e recuperação de
- * senha. Protege contra força bruta e contra abuso no envio de e-mails.
- *
- * O identificador (normalmente e-mail + IP) nunca é gravado em claro: guardamos
- * apenas o hash SHA-256, tanto para privacidade quanto para permitir índice único.
- */
+
 final class RateLimiter
 {
     private PDO $pdo;
