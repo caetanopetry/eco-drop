@@ -55,9 +55,6 @@ $dados = [
     'Nome completo' => $perfil['nome'],
     'E-mail' => $perfil['email'],
     'CPF' => $cpf,
-    'Membro desde' => date('d/m/Y', strtotime($perfil['criado_em'])),
-    'Formas de acesso' => $perfil['google_sub'] ? 'Google e e-mail com senha' : 'E-mail e senha',
-    'Situação da conta' => 'Ativa',
 ];
 ?>
 <!doctype html>
@@ -75,7 +72,7 @@ $dados = [
         <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/' . $css . '.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/' . $css . '.css') ?>">
     <?php endforeach; ?>
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/conta.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/conta.css') ?>">
-    <script src="<?= Url::escapar('/frontend/assets/js/conta.js') ?>" defer></script>
+    <script src="<?= Url::escapar('/frontend/assets/js/conta.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/conta.js') ?>" defer></script>
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
 <body>
@@ -83,8 +80,8 @@ $dados = [
     <?php include __DIR__ . '/../../components/app/sidebar.php'; ?>
     <main class="conteudo-app pagina-conta">
         <header class="conta-cabecalho">
-            <div><span class="conta-sobretitulo">Meu perfil</span><h1>Conta</h1><p>Seu espaço no EcoDrop. Todos os seus dados em um só lugar.</p></div>
-            <div class="perfil-controles"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?><span class="conta-status"><span aria-hidden="true"></span>Conta ativa</span></div>
+            <div><span class="conta-sobretitulo">Meu perfil</span><h1>Conta</h1><p>Confira seus dados e personalize sua foto de perfil.</p></div>
+            <div class="perfil-controles"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?></div>
         </header>
         <?php if ($erro !== null): ?>
             <div class="alerta alerta-erro" role="alert"><?= $esc($erro) ?></div>
@@ -101,36 +98,35 @@ $dados = [
                     <?php endif; ?>
                 </div>
                 <h2 id="titulo-perfil"><?= $esc($perfil['nome']) ?></h2>
-                <span class="etiqueta"><?= $perfil['google_sub'] ? 'Google conectado' : 'Conta EcoDrop' ?></span>
                 <dl class="conta-resumo">
-                    <div><dt>E-mail</dt><dd><?= $esc($perfil['email']) ?></dd></div>
-                    <div><dt>Membro desde</dt><dd><?= $esc($dados['Membro desde']) ?></dd></div>
+                    <div><dt>Membro desde</dt><dd><?= $esc(date('d/m/Y', strtotime($perfil['criado_em']))) ?></dd></div>
                 </dl>
+                <details class="conta-foto-editor" <?= $erro !== null ? 'open' : '' ?>>
+                <summary class="botao botao-secundario">Alterar foto</summary>
                 <form method="post" action="<?= Url::escapar('/app/conta/') ?>" enctype="multipart/form-data" class="conta-foto-form">
                     <?= Csrf::campoHtml() ?>
-                    <label for="foto">Alterar foto de perfil</label>
-                    <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/webp" aria-describedby="foto-ajuda" required>
+                    <label for="foto">Escolher nova foto</label>
+                    <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/webp" aria-describedby="foto-ajuda foto-feedback" required>
                     <p id="foto-ajuda">JPG, PNG ou WebP. Até 2 MB e 4096 × 4096 pixels.</p>
+                    <div class="conta-foto-previa" hidden><img alt="Prévia da nova foto de perfil" width="160" height="160"><p>Prévia. A foto só será alterada ao salvar.</p></div>
+                    <p id="foto-feedback" role="status" aria-live="polite"></p>
                     <button class="botao botao-primario" type="submit">Salvar foto</button>
+                    <button class="botao botao-secundario" type="button" data-cancelar-foto hidden>Cancelar</button>
                 </form>
-                <?php if ($perfil['google_sub'] && !$perfil['foto_google'] && !$perfil['foto_personalizada']): ?>
-                    <p class="conta-nota">Entre novamente com o Google para importar sua foto ou envie uma imagem acima.</p>
-                <?php endif; ?>
+                </details>
             </section>
             <section class="conta-detalhes" aria-labelledby="titulo-dados">
-                <nav class="conta-navegacao" aria-label="Seções da conta">
-                    <a href="<?= Url::escapar('/app/conta/') ?>" aria-current="page">Dados pessoais</a>
-                    <a href="<?= Url::escapar('/app/extrato/') ?>">Extrato</a>
-                    <a href="<?= Url::escapar('/app/saques/') ?>">Saques</a>
-                </nav>
                 <div class="conta-informacoes">
-                <div class="conta-secao-cabecalho"><span class="conta-sobretitulo">Meu cadastro</span><h2 id="titulo-dados">Dados pessoais</h2><p>Informações associadas à sua conta EcoDrop.</p></div>
+                <div class="conta-secao-cabecalho"><span class="conta-sobretitulo">Meu cadastro</span><h2 id="titulo-dados">Dados pessoais</h2><p>Os dados abaixo estão disponíveis para consulta.</p></div>
                 <dl class="conta-dados">
                     <?php foreach ($dados as $rotulo => $valor): ?>
                         <div><dt><?= $esc($rotulo) ?></dt><dd><?= $esc($valor) ?></dd></div>
                     <?php endforeach; ?>
                 </dl>
-                <div class="conta-rodape-dados"><span class="conta-status"><span aria-hidden="true"></span><?= $perfil['google_sub'] ? 'Conta vinculada ao Google' : 'Cadastro com e-mail e senha' ?></span><p>Seus dados acompanham você em cada novo descarte.</p></div>
+                <nav class="conta-atalhos" aria-label="Pontos e recompensas">
+                    <a class="botao botao-secundario" href="<?= Url::escapar('/app/extrato/') ?>">Ver extrato <span aria-hidden="true">→</span></a>
+                    <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ir para saques <span aria-hidden="true">→</span></a>
+                </nav>
                 </div>
             </section>
         </div>
