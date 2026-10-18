@@ -5,14 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../repositories/UsuarioRepository.php';
 require_once __DIR__ . '/../core/Validator.php';
 
-/**
- * Regras de negócio de cadastro e autenticação.
- *
- * RF001 - Cadastro de usuário (nome, e-mail, CPF, senha)
- * RN014 - Unicidade de e-mail
- * RN015 - Unicidade de CPF
- * RNF002 - Senhas nunca em texto puro (password_hash / password_verify)
- */
+
 final class AuthService
 {
     public function __construct(private readonly UsuarioRepository $usuarios = new UsuarioRepository())
