@@ -18,10 +18,9 @@ if (!function_exists('linkAppAtivo')) {
         <a href="<?= Url::escapar('/app/inicio/') ?>" <?= linkAppAtivo('inicio', $paginaAtualApp) ?>>Visao geral</a>
         <a href="<?= Url::escapar('/app/saques/') ?>" <?= linkAppAtivo('saques', $paginaAtualApp) ?>>Saques</a>
         <a href="<?= Url::escapar('/app/extrato/') ?>" <?= linkAppAtivo('extrato', $paginaAtualApp) ?>>Extrato</a>
-        <a href="<?= Url::escapar('/station/') ?>">Estacao demo</a>
         <a href="<?= Url::escapar('/app/conta/') ?>" <?= linkAppAtivo('conta', $paginaAtualApp) ?>>Conta</a>
     </nav>
     <div class="app-sidebar-rodape">
-        <a href="<?= Url::escapar('/app/logout/') ?>">Sair</a>
+        <?php require __DIR__ . '/logout-form.php'; ?>
     </div>
 </aside>

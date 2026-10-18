@@ -8,9 +8,11 @@ require_once __DIR__ . '/../../../backend/core/Url.php';
 require_once __DIR__ . '/../../../backend/repositories/EcoDropRepository.php';
 
 Auth::iniciarSessao();
+// A estação representa o totem físico (AT03): somente administradores/operadores
+// podem gerar sessões e registrar descartes que creditam pontos (RN021).
+Auth::exigirPapelPagina('admin', Url::para('/admin/login/'));
 
 $repo = new EcoDropRepository();
-$repo->prepararDemo();
 
 $mensagem = null;
 $tipoMensagem = 'sucesso';
@@ -28,10 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tipoMensagem = 'erro';
     } elseif (($_POST['acao'] ?? '') === 'criar_sessao') {
         $sessaoCriada = $repo->criarSessaoEstacao((int) ($_POST['estacao_id'] ?? 0));
-        $mensagem = 'Sessão temporária criada. Use o link/QR no app do usuário.';
+        if ($sessaoCriada) {
+            $mensagem = 'Sessão temporária criada. Use o link/QR no app do usuário.';
+        } else {
+            $mensagem = 'Não foi possível criar a sessão: estação inválida ou inativa.';
+            $tipoMensagem = 'erro';
+        }
     } elseif (($_POST['acao'] ?? '') === 'registrar_descarte') {
-        $resultado = $repo->registrarDescarte(
-            (string) ($_POST['token'] ?? ''),
+        $resultado = $repo->registrarDescartePorSessao(
+            (int) ($_POST['sessao_id'] ?? 0),
             (int) ($_POST['material_id'] ?? 0),
             (float) str_replace(',', '.', (string) ($_POST['quantidade'] ?? '0'))
         );
@@ -123,9 +130,9 @@ $sessoes = $repo->sessoesEmUso();
 
                 <label>
                     Sessão
-                    <select name="token" required>
+                    <select name="sessao_id" required>
                         <?php foreach ($sessoes as $sessao): ?>
-                            <option value="<?= htmlspecialchars($sessao['token'], ENT_QUOTES, 'UTF-8') ?>">
+                            <option value="<?= (int) $sessao['id'] ?>">
                                 <?= htmlspecialchars($sessao['usuario'] . ' - ' . $sessao['estacao'], ENT_QUOTES, 'UTF-8') ?>
                             </option>
                         <?php endforeach; ?>

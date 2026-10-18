@@ -61,8 +61,8 @@ Não foi necessário stash, pois não houve avanço remoto.
 
 ## Pendências e riscos existentes
 
-1. Antes de usar pontos reais, restringir a interface pública `/station/` a operadores autorizados e separar a preparação de dados demo das requisições comuns.
-2. Endurecimento para produção segue pendente: limites de tentativas, expiração absoluta de sessão, HTTPS/cookies seguros e logout com proteção contra requisições externas (atualmente aceita GET).
+1. ~~Restringir a interface pública `/station/` a operadores autorizados e separar a preparação de dados demo das requisições comuns.~~ **Resolvido (18/10/2026):** `/station/` exige papel `admin`; dados demo vêm apenas de `seed.sql` (sem escrita por requisição).
+2. ~~Endurecimento para produção: limites de tentativas, expiração absoluta de sessão, HTTPS/cookies seguros e logout com proteção contra requisições externas.~~ **Resolvido (18/10/2026):** rate limiting em login/recuperação, expiração de sessões `em_uso`, cookie `Secure` em HTTPS, `use_strict_mode`, logout por POST + CSRF e token de redefinição retirado da URL. Resta apenas colocar a aplicação atrás de HTTPS em produção.
 3. Validar Google, entrega SMTP, upload real, hardware e mapas nos respectivos ambientes. Nenhum e-mail foi enviado nesta revisão.
 4. Realizar conferência visual em navegador, dispositivos móveis e acessibilidade manual. Os testes HTTP/CSS não substituem essa avaliação.
 5. Usuários, estações e propostas carregam conjuntos completos para filtragem; planejar paginação e filtros no banco conforme o volume aumentar.

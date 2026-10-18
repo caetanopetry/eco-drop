@@ -16,7 +16,6 @@ if ($usuario['papel'] === 'admin') {
 }
 
 $repo = new EcoDropRepository();
-$repo->prepararDemo();
 
 $mensagem = null;
 $tipoMensagem = 'sucesso';

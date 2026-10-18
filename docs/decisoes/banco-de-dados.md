@@ -55,10 +55,13 @@ deve deixar claro quando um valor ainda não foi definido.
 
 ### QR Code / sessão de estação como token opaco
 
-`sessoes_estacao.token` é uma string aleatória sem significado — nunca contém CPF,
-e-mail ou qualquer dado sensível (RN019). O QR Code apresentado pela estação
-codifica apenas esse token; a validação de validade (RN018, 2 minutos) é feita no
-servidor via `expira_em`, nunca confiando em um timestamp vindo do cliente.
+`sessoes_estacao.token_hash` é o hash SHA-256 de uma string aleatória sem
+significado — o banco nunca guarda o token puro, que existe apenas no link/QR
+exibido uma vez no momento da criação (nunca contém CPF, e-mail ou qualquer dado
+sensível — RN019). O QR Code apresentado pela estação codifica apenas esse token;
+a validação de validade (RN018, 2 minutos) é feita no servidor via `expira_em`,
+nunca confiando em um timestamp vindo do cliente. Sessões que aguardam o
+descarte no totem expiram após `sessao_estacao_uso_segundos` (padrão 900s).
 
 ## Tabelas e sua origem na documentação
 

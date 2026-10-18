@@ -6,6 +6,7 @@ require_once __DIR__ . '/../../../backend/core/Auth.php';
 require_once __DIR__ . '/../../../backend/core/Csrf.php';
 require_once __DIR__ . '/../../../backend/core/Url.php';
 require_once __DIR__ . '/../../../backend/services/PasswordRecoveryService.php';
+require_once __DIR__ . '/../../../backend/services/RateLimiter.php';
 
 Auth::iniciarSessao();
 
@@ -26,16 +27,34 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 'mensagem' => 'Informe um e-mail válido.',
             ];
         } else {
-            try {
-                (new PasswordRecoveryService())->solicitar($email);
-            } catch (EmailDeliveryException $e) {
-                error_log('[EcoDrop] Recuperação de senha: ' . $e->getMessage());
-            }
+            // Limita o envio para evitar abuso (bombardeio de e-mails): 10/hora por IP
+            // e 5/hora por e-mail. Mensagem genérica para não revelar cadastro.
+            $limitador = new RateLimiter();
+            $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+            $emailNormalizado = mb_strtolower($email);
+            $excedeu = $limitador->demasiadasTentativas('recuperacao_ip', $ip, 10, 3600)
+                || $limitador->demasiadasTentativas('recuperacao_email', $emailNormalizado, 5, 3600);
 
-            $_SESSION['feedback_recuperacao'] = [
-                'tipo' => 'sucesso',
-                'mensagem' => 'Se o e-mail estiver cadastrado, você receberá as instruções para redefinir sua senha.',
-            ];
+            if ($excedeu) {
+                $_SESSION['feedback_recuperacao'] = [
+                    'tipo' => 'erro',
+                    'mensagem' => 'Muitas solicitações. Aguarde alguns minutos e tente novamente.',
+                ];
+            } else {
+                $limitador->registrar('recuperacao_ip', $ip);
+                $limitador->registrar('recuperacao_email', $emailNormalizado);
+
+                try {
+                    (new PasswordRecoveryService())->solicitar($email);
+                } catch (EmailDeliveryException $e) {
+                    error_log('[EcoDrop] Recuperação de senha: ' . $e->getMessage());
+                }
+
+                $_SESSION['feedback_recuperacao'] = [
+                    'tipo' => 'sucesso',
+                    'mensagem' => 'Se o e-mail estiver cadastrado, você receberá as instruções para redefinir sua senha.',
+                ];
+            }
         }
     }
 

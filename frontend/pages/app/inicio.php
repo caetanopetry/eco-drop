@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../../backend/core/Auth.php';
+require_once __DIR__ . '/../../../backend/core/Csrf.php';
 require_once __DIR__ . '/../../../backend/core/Url.php';
 require_once __DIR__ . '/../../../backend/repositories/EcoDropRepository.php';
 
@@ -15,24 +16,45 @@ if ($usuario['papel'] === 'admin') {
 }
 
 $repo = new EcoDropRepository();
-$repo->prepararDemo();
 
 $mensagem = null;
 $tipoMensagem = 'sucesso';
+$qrToken = null;
+$qrSessao = null;
 
-if (isset($_GET['qr'])) {
-    $resultado = $repo->associarSessao((string) $_GET['qr'], (int) $usuario['id']);
-    if ($resultado['sucesso']) {
-        header('Location: ' . Url::para('/station/?associado=1'));
-        exit;
+if (($_GET['associado'] ?? '') === '1') {
+    $mensagem = 'Sessão da estação conectada. Registre seu descarte no totem para receber os pontos.';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'associar_qr') {
+    $tokenCsrf = $_POST['csrf_token'] ?? null;
+    if (!is_string($tokenCsrf) || !Csrf::validar($tokenCsrf)) {
+        $mensagem = 'Token de segurança inválido. Recarregue a página e tente novamente.';
+        $tipoMensagem = 'erro';
+    } else {
+        $resultado = $repo->associarSessao((string) ($_POST['qr'] ?? ''), (int) $usuario['id']);
+        if ($resultado['sucesso']) {
+            header('Location: ' . Url::para('/app/inicio/?associado=1'));
+            exit;
+        }
+
+        $mensagem = $resultado['mensagem'];
+        $tipoMensagem = 'erro';
     }
-
-    $mensagem = $resultado['mensagem'];
-    $tipoMensagem = 'erro';
+} elseif (isset($_GET['qr'])) {
+    // A leitura do QR (via link/câmera) apenas apresenta a confirmação; a associação
+    // de fato ocorre em um POST com token CSRF, evitando conexão forçada por link.
+    $qrToken = (string) $_GET['qr'];
+    $qrSessao = $repo->descreverSessao($qrToken);
+    if ($qrSessao === null || $qrSessao['status'] !== 'aguardando_usuario') {
+        $qrToken = null;
+        $qrSessao = null;
+        $mensagem = 'QR Code inválido, já utilizado ou expirado. Gere um novo na estação.';
+        $tipoMensagem = 'erro';
+    }
 }
 
 $saldo = $repo->saldoDoUsuario((int) $usuario['id']);
-$estacoes = $repo->estacoesAtivas();
 $descartes = $repo->descartesDoUsuario((int) $usuario['id']);
 $ranking = $repo->rankingMensal();
 $recompensas = $repo->recompensasAtivas();
@@ -80,13 +102,29 @@ $paginaAtualApp = 'inicio';
                 </div>
             <?php endif; ?>
 
+            <?php if ($qrSessao !== null): ?>
+                <section class="painel-app" aria-label="Confirmar conexão com a estação">
+                    <div class="cabecalho-painel">
+                        <h2>Conectar à estação</h2>
+                        <span>Confirmação</span>
+                    </div>
+                    <p>Você está associando sua conta à sessão da estação <strong><?= htmlspecialchars($qrSessao['estacao'], ENT_QUOTES, 'UTF-8') ?></strong>. Confirme para permitir o registro do seu descarte.</p>
+                    <form method="post">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(Csrf::token(), ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="acao" value="associar_qr">
+                        <input type="hidden" name="qr" value="<?= htmlspecialchars((string) $qrToken, ENT_QUOTES, 'UTF-8') ?>">
+                        <button class="botao botao-primario" type="submit">Conectar minha conta</button>
+                    </form>
+                </section>
+            <?php endif; ?>
+
             <section class="dashboard-hero">
                 <article class="cartao-principal">
                     <span class="etiqueta">Fluxo principal</span>
                     <h2>Descarte reciclaveis, acumule pontos e troque por beneficios.</h2>
-                    <p>Acesse a estacao demo para simular um descarte ou use os atalhos para ver seus dados completos.</p>
+                    <p>Em uma estação EcoDrop, escaneie o QR Code temporário para associar sua conta e registrar o descarte.</p>
                     <div class="acoes-hero">
-                        <a class="botao botao-primario" href="<?= Url::escapar('/station/') ?>">Iniciar descarte</a>
+                        <a class="botao botao-primario" href="<?= Url::escapar('/app/extrato/') ?>">Ver extrato</a>
                         <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ver saques</a>
                     </div>
                 </article>
@@ -115,11 +153,6 @@ $paginaAtualApp = 'inicio';
                     <strong>Pontos e descartes</strong>
                     <em><?= count($descartes) ?> descartes recentes</em>
                 </a>
-                <a class="atalho-card" href="<?= Url::escapar('/station/') ?>">
-                    <span>Estacao</span>
-                    <strong>Simular descarte</strong>
-                    <em><?= count($estacoes) ?> estacoes ativas</em>
-                </a>
             </section>
 
             <section class="bloco-operacao">
@@ -130,7 +163,7 @@ $paginaAtualApp = 'inicio';
                         <?php if ($ultimoDescarte): ?>
                             <?= htmlspecialchars($ultimoDescarte['material'], ENT_QUOTES, 'UTF-8') ?> em <?= date('d/m H:i', strtotime((string) $ultimoDescarte['criado_em'])) ?>.
                         <?php else: ?>
-                            Comece pela estacao demo para gerar sua primeira movimentacao.
+                            Escaneie o QR Code em uma estação EcoDrop para registrar seu primeiro descarte.
                         <?php endif; ?>
                     </p>
                 </div>

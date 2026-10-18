@@ -131,7 +131,14 @@ try {
     $sessaoEstacao = $eco->criarSessaoEstacao($estacao);
     $stmt = $pdo->prepare('UPDATE sessoes_estacao SET expira_em = DATE_SUB(NOW(), INTERVAL 1 DAY) WHERE id=?'); $stmt->execute([$sessaoEstacao['id']]);
     conferir(!$eco->associarSessao($sessaoEstacao['token'], $id)['sucesso'], 'QR expirado aceito');
-    $testes[] = 'quantidade mínima e expiração do QR';
+
+    // Sessão em uso também expira: descarte fora da janela é recusado e a sessão é encerrada.
+    $sessaoUso = $eco->criarSessaoEstacao($estacao);
+    conferir($eco->associarSessao($sessaoUso['token'], $id)['sucesso'], 'Terceiro QR falhou');
+    $stmt = $pdo->prepare('UPDATE sessoes_estacao SET associado_em = DATE_SUB(NOW(), INTERVAL 1 DAY) WHERE id=?'); $stmt->execute([$sessaoUso['id']]);
+    conferir(!$eco->registrarDescartePorSessao((int) $sessaoUso['id'], (int) $material['id'], 2)['sucesso'], 'Descarte em sessão de uso expirada aceito');
+    conferir($pdo->query('SELECT status FROM sessoes_estacao WHERE id=' . (int) $sessaoUso['id'])->fetchColumn() === 'expirada', 'Sessão de uso expirada não foi encerrada');
+    $testes[] = 'quantidade mínima, expiração do QR e expiração da sessão em uso';
 
     $recompensa = $pdo->query("SELECT * FROM recompensas WHERE custo_pontos=300 LIMIT 1")->fetch();
     conferir($eco->resgatarRecompensa($id, (int) $recompensa['id'])['sucesso'], 'Resgate válido falhou');

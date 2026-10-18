@@ -85,14 +85,16 @@ CREATE TABLE IF NOT EXISTS sessoes_estacao (
     estacao_id      INT UNSIGNED        NOT NULL,
     usuario_id      INT UNSIGNED        NULL COMMENT 'Preenchido quando o usuário se associa via QR Code ou credenciais.',
     -- RN019: o código do QR nunca deve conter dado sensível — é apenas um token opaco.
-    token           CHAR(64)            NOT NULL,
+    -- O banco guarda somente o hash SHA-256 do token; o valor puro existe apenas
+    -- no link/QR exibido uma vez, no momento da criação.
+    token_hash      CHAR(64)            NOT NULL,
     status          ENUM('aguardando_usuario', 'em_uso', 'concluida', 'expirada', 'cancelada') NOT NULL DEFAULT 'aguardando_usuario',
     expira_em       DATETIME            NOT NULL COMMENT 'RN018: validade de 2 minutos a partir da criação.',
     associado_em    DATETIME            NULL,
     criado_em       DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_sessao_estacao FOREIGN KEY (estacao_id) REFERENCES estacoes (id) ON DELETE CASCADE,
     CONSTRAINT fk_sessao_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE SET NULL,
-    UNIQUE KEY uq_sessao_token (token),
+    UNIQUE KEY uq_sessao_token_hash (token_hash),
     KEY idx_sessao_estacao (estacao_id),
     KEY idx_sessao_status (status),
     KEY idx_sessao_expira (expira_em)
@@ -301,4 +303,16 @@ CREATE TABLE IF NOT EXISTS propostas_parceria (
     atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_proposta_avaliador FOREIGN KEY (avaliado_por) REFERENCES usuarios(id) ON DELETE SET NULL,
     KEY idx_propostas_status_data (status, criado_em)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tentativas de acesso para limitar força bruta e abuso (rate limiting).
+-- O identificador é um hash do par (e-mail/IP): não guarda dado pessoal em claro.
+CREATE TABLE IF NOT EXISTS tentativas_acesso (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    escopo VARCHAR(40) NOT NULL COMMENT 'Ex.: login, recuperacao.',
+    identificador CHAR(64) NOT NULL COMMENT 'SHA-256 do identificador (e-mail/IP).',
+    ip VARCHAR(45) NULL,
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_tentativas_busca (escopo, identificador, criado_em),
+    KEY idx_tentativas_limpeza (criado_em)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

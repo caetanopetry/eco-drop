@@ -55,7 +55,7 @@ $campos=['organizacao'=>'Organização / nome do negócio','responsavel'=>'Respo
 </head><body><div class="layout-admin">
 <?php include __DIR__.'/../../components/navbar/navbar-admin.php'; ?>
 <main class="admin-conteudo parceiros-pagina">
-    <header class="admin-cabecalho"><div><p class="parceiros-sobretitulo">CONEXÕES QUE TRANSFORMAM</p><h1>Parceiros</h1><p>Conheça as propostas e acompanhe cada nova possibilidade de parceria.</p></div><div class="flex itens-centro gap-3"><?php require __DIR__.'/../../components/theme/toggle.php'; ?><span><?= $esc($usuario['nome']) ?></span><a class="botao botao-secundario" href="<?= Url::escapar('/app/logout/') ?>">Sair</a></div></header>
+    <header class="admin-cabecalho"><div><p class="parceiros-sobretitulo">CONEXÕES QUE TRANSFORMAM</p><h1>Parceiros</h1><p>Conheça as propostas e acompanhe cada nova possibilidade de parceria.</p></div><div class="flex itens-centro gap-3"><?php require __DIR__.'/../../components/theme/toggle.php'; ?><span><?= $esc($usuario['nome']) ?></span><?php $logoutClasse = 'botao botao-secundario'; require __DIR__.'/../../components/app/logout-form.php'; ?></div></header>
     <?php if ($erro): ?><p class="parceiros-mensagem" role="alert"><?= $esc($erro) ?></p><?php endif; ?>
     <?php if ($sucesso): ?><p class="parceiros-mensagem" role="status"><?= $esc($sucesso) ?></p><?php endif; ?>
     <?php if ($dados!==null): ?>

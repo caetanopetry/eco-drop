@@ -111,7 +111,7 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/cadastro/` — criar conta
 - `/app/login/` — entrar
 - `/app/inicio/` — dashboard do usuário (protegida)
-- `/app/logout/` — encerrar sessão
+- `/app/logout/` — encerrar sessão (POST com CSRF)
 - `/app/esqueci-senha/` e `/app/redefinir-senha/` — recuperação de acesso
 - `/app/saques/` — recompensas e vouchers
 - `/app/extrato/` — movimentações de pontos

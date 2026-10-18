@@ -11,13 +11,31 @@ Auth::iniciarSessao();
 header('Cache-Control: no-store');
 header('Referrer-Policy: no-referrer');
 
-$tokenRecebido = $_SERVER['REQUEST_METHOD'] === 'POST'
-    ? (is_string($_POST['token'] ?? null) ? $_POST['token'] : '')
-    : (is_string($_GET['token'] ?? null) ? $_GET['token'] : '');
+$service = new PasswordRecoveryService();
+$metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+// Ao abrir o link do e-mail (GET ?token=...), o token é guardado na sessão e a
+// página redireciona para a URL limpa, evitando mantê-lo na barra de endereços,
+// no histórico do navegador e no cabeçalho Referer de recursos externos.
+if ($metodo === 'GET' && isset($_GET['token'])) {
+    $tokenLink = is_string($_GET['token']) ? $_GET['token'] : '';
+    if ($service->tokenValido($tokenLink)) {
+        $_SESSION['redefinir_token'] = $tokenLink;
+    } else {
+        $_SESSION['feedback_redefinir_senha'] = [
+            'tipo' => 'erro',
+            'mensagem' => 'Este link é inválido, expirou ou já foi utilizado. Solicite uma nova redefinição.',
+        ];
+    }
+
+    header('Location: ' . Url::para('/app/redefinir-senha/'), true, 303);
+    exit;
+}
+
+$tokenRecebido = is_string($_SESSION['redefinir_token'] ?? null) ? $_SESSION['redefinir_token'] : '';
 $feedback = $_SESSION['feedback_redefinir_senha'] ?? null;
 unset($_SESSION['feedback_redefinir_senha']);
-$service = new PasswordRecoveryService();
-$tokenValido = $service->tokenValido($tokenRecebido);
+$tokenValido = $tokenRecebido !== '' && $service->tokenValido($tokenRecebido);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!Csrf::validar(is_string($_POST['csrf_token'] ?? null) ? $_POST['csrf_token'] : null)) {
@@ -45,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'mensagem' => 'As senhas não conferem.',
             ];
         } elseif ($service->redefinirSenha($tokenRecebido, $senha)) {
+            unset($_SESSION['redefinir_token']);
             $_SESSION['feedback_login'] = [
                 'tipo' => 'sucesso',
                 'mensagem' => 'Senha redefinida com sucesso. Entre com sua nova senha.',
@@ -95,7 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if ($tokenValido): ?>
                     <form method="post" action="<?= Url::escapar('/app/redefinir-senha/') ?>">
                         <?= Csrf::campoHtml() ?>
-                        <input type="hidden" name="token" value="<?= htmlspecialchars($tokenRecebido, ENT_QUOTES, 'UTF-8') ?>">
                         <div class="campo">
                             <label for="nova-senha">Nova senha</label>
                             <input type="password" id="nova-senha" name="senha" required minlength="8" autocomplete="new-password">

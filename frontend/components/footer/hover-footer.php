@@ -14,7 +14,6 @@
           <li><a href="<?= Url::escapar('/sobre/') ?>">Sobre o EcoDrop</a></li>
           <li><a href="<?= Url::escapar('/') ?>#como-funciona">Como funciona</a></li>
           <li><a href="<?= Url::escapar('/') ?>#materiais">Materiais recicláveis</a></li>
-          <li><a href="<?= Url::escapar('/station/') ?>">Estação demonstrativa <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a></li>
         </ul>
       </nav>
 

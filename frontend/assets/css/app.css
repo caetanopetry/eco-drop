@@ -45,7 +45,8 @@ body {
 }
 
 .app-menu a,
-.app-sidebar-rodape a {
+.app-sidebar-rodape a,
+.app-sidebar-rodape button {
     display: flex;
     align-items: center;
     min-height: 36px;
@@ -55,6 +56,15 @@ body {
     font-size: .86rem;
     font-weight: 700;
     text-decoration: none;
+}
+
+.app-sidebar-rodape button {
+    width: 100%;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
 }
 
 .app-menu a:hover,

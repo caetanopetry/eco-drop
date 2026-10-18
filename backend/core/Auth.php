@@ -26,9 +26,14 @@ final class Auth
             return;
         }
 
+        // Rejeita IDs de sessão não gerados pelo servidor (mitiga fixação de sessão).
+        ini_set('session.use_strict_mode', '1');
+
         session_set_cookie_params([
             'lifetime' => (int) Config::get('sessao.tempo_vida', 28800),
             'path' => '/',
+            // Em HTTP local o cookie não é Secure; em HTTPS passa a exigir o canal seguro.
+            'secure' => (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off'),
             'httponly' => true,
             'samesite' => 'Lax',
         ]);

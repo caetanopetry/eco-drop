@@ -47,7 +47,7 @@ foreach ($dados['materiais'] ?? [] as $m) $materiais[$m['estacao_id']][] = $m;
     <main class="admin-conteudo estacoes-pagina">
         <header class="admin-cabecalho">
             <div><p class="estacoes-sobretitulo">GESTÃO DA REDE</p><h1>Estações</h1><p class="texto-suave">Cada ponto de coleta, uma nova oportunidade de transformar.</p></div>
-            <div class="flex itens-centro gap-3"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?><span><?= $esc($usuario['nome']) ?></span><a class="botao botao-secundario" href="<?= Url::escapar('/app/logout/') ?>">Sair</a></div>
+            <div class="flex itens-centro gap-3"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?><span><?= $esc($usuario['nome']) ?></span><?php $logoutClasse = 'botao botao-secundario'; require __DIR__ . '/../../components/app/logout-form.php'; ?></div>
         </header>
         <?php if ($dados === null): ?>
         <div class="estacoes-vazio" role="alert"><h2>Dados indisponíveis</h2><p>Não foi possível consultar as estações. Recarregue a página para tentar novamente.</p></div>

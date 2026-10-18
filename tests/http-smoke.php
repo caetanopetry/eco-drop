@@ -49,17 +49,17 @@ function pagina(string $rota, ?string $cookie = null): void
 Auth::iniciarSessao();
 $_SESSION = [];
 session_write_close();
-foreach (['/', '/sobre/', '/contato/', '/perguntas-frequentes/', '/termos-de-uso/', '/politica-de-privacidade/', '/app/login/', '/app/cadastro/', '/admin/login/', '/app/esqueci-senha/', '/app/redefinir-senha/', '/station/'] as $rota) pagina($rota);
+foreach (['/', '/sobre/', '/contato/', '/perguntas-frequentes/', '/termos-de-uso/', '/politica-de-privacidade/', '/app/login/', '/app/cadastro/', '/admin/login/', '/app/esqueci-senha/', '/app/redefinir-senha/'] as $rota) pagina($rota);
 foreach (['/.env','/.git/HEAD','/backend/database/schema.sql','/backend/database/schema%20copy.sql','/backend/core/Auth.php','/backend/services/EmailService.php','/vendor/autoload.php','/composer.json','/tests/integration.php'] as $rota) status($rota,403);
-foreach (['/app/inicio/','/admin/dashboard/','/admin/usuarios/','/admin/estacoes/','/admin/parceiros/','/app/cadastro/google/'] as $rota) status($rota,302);
+foreach (['/app/inicio/','/admin/dashboard/','/admin/usuarios/','/admin/estacoes/','/admin/parceiros/','/app/cadastro/google/','/station/'] as $rota) status($rota,302);
 status('/backend/api/auth/me.php',401);
 status('/backend/api/auth/login.php',405);
 foreach (['login','register','google-completar'] as $endpoint) status('/backend/api/auth/'.$endpoint.'.php',403,null,['csrf_token'=>'invalido']);
 status('/backend/api/status.php',200);
-status('/station/',403,null,['csrf_token'=>['invalido']],true);
+status('/station/',302,null,['acao'=>'criar_sessao','csrf_token'=>'invalido'],true);
 
 $pdo = Database::conexao();
-foreach (['usuario'=>['/app/inicio/','/app/saques/','/app/extrato/','/app/conta/'], 'admin'=>['/admin/dashboard/','/admin/usuarios/','/admin/estacoes/','/admin/parceiros/']] as $papel=>$rotas) {
+foreach (['usuario'=>['/app/inicio/','/app/saques/','/app/extrato/','/app/conta/'], 'admin'=>['/admin/dashboard/','/admin/usuarios/','/admin/estacoes/','/admin/parceiros/','/station/']] as $papel=>$rotas) {
     $stmt = $pdo->prepare("SELECT id,nome,email,papel FROM usuarios WHERE papel=? AND status='ativo' LIMIT 1"); $stmt->execute([$papel]);
     $usuario = $stmt->fetch();
     if (!$usuario) throw new RuntimeException('É necessária uma conta local ativa para testar o perfil ' . $papel);
@@ -74,10 +74,12 @@ foreach (['usuario'=>['/app/inicio/','/app/saques/','/app/extrato/','/app/conta/
         if ($papel === 'usuario') {
             status('/admin/estacoes/',302,$cookie);
             status('/admin/parceiros/',302,$cookie);
+            status('/station/',302,$cookie);
             status('/admin/parceiros/',302,$cookie,['acao'=>'receber','csrf_token'=>'invalido'],true);
             status('/app/conta/',403,$cookie,['csrf_token'=>'invalido']);
             status('/app/saques/',403,$cookie,['csrf_token'=>['invalido']],true);
         } else {
+            status('/station/',403,$cookie,['acao'=>'criar_sessao','csrf_token'=>['invalido']],true);
             foreach (['invalido', ['invalido']] as $tokenInvalido) {
                 status('/admin/parceiros/',403,$cookie,['acao'=>'receber','csrf_token'=>$tokenInvalido],true);
             }

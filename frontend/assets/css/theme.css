@@ -29,9 +29,9 @@ html :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible 
 html[data-theme="dark"] { color-scheme: dark; }
 html[data-theme="light"] { color-scheme: light; }
 html[data-theme="dark"] .app-sidebar { background: var(--sidebar-bg); border-color: var(--border-sidebar); }
-html[data-theme="dark"] :is(.app-menu a, .app-sidebar-rodape a) { color: var(--text-menu); }
+html[data-theme="dark"] :is(.app-menu a, .app-sidebar-rodape a, .app-sidebar-rodape button) { color: var(--text-menu); }
 html[data-theme="dark"] .app-menu a[aria-current="page"] { background: var(--surface-active); color: var(--accent); }
-html[data-theme="dark"] :is(.app-menu a, .app-sidebar-rodape a):hover { background: var(--surface-hover); color: var(--accent); }
+html[data-theme="dark"] :is(.app-menu a, .app-sidebar-rodape a, .app-sidebar-rodape button):hover { background: var(--surface-hover); color: var(--accent); }
 html[data-theme="dark"] .perfil-pill { background: var(--surface); border-color: var(--border); }
 html[data-theme="dark"] .perfil-pill span { background: var(--accent); color: var(--accent-text-on); }
 html[data-theme="dark"] .cartao-principal { background: var(--hero-gradient); border-color: var(--hero-border); }

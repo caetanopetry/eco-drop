@@ -15,7 +15,6 @@ if ($usuario['papel'] === 'admin') {
 }
 
 $repo = new EcoDropRepository();
-$repo->prepararDemo();
 
 $saldo = $repo->saldoDoUsuario((int) $usuario['id']);
 $descartes = $repo->descartesDoUsuario((int) $usuario['id']);

@@ -40,7 +40,8 @@ final class Validator
     public static function senhaForteMinima(string $valor): bool
     {
         // Mínimo técnico razoável. Política de senha mais rígida não está definida na documentação.
-        return mb_strlen($valor) >= 8;
+        // Exige 8 caracteres e ao menos um caractere que não seja espaço em branco.
+        return mb_strlen($valor) >= 8 && trim($valor) !== '';
     }
 
     /**

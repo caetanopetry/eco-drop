@@ -34,7 +34,7 @@ try {
     <main class="admin-conteudo usuarios-pagina">
         <header class="admin-cabecalho">
             <div><p class="usuarios-sobretitulo">GESTÃO DE CONTAS</p><h1>Usuários</h1><p class="texto-suave">Conheça sua comunidade e acompanhe os acessos.</p></div>
-            <div class="flex itens-centro gap-3"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?><span><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></span><a class="botao botao-secundario" href="<?= Url::escapar('/app/logout/') ?>">Sair</a></div>
+            <div class="flex itens-centro gap-3"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?><span><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></span><?php $logoutClasse = 'botao botao-secundario'; require __DIR__ . '/../../components/app/logout-form.php'; ?></div>
         </header>
         <div class="usuarios-aviso"><strong><?= $dados === null ? 'Dados indisponíveis' : 'Dados do banco' ?></strong><span><?= $dados === null ? 'Não foi possível consultar as contas. Tente novamente em instantes.' : 'Atualizado em ' . htmlspecialchars($dados['atualizado'], ENT_QUOTES, 'UTF-8') . ' (Brasília). Recarregue a página para atualizar.' ?></span></div>
         <noscript><p>Ative o JavaScript para visualizar e filtrar as contas.</p></noscript>
