@@ -66,16 +66,28 @@
     padding: 48px;
     background: radial-gradient(ellipse at 25% 75%, var(--auth-glow) 0%, transparent 48%), linear-gradient(135deg, var(--auth-gradient-start), var(--auth-gradient-end));
 }
-.auth-marca-painel::before {
+/* Entrada e cadastro têm fotos próprias em tela cheia, com crossfade na troca. */
+.auth-marca-painel::before,
+.auth-marca-painel::after {
     content: '';
     position: absolute;
-    width: 84%;
-    aspect-ratio: 1;
-    border: 1px solid var(--auth-ring);
-    border-radius: 50%;
+    inset: 0;
+    z-index: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 500ms ease;
 }
-.auth-marca-painel .eco-marca { position: relative; --marca-largura: clamp(230px, 25vw, 420px); }
+.auth-marca-painel::before { background-image: url('../img/logos/background-login.jpg'); }
+.auth-marca-painel::after { background-image: url('../img/logos/background-cadastro.jpg'); }
+
+.auth-troca[data-modo="login"] .auth-marca-painel::before,
+.auth-troca[data-modo="cadastro"] .auth-marca-painel::after { opacity: 1; }
+
+/* A foto substitui o logo/anel no painel; no mobile a marca continua no topo. */
+.auth-marca-painel .eco-marca { display: none; }
 .auth-marca-mobile { display: none; }
 .auth-troca[data-modo="cadastro"] .auth-formulario { transform: translateX(100%); }
 .auth-troca[data-modo="cadastro"] .auth-marca-painel { transform: translateX(-100%); }
