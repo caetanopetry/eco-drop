@@ -66,10 +66,11 @@ final class Config
 
         $dados['database'] = [
             'driver' => 'mysql',
-            'host' => $variavelObrigatoria('DB_HOST'),
-            'port' => $variavelObrigatoria('DB_PORT'),
-            'database' => $variavelObrigatoria('DB_NAME'),
-            'usuario' => $variavelObrigatoria('DB_USER'),
+            // trim() evita falhas por espaços acidentais no .env (ex.: "DB_NAME=ecodrop ").
+            'host' => trim($variavelObrigatoria('DB_HOST')),
+            'port' => trim($variavelObrigatoria('DB_PORT')),
+            'database' => trim($variavelObrigatoria('DB_NAME')),
+            'usuario' => trim($variavelObrigatoria('DB_USER')),
             'senha' => $variavelObrigatoria('DB_PASS', true),
             'charset' => 'utf8mb4',
         ];

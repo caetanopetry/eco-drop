@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../core/Auth.php';
 require_once __DIR__ . '/../../core/Csrf.php';
 require_once __DIR__ . '/../../core/Url.php';
 require_once __DIR__ . '/../../services/AuthService.php';
+require_once __DIR__ . '/../../services/RateLimiter.php';
 
 Auth::iniciarSessao();
 
@@ -91,8 +92,16 @@ if ($acao === 'cadastrar') {
 }
 
 if ($acao === 'vincular') {
+    // Mesmo limite do login: o fluxo Google não pode virar atalho para força bruta.
+    $limitador = new RateLimiter();
+    $chaveLimite = mb_strtolower($email) . '|' . ($_SERVER['REMOTE_ADDR'] ?? '');
+    if ($limitador->demasiadasTentativas('login', $chaveLimite, 5, 900)) {
+        Response::erro('Muitas tentativas de acesso. Aguarde alguns minutos e tente novamente.', 429);
+    }
+
     $resultado = $authService->autenticar($email, Request::texto('senha', '', false));
     if (!$resultado['sucesso']) {
+        $limitador->registrar('login', $chaveLimite);
         Response::erro($resultado['mensagem'], 401);
     }
 
@@ -104,6 +113,8 @@ if ($acao === 'vincular') {
     if (!$authService->vincularGoogle((int) $resultado['usuario']['id'], $googleSub)) {
         Response::erro('Esta conta Google já está vinculada a outra conta EcoDrop.', 409);
     }
+
+    $limitador->limpar('login', $chaveLimite);
 
     (new UsuarioRepository())->salvarFotoGoogle((int) $resultado['usuario']['id'], $pendente['foto_google'] ?? null);
     unset($_SESSION['google_onboarding']);
