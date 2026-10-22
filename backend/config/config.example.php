@@ -13,7 +13,7 @@ declare(strict_types=1);
 return [
     'app' => [
         // URL base da aplicação no ambiente local de teste.
-        'url_base' => 'http://localhost:9999/EcoDrop',
+        'url_base' => 'http://localhost:8080/Eco-Drop',
         'timezone' => 'America/Sao_Paulo',
     ],
 

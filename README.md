@@ -63,7 +63,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
 
 ## Como executar localmente (XAMPP)
 
-1. Copie a pasta do projeto para `C:\xampp\htdocs\EcoDrop`.
+1. Copie a pasta do projeto para `C:\xampp\htdocs\Eco-Drop`.
 2. Crie o banco: abra o phpMyAdmin (ou o cliente MySQL de sua preferência) e
    execute, nesta ordem:
    - `backend/database/schema.sql`
@@ -78,17 +78,29 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    de recuperação. Em uma instalação nova, essas estruturas já estão no schema.
    Para propostas de parceria, aplique também
    `20261016_create_propostas_parceria.sql` em bancos existentes.
-3. Instale as dependências na raiz do projeto com `composer install`.
-   O carregamento do `.env` depende de `vlucas/phpdotenv`, instalado em `vendor/`.
-   Se o Composer informar que falta suporte a ZIP, habilite `extension=zip` no
-   `php.ini` usado pelo PHP da linha de comando.
-4. Se ainda não existir, copie `.env.example` para `.env` e configure
+3. Instale o Composer para Windows, caso ainda não esteja instalado, em
+   [getcomposer.org/download](https://getcomposer.org/download/). Durante a
+   instalação, selecione o PHP do XAMPP (`C:\xampp\php\php.exe`) se o instalador
+   solicitar o caminho do executável.
+4. Abra um terminal na raiz do projeto (`C:\xampp\htdocs\Eco-Drop`) e execute:
+
+   ```sh
+   composer install
+   ```
+
+   Esse comando baixa as dependências do projeto e cria a pasta `vendor/`,
+   necessária para carregar o `.env` por meio de `vlucas/phpdotenv`. A pasta
+   `vendor/` não é incluída no repositório; execute o comando após clonar ou
+   copiar o projeto. Se o Composer não for reconhecido, feche e reabra o
+   terminal após a instalação. Se ele informar que falta suporte a ZIP, habilite
+   `extension=zip` no `php.ini` usado pelo PHP da linha de comando.
+5. Se ainda não existir, copie `.env.example` para `.env` e configure
    `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` e `DB_PASS` (esta última pode ser
    vazia no XAMPP). As credenciais do banco são lidas do `.env`, não de
    `backend/config/config.php`. Mantenha o `.env` fora do controle de versão.
-5. Inicie o Apache e o MySQL pelo painel do XAMPP.
-6. Acesse `http://localhost/EcoDrop/`, ajustando a porta conforme o Apache.
-   Por exemplo, com `Listen 9999`, use `http://localhost:9999/EcoDrop/`.
+6. Inicie o Apache e o MySQL pelo painel do XAMPP.
+7. Acesse `http://localhost:8080/Eco-Drop/`, ajustando a porta em
+   `backend/config/config.php` conforme o Apache e mantendo o nome da pasta.
 
 ### Usuários de teste (criados pelo seed)
 
