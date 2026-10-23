@@ -44,7 +44,7 @@ $paginaAtual = 'dashboard';
             <div class="admin-cabecalho">
                 <div>
                     <h1>Dashboard</h1>
-                    <p class="texto-suave" style="margin:0;">Visão geral operacional do MVP fictício em funcionamento.</p>
+                    <p class="texto-suave" style="margin:0;">Acompanhe os indicadores do ambiente de demonstração.</p>
                 </div>
                 <div class="flex itens-centro gap-3"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?>
                     <span class="texto-suave"><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></span>
@@ -119,7 +119,7 @@ $paginaAtual = 'dashboard';
                 </div>
 
                 <div class="admin-painel admin-painel-largo">
-                    <h2>Recompensas ficticias</h2>
+                    <h2>Recompensas de demonstração</h2>
                     <p class="tabela-dica">Deslize a tabela para ver todas as colunas.</p>
                     <div class="tabela-wrapper" role="region" aria-label="Recompensas, tabela com rolagem horizontal" tabindex="0">
                         <table class="tabela-ecodrop">

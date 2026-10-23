@@ -52,7 +52,7 @@ if ($usuarioLogado !== null) {
                 <p class="subtitulo texto-suave">Acompanhe seus pontos e recompensas.</p>
 
                 <?php if (is_array($feedbackLogin)): ?>
-                    <div class="alerta alerta-<?= htmlspecialchars((string) $feedbackLogin['tipo'], ENT_QUOTES, 'UTF-8') ?>" role="status">
+                    <div class="alerta alerta-<?= htmlspecialchars((string) $feedbackLogin['tipo'], ENT_QUOTES, 'UTF-8') ?>" role="<?= $feedbackLogin['tipo'] === 'erro' ? 'alert' : 'status' ?>">
                         <?= htmlspecialchars((string) $feedbackLogin['mensagem'], ENT_QUOTES, 'UTF-8') ?>
                     </div>
                 <?php endif; ?>

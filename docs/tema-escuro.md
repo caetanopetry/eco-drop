@@ -30,7 +30,7 @@ O projeto usa PHP, HTML, CSS e JavaScript sem framework de frontend. O tema clar
 | `frontend/pages/admin/{dashboard,usuarios,login}.php` | Recursos do tema e botão de alternância. |
 | `frontend/pages/station/index.php` | Recursos do tema e botão no cabeçalho. |
 | `frontend/pages/auth/{layout,google-completar,esqueci-senha,redefinir-senha}.php` | Recursos do tema e botão de alternância, incluindo as telas recebidas do repositório. |
-| `frontend/pages/inicio.html`, `frontend/pages/institucional/layout.php` | Recursos compartilhados e CSS versionados nas páginas públicas. |
+| `frontend/pages/inicio.php`, `frontend/pages/institucional/layout.php` | Recursos compartilhados e CSS versionados nas páginas públicas. |
 | `tests/theme.test.cjs` | Testes de preferência, persistência, acessibilidade do controle, sincronização, tokens e contraste. |
 
 ## Paleta e contraste

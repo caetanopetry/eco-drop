@@ -1,9 +1,9 @@
 <section class="institucional-dupla" aria-labelledby="sobre-proposta" data-revelar>
   <div class="institucional-texto">
-    <h2 id="sobre-proposta">Ver valor onde muita gente vê o fim.</h2>
-    <p>Uma embalagem vazia, um papel usado, o óleo que sobrou na cozinha. O EcoDrop nasce da ideia de que esses materiais podem encontrar um novo destino quando a separação faz parte da rotina.</p>
-    <p>Nossa proposta é conectar pessoas à coleta seletiva e reconhecer cada participação com pontos. Um incentivo para transformar uma atitude pequena em um hábito que continua.</p>
-    <a class="botao botao-secundario" href="<?= Url::escapar('/') ?>#como-funciona">Conheça o ciclo</a>
+    <h2 id="sobre-proposta">Coleta seletiva com registro e acompanhamento.</h2>
+    <p>O EcoDrop apresenta um fluxo para separar materiais, associar uma conta à estação e acompanhar os descartes registrados.</p>
+    <p>Nesta versão, a estação funciona como uma simulação controlada e os pontos permitem explorar o painel e os resgates.</p>
+    <a class="botao botao-secundario" href="<?= Url::escapar('/') ?>#como-funciona">Como funciona</a>
   </div>
   <figure class="institucional-ilustracao">
     <img src="<?= Url::escapar('/frontend/assets/img/ciclo.svg') ?>" width="600" height="560" alt="Cesta com materiais recicláveis, cercada por folhas e pelo selo menos lixo, mais vida.">
@@ -11,20 +11,20 @@
   </figure>
 </section>
 <section class="institucional-secao" aria-labelledby="sobre-valores">
-  <h2 id="sobre-valores">Um ciclo que faz sentido para todos.</h2>
+  <h2 id="sobre-valores">O que orienta a experiência.</h2>
   <div class="institucional-cards" data-revelar>
-    <article class="institucional-card"><span class="valor-icone" aria-hidden="true">↗</span><h3>Facilitar o primeiro passo</h3><p>Explicar o caminho entre separar os materiais, identificar a conta na estação e acompanhar o descarte.</p></article>
-    <article class="institucional-card"><span class="valor-icone" aria-hidden="true">↻</span><h3>Incentivar a continuidade</h3><p>Usar pontos e recompensas como um convite para manter a coleta seletiva no dia a dia.</p></article>
-    <article class="institucional-card"><span class="valor-icone" aria-hidden="true">✳</span><h3>Crescer com transparência</h3><p>Mostrar o que já pode ser experimentado e o que ainda depende das próximas etapas do projeto.</p></article>
+    <article class="institucional-card"><span class="valor-icone" aria-hidden="true">↗</span><h3>Explicar o fluxo</h3><p>Apresentar as etapas entre separar os materiais, identificar a conta na estação e acompanhar o descarte.</p></article>
+    <article class="institucional-card"><span class="valor-icone" aria-hidden="true">↻</span><h3>Registrar cada etapa</h3><p>Usar pontos e resgates para tornar visível o que foi registrado na conta.</p></article>
+    <article class="institucional-card"><span class="valor-icone" aria-hidden="true">✳</span><h3>Comunicar os limites</h3><p>Indicar o que já pode ser testado e o que ainda não faz parte desta versão.</p></article>
   </div>
 </section>
 <section class="institucional-secao sobre-jornada" aria-labelledby="jornada-titulo" data-revelar>
-  <div><span class="sobretitulo">Uma ideia em construção</span><h2 id="jornada-titulo">Cada etapa abre<br>uma possibilidade.</h2><p>Um projeto que começa na experiência digital e quer encontrar espaço na vida real.</p></div>
+  <div><span class="sobretitulo">Versão atual</span><h2 id="jornada-titulo">O que você pode<br>conhecer agora.</h2><p>Uma experiência digital para apresentar o fluxo de coleta, pontos e resgates.</p></div>
   <ol class="jornada-etapas">
-    <li class="jornada-atual"><span class="jornada-status">Agora · demonstração</span><h3>Experimentar o ciclo</h3><p>Conhecer a plataforma, simular descartes e explorar a proposta de pontos e recompensas.</p></li>
-    <li><span class="jornada-status">Próximas etapas</span><h3>Aprender em conjunto</h3><p>Ouvir quem participa, melhorar a experiência e construir conexões com possíveis parceiros.</p></li>
-    <li><span class="jornada-status">Nosso horizonte</span><h3>Levar a ideia mais longe</h3><p>Avançar na implantação de estações físicas e aproximar a proposta da rotina das pessoas.</p></li>
+    <li class="jornada-atual"><span class="jornada-status">Agora · demonstração</span><h3>Explorar a plataforma</h3><p>Criar uma conta, simular descartes e consultar pontos, extrato e resgates.</p></li>
+    <li><span class="jornada-status">Em desenvolvimento</span><h3>Aprimorar a experiência</h3><p>Usar os aprendizados da demonstração para orientar melhorias no produto.</p></li>
+    <li><span class="jornada-status">Futuro</span><h3>Avaliar novas integrações</h3><p>Estações físicas e parcerias comerciais ainda não fazem parte desta versão.</p></li>
   </ol>
 </section>
-<aside class="institucional-nota"><h2>Estamos no começo desse caminho.</h2><p>O EcoDrop está em fase demonstrativa. As estações, os descartes e as recompensas são usados para experimentar a proposta. Estações físicas e parcerias reais fazem parte das próximas etapas.</p><a href="<?= Url::escapar('/perguntas-frequentes/') ?>">Entenda a versão atual</a></aside>
-<div class="convite"><div><h2>O próximo ciclo pode começar com você.</h2><p>Conheça a experiência e descubra novas possibilidades para o descarte.</p></div><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Criar minha conta</a></div>
+<aside class="institucional-nota"><h2>Ambiente de demonstração</h2><p>Estações, descartes, pontos e recompensas permitem testar o fluxo, sem operação física ou resgates reais.</p><a href="<?= Url::escapar('/perguntas-frequentes/') ?>">Entenda a versão atual</a></aside>
+<div class="convite"><div><h2>Crie sua conta<br>e conheça o EcoDrop.</h2><p>Acompanhe a simulação de descarte, pontos e resgates pelo painel.</p></div><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Criar conta</a></div>

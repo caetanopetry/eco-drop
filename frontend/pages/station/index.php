@@ -96,7 +96,7 @@ $sessoes = $repo->sessoesEmUso();
         </section>
 
         <?php if ($mensagem !== null): ?>
-            <div class="alerta alerta-<?= htmlspecialchars($tipoMensagem, ENT_QUOTES, 'UTF-8') ?>" role="status">
+            <div class="alerta alerta-<?= htmlspecialchars($tipoMensagem, ENT_QUOTES, 'UTF-8') ?>" role="<?= $tipoMensagem === 'erro' ? 'alert' : 'status' ?>">
                 <?= htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8') ?>
             </div>
         <?php endif; ?>

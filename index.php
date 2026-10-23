@@ -29,4 +29,4 @@ if (in_array($paginaInstitucional, $paginasInstitucionais, true)) {
     exit;
 }
 
-require __DIR__ . '/frontend/pages/inicio.html';
+require __DIR__ . '/frontend/pages/inicio.php';
