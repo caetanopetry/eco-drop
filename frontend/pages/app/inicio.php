@@ -23,7 +23,7 @@ $qrToken = null;
 $qrSessao = null;
 
 if (($_GET['associado'] ?? '') === '1') {
-    $mensagem = 'Sessão da estação conectada. Registre seu descarte no totem para receber os pontos.';
+    $mensagem = 'Sessão da estação conectada. O operador pode registrar seu descarte na estação.';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'associar_qr') {

@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (($_POST['acao'] ?? '') === 'criar_sessao') {
         $sessaoCriada = $repo->criarSessaoEstacao((int) ($_POST['estacao_id'] ?? 0));
         if ($sessaoCriada) {
-            $mensagem = 'Sessão temporária criada. Use o link/QR no app do usuário.';
+            $mensagem = 'Sessão temporária criada. Abra a associação no app do usuário para continuar.';
         } else {
             $mensagem = 'Não foi possível criar a sessão: estação inválida ou inativa.';
             $tipoMensagem = 'erro';
@@ -58,7 +58,7 @@ $sessoes = $repo->sessoesEmUso();
     <meta charset="utf-8">
     <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Estação Demo - EcoDrop</title>
+    <title>Simulador de estação - EcoDrop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -77,9 +77,9 @@ $sessoes = $repo->sessoesEmUso();
 
         <section class="station-hero">
             <div>
-                <p class="station-etiqueta">Totem fictício do MVP</p>
-                <h1>Estação de descarte simulado</h1>
-                <p>Gere uma sessão temporária, associe pelo app e registre material e quantidade como se viessem do hardware.</p>
+                <p class="station-etiqueta">Simulador de estação</p>
+                <h1>Registre um descarte simulado</h1>
+                <p>Crie uma sessão temporária, associe uma conta pelo app e informe o material e a quantidade do descarte.</p>
             </div>
 
             <form class="station-form" method="post">
@@ -91,7 +91,7 @@ $sessoes = $repo->sessoesEmUso();
                         <option value="<?= (int) $estacao['id'] ?>"><?= htmlspecialchars($estacao['nome'], ENT_QUOTES, 'UTF-8') ?></option>
                     <?php endforeach; ?>
                 </select>
-                <button class="botao station-botao-principal" type="submit">Gerar QR temporário</button>
+                <button class="botao station-botao-principal" type="submit">Criar sessão temporária</button>
             </form>
         </section>
 
@@ -104,15 +104,15 @@ $sessoes = $repo->sessoesEmUso();
         <?php if ($sessaoCriada): ?>
             <?php $linkQr = Url::para('/app/inicio/?qr=' . urlencode((string) $sessaoCriada['token'])); ?>
             <section class="station-qr">
-                <div class="qr-falso" aria-label="QR Code fictício">
+                <div class="qr-sessao" aria-label="Código visual da sessão temporária">
                     <?php for ($i = 0; $i < 49; $i++): ?>
                         <span class="<?= ($i + ord($sessaoCriada['token'][$i % 64])) % 3 === 0 ? 'preto' : '' ?>"></span>
                     <?php endfor; ?>
                 </div>
                 <div>
-                    <h2>QR ativo por 2 minutos</h2>
-                    <p>Como estamos sem câmera/leitor real, clique no link abaixo estando logado como usuário.</p>
-                    <a class="botao botao-primario" href="<?= htmlspecialchars($linkQr, ENT_QUOTES, 'UTF-8') ?>">Associar no app</a>
+                    <h2>Sessão válida por 2 minutos</h2>
+                    <p>Abra a associação no app com a conta do usuário e confirme a sessão antes de registrar o descarte.</p>
+                    <a class="botao botao-primario" href="<?= htmlspecialchars($linkQr, ENT_QUOTES, 'UTF-8') ?>">Abrir associação no app</a>
                     <code><?= htmlspecialchars(substr((string) $sessaoCriada['token'], 0, 18), ENT_QUOTES, 'UTF-8') ?>...</code>
                 </div>
             </section>
@@ -120,8 +120,8 @@ $sessoes = $repo->sessoesEmUso();
 
         <section class="station-operacao">
             <div>
-                <h2>Sessões em uso</h2>
-                <p>Depois que o usuário associa o QR, selecione a sessão e simule o descarte.</p>
+                <h2>Registrar descarte simulado</h2>
+                <p>Depois que o usuário confirmar a associação no app, selecione a sessão e registre o material e a quantidade.</p>
             </div>
 
             <form class="station-grid-form" method="post">
