@@ -95,13 +95,12 @@ if ($acao === 'vincular') {
     // Mesmo limite do login: o fluxo Google não pode virar atalho para força bruta.
     $limitador = new RateLimiter();
     $chaveLimite = mb_strtolower($email) . '|' . ($_SERVER['REMOTE_ADDR'] ?? '');
-    if ($limitador->demasiadasTentativas('login', $chaveLimite, 5, 900)) {
+    if (!$limitador->registrarSePermitido('login', $chaveLimite, 5, 900)) {
         Response::erro('Muitas tentativas de acesso. Aguarde alguns minutos e tente novamente.', 429);
     }
 
     $resultado = $authService->autenticar($email, Request::texto('senha', '', false));
     if (!$resultado['sucesso']) {
-        $limitador->registrar('login', $chaveLimite);
         Response::erro($resultado['mensagem'], 401);
     }
 

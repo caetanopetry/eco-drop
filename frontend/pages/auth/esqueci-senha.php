@@ -32,8 +32,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             $limitador = new RateLimiter();
             $ip = $_SERVER['REMOTE_ADDR'] ?? '';
             $emailNormalizado = mb_strtolower($email);
-            $excedeu = $limitador->demasiadasTentativas('recuperacao_ip', $ip, 10, 3600)
-                || $limitador->demasiadasTentativas('recuperacao_email', $emailNormalizado, 5, 3600);
+            $excedeu = !$limitador->registrarTodosSePermitido([
+                ['escopo' => 'recuperacao_ip', 'identificador' => $ip, 'maximo' => 10, 'janela' => 3600],
+                ['escopo' => 'recuperacao_email', 'identificador' => $emailNormalizado, 'maximo' => 5, 'janela' => 3600],
+            ]);
 
             if ($excedeu) {
                 $_SESSION['feedback_recuperacao'] = [
@@ -41,9 +43,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                     'mensagem' => 'Muitas solicitações. Aguarde alguns minutos e tente novamente.',
                 ];
             } else {
-                $limitador->registrar('recuperacao_ip', $ip);
-                $limitador->registrar('recuperacao_email', $emailNormalizado);
-
                 try {
                     (new PasswordRecoveryService())->solicitar($email);
                 } catch (EmailDeliveryException $e) {

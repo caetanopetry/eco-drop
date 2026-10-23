@@ -153,9 +153,6 @@ $vinculacao = $contaExistente !== null;
             <a class="eco-marca eco-marca--clara" href="<?= Url::escapar('/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
         </aside>
     </div>
-    <script>
-        window.EcoDropBaseUrl = <?= json_encode(Url::para('/'), JSON_UNESCAPED_SLASHES) ?>;
-    </script>
     <script src="<?= Url::escapar('/frontend/assets/js/api.js') ?>"></script>
     <script src="<?= Url::escapar('/frontend/assets/js/auth.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/auth.js') ?>-<?= filesize(__DIR__ . '/../../assets/js/auth.js') ?>"></script>
 </body>

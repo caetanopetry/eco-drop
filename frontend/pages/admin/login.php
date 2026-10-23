@@ -68,9 +68,6 @@ if ($usuarioLogado !== null && $usuarioLogado['papel'] === 'admin') {
         </main>
     </div>
 
-    <script>
-        window.EcoDropBaseUrl = <?= json_encode(Url::para('/'), JSON_UNESCAPED_SLASHES) ?>;
-    </script>
     <script src="<?= Url::escapar('/frontend/assets/js/api.js') ?>"></script>
     <script src="<?= Url::escapar('/frontend/assets/js/auth.js') ?>"></script>
 </body>

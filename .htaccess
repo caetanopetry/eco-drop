@@ -2,6 +2,17 @@ Options -MultiViews
 
 DirectoryIndex index.php
 
+# Cabeçalhos de proteção para todas as respostas, quando mod_headers estiver
+# habilitado no Apache (padrão no XAMPP). A CSP mantém apenas as origens usadas
+# pela aplicação: recursos locais, Google Fonts, fotos HTTPS e imagens de perfil.
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), geolocation=(), microphone=()"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'"
+</IfModule>
+
 RewriteEngine On
 
 # Arquivos de configuração, versionamento e banco não são recursos públicos.

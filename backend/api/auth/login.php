@@ -25,24 +25,22 @@ $senha = Request::texto('senha', '', false);
 // Indica se o login está sendo feito pela tela administrativa (RNF004: controle de acesso).
 $contextoAdmin = Request::texto('contexto') === 'admin';
 
-// Limita tentativas por e-mail + IP para dificultar força bruta (5 em 15 minutos).
+// Reserva tentativas por e-mail + IP de forma atômica para dificultar força bruta (5 em 15 minutos).
 $limitador = new RateLimiter();
 $chaveLimite = mb_strtolower($email) . '|' . ($_SERVER['REMOTE_ADDR'] ?? '');
-if ($limitador->demasiadasTentativas('login', $chaveLimite, 5, 900)) {
+if (!$limitador->registrarSePermitido('login', $chaveLimite, 5, 900)) {
     Response::erro('Muitas tentativas de acesso. Aguarde alguns minutos e tente novamente.', 429);
 }
 
 $resultado = (new AuthService())->autenticar($email, $senha);
 
 if (!$resultado['sucesso']) {
-    $limitador->registrar('login', $chaveLimite);
     Response::erro($resultado['mensagem'], 401);
 }
 
 if ($contextoAdmin && $resultado['usuario']['papel'] !== 'admin') {
     // Mensagem genérica: não confirma que as credenciais eram válidas para uma
     // conta comum (evita oráculo de credenciais na tela administrativa).
-    $limitador->registrar('login', $chaveLimite);
     Response::erro('E-mail ou senha inválidos.', 401);
 }
 

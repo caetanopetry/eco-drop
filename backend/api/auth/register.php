@@ -25,10 +25,10 @@ $email = Request::texto('email');
 $cpf = Request::texto('cpf');
 $senha = Request::texto('senha', '', false);
 
-// Limita criação de contas por IP (20/hora) para conter cadastros automatizados.
+// Limita tentativas de cadastro por IP (20/hora) para conter automação concorrente.
 $limitador = new RateLimiter();
 $ip = $_SERVER['REMOTE_ADDR'] ?? '';
-if ($limitador->demasiadasTentativas('registro_ip', $ip, 20, 3600)) {
+if (!$limitador->registrarSePermitido('registro_ip', $ip, 20, 3600)) {
     Response::erro('Muitas contas criadas recentemente. Aguarde e tente novamente.', 429);
 }
 
@@ -38,7 +38,6 @@ if (!$resultado['sucesso']) {
     Response::erro($resultado['mensagem'], 422, $resultado['campos'] ?? []);
 }
 
-$limitador->registrar('registro_ip', $ip);
 Auth::autenticar($resultado['usuario']);
 
 Response::sucesso([

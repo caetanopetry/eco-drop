@@ -6,6 +6,7 @@ require_once __DIR__ . '/../../core/Response.php';
 require_once __DIR__ . '/../../core/Request.php';
 require_once __DIR__ . '/../../core/Auth.php';
 require_once __DIR__ . '/../../core/Csrf.php';
+require_once __DIR__ . '/../../core/Url.php';
 
 Auth::iniciarSessao();
 
@@ -19,4 +20,4 @@ if (!Csrf::validar(Request::texto('csrf_token'))) {
 
 Auth::encerrarSessao();
 
-Response::sucesso(['redirecionar_para' => '/']);
+Response::sucesso(['redirecionar_para' => Url::para('/')]);

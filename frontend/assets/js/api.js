@@ -3,12 +3,28 @@
  * Nunca decide regra de negócio aqui: apenas envia e recebe dados.
  */
 const EcoDropApi = (() => {
+    const caminhoDoScript = document.currentScript?.src
+        ? new URL(document.currentScript.src).pathname
+        : '';
+
+    function baseDaAplicacao() {
+        if (window.EcoDropBaseUrl) {
+            return window.EcoDropBaseUrl;
+        }
+
+        // O próprio caminho do arquivo é estável em todas as páginas e evita
+        // depender de um script inline para descobrir a subpasta da aplicação.
+        const marcador = '/frontend/assets/js/';
+        const posicao = caminhoDoScript.indexOf(marcador);
+        return posicao >= 0 ? (caminhoDoScript.slice(0, posicao) || '/') : '/';
+    }
+
     function caminhoComBase(caminho) {
         if (/^https?:\/\//i.test(caminho)) {
             return caminho;
         }
 
-        const base = (window.EcoDropBaseUrl || '/').replace(/\/$/, '');
+        const base = baseDaAplicacao().replace(/\/$/, '');
         return caminho.startsWith('/') ? `${base}${caminho}` : caminho;
     }
 
