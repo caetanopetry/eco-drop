@@ -125,7 +125,7 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/inicio/` — dashboard do usuário (protegida)
 - `/app/logout/` — encerrar sessão (POST com CSRF)
 - `/app/esqueci-senha/` e `/app/redefinir-senha/` — recuperação de acesso
-- `/app/saques/` — recompensas e vouchers
+- `/app/saques/` — resgates e vouchers
 - `/app/extrato/` — movimentações de pontos
 - `/app/conta/` — perfil e fotos
 - `/station/` — estação demonstrativa

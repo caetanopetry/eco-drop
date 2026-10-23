@@ -173,7 +173,7 @@ $dados = [
                 </dl>
                 <nav class="conta-atalhos" aria-label="Pontos e recompensas">
                     <a class="botao botao-secundario" href="<?= Url::escapar('/app/extrato/') ?>">Ver extrato <span aria-hidden="true">→</span></a>
-                    <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ir para saques <span aria-hidden="true">→</span></a>
+                    <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ir para resgates <span aria-hidden="true">→</span></a>
                 </nav>
                 </div>
             </section>

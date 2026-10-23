@@ -45,7 +45,7 @@ $paginaAtualApp = 'saques';
     <meta charset="utf-8">
     <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Saques - EcoDrop</title>
+    <title>Resgates - EcoDrop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@ $paginaAtualApp = 'saques';
         <main class="conteudo-app">
             <div class="app-topbar">
                 <div>
-                    <h1>Saques</h1>
+                    <h1>Resgates</h1>
                     <p>Troque pontos por recompensas e acompanhe seus vouchers.</p>
                 </div>
                 <?php include __DIR__ . '/../../components/app/perfil.php'; ?>

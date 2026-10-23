@@ -125,7 +125,7 @@ $paginaAtualApp = 'inicio';
                     <p>Em uma estação EcoDrop, escaneie o QR Code temporário para associar sua conta e registrar o descarte.</p>
                     <div class="acoes-hero">
                         <a class="botao botao-primario" href="<?= Url::escapar('/app/extrato/') ?>">Ver extrato</a>
-                        <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ver saques</a>
+                        <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ver resgates</a>
                     </div>
                 </article>
 
@@ -144,7 +144,7 @@ $paginaAtualApp = 'inicio';
 
             <section class="atalhos-dashboard" aria-label="Atalhos">
                 <a class="atalho-card" href="<?= Url::escapar('/app/saques/') ?>">
-                    <span>Saques</span>
+                    <span>Resgates</span>
                     <strong>Recompensas e vouchers</strong>
                     <em><?= count($recompensas) ?> recompensas / <?= count($vouchers) ?> vouchers</em>
                 </a>
