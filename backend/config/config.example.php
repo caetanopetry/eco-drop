@@ -13,7 +13,8 @@ declare(strict_types=1);
 return [
     'app' => [
         // URL base da aplicação no ambiente local de teste.
-        'url_base' => 'http://localhost:8080/Eco-Drop',
+        // Deve corresponder à porta do Apache e ao nome real da pasta em htdocs.
+        'url_base' => 'http://localhost:9999/EcoDrop',
         'timezone' => 'America/Sao_Paulo',
     ],
 

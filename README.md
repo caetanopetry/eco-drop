@@ -63,26 +63,22 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
 
 ## Como executar localmente (XAMPP)
 
-1. Copie a pasta do projeto para `C:\xampp\htdocs\Eco-Drop`.
+1. Copie a pasta do projeto para `C:\xampp\htdocs\EcoDrop`.
 2. Crie o banco: abra o phpMyAdmin (ou o cliente MySQL de sua preferência) e
    execute, nesta ordem:
    - `backend/database/schema.sql`
    - `backend/database/seed.sql`
-   Para bancos já existentes, não execute novamente o `schema.sql`: aplique,
-   uma única vez e em ordem cronológica, cada migração ainda pendente em
-   `backend/database/migrations/`. Em particular, a migração
-   `20261002_add_fotos_to_usuarios.sql` adiciona as colunas de fotos usadas
-   pelo perfil e pelos fluxos de login.
-   Aplique também `20261008_create_sessoes_acesso.sql` para o histórico do admin
-   e `20261008_add_unique_token_hash_to_recuperacoes_acesso.sql` para os tokens
-   de recuperação. Em uma instalação nova, essas estruturas já estão no schema.
-   Para propostas de parceria, aplique também
-   `20261016_create_propostas_parceria.sql` em bancos existentes.
+   Para bancos já existentes, aplique uma única vez
+   `backend/database/atualizacao.sql`. Ele cria a tabela `tentativas_acesso`
+   (proteção contra força bruta, exigida pelo login) e alinha a coluna
+   `sessoes_estacao.token_hash` usada pelo fluxo da estação. O script é
+   idempotente e pode ser executado novamente sem erro. Em uma instalação nova,
+   essas estruturas já estão no `schema.sql`.
 3. Instale o Composer para Windows, caso ainda não esteja instalado, em
    [getcomposer.org/download](https://getcomposer.org/download/). Durante a
    instalação, selecione o PHP do XAMPP (`C:\xampp\php\php.exe`) se o instalador
    solicitar o caminho do executável.
-4. Abra um terminal na raiz do projeto (`C:\xampp\htdocs\Eco-Drop`) e execute:
+4. Abra um terminal na raiz do projeto (`C:\xampp\htdocs\EcoDrop`) e execute:
 
    ```sh
    composer install
@@ -99,8 +95,8 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    vazia no XAMPP). As credenciais do banco são lidas do `.env`, não de
    `backend/config/config.php`. Mantenha o `.env` fora do controle de versão.
 6. Inicie o Apache e o MySQL pelo painel do XAMPP.
-7. Acesse `http://localhost:8080/Eco-Drop/`, ajustando a porta em
-   `backend/config/config.php` conforme o Apache e mantendo o nome da pasta.
+7. Acesse `http://localhost:9999/EcoDrop/`, ajustando a porta e o nome da pasta
+   em `backend/config/config.php` (`app.url_base`) conforme o Apache local.
 
 ### Usuários de teste (criados pelo seed)
 
