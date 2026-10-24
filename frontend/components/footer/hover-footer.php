@@ -3,9 +3,6 @@
   <div class="eco-footer__inner">
     <div class="eco-footer__grid">
       <div class="eco-footer__brand">
-        <a class="eco-footer__logo eco-marca eco-marca--clara" href="<?= Url::escapar('/') ?>" aria-label="EcoDrop, página inicial">
-          <?php require __DIR__ . '/../brand/marca.php'; ?>
-        </a>
       </div>
 
       <nav class="eco-footer__nav" aria-labelledby="footer-projeto">

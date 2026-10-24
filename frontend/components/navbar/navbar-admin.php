@@ -21,7 +21,6 @@ function linkAdminAtivo(string $chave, string $atual): string
             <li><a href="<?= Url::escapar('/admin/parceiros/') ?>" <?= linkAdminAtivo('parceiros', $paginaAtual) ?>>Parceiros</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Vouchers</a></li>
             <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Ranking</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Premiações</a></li>
         </ul>
     </nav>
 </aside>

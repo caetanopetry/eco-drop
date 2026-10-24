@@ -39,6 +39,17 @@
         </div>
       </div>
     </section>
+    <section class="secao-estatisticas" aria-labelledby="titulo-estatisticas">
+      <div class="container">
+        <div class="secao-cabecalho"><div><span class="sobretitulo">Brasil em números</span><h2 id="titulo-estatisticas">O desafio dos resíduos, em dados.</h2></div><p>Estimativas nacionais de resíduos urbanos e um índice de reciclagem mecânica de plásticos. Cada indicador tem seu próprio escopo.</p></div>
+        <dl class="estatisticas-grade">
+          <div class="estatistica-card estatistica-card--geracao"><dt>RSU gerados <span>BRASIL · 2024</span></dt><dd>81,6 <small>mi t</small></dd><p class="estatistica-descricao">Estimativa anual de resíduos urbanos.</p><div class="estatistica-link"><a href="https://www.abrema.org.br/download/98191/" target="_blank" rel="noopener noreferrer">Fonte: ABREMA <span aria-hidden="true">↗</span><span class="sr-only"> (abre em nova aba)</span></a></div></div>
+          <div class="estatistica-card estatistica-card--coleta"><dt>RSU coletados <span>BRASIL · 2024</span></dt><dd>93,7<small>%</small></dd><p class="estatistica-descricao">Dos resíduos urbanos gerados.</p><div class="estatistica-link"><a href="https://www.abrema.org.br/download/98191/" target="_blank" rel="noopener noreferrer">Fonte: ABREMA <span aria-hidden="true">↗</span><span class="sr-only"> (abre em nova aba)</span></a></div></div>
+          <div class="estatistica-card estatistica-card--destinacao"><dt>Destinação inadequada <span>BRASIL · 2024</span></dt><dd>40,3<small>%</small></dd><p class="estatistica-descricao">Do volume destinado: 28,1 mi t.</p><div class="estatistica-link"><a href="https://www.abrema.org.br/download/98191/" target="_blank" rel="noopener noreferrer">Fonte: ABREMA <span aria-hidden="true">↗</span><span class="sr-only"> (abre em nova aba)</span></a></div></div>
+          <div class="estatistica-card estatistica-card--plastico"><dt>Reciclagem de plásticos <span>BRASIL · 2025</span></dt><dd>24,2<small>%</small></dd><p class="estatistica-descricao">Embalagens e itens equiparáveis.</p><div class="estatistica-link"><a href="https://www.abiplast.org.br/noticias/setor-de-reciclagem-mecanica-de-plasticos-recupera-producao-faturamento-e-empregos-em-2025/" target="_blank" rel="noopener noreferrer">Fonte: ABIPLAST · PICPlast <span aria-hidden="true">↗</span><span class="sr-only"> (abre em nova aba)</span></a></div></div>
+        </dl>
+      </div>
+    </section>
     <section id="como-funciona" class="secao-timeline">
       <div class="container">
         <div class="secao-cabecalho"><div><span class="sobretitulo">Como funciona</span><h2>Do descarte ao painel.<br>Em três passos.</h2></div><p>Veja como a demonstração associa o descarte à conta e registra os pontos.</p></div>
