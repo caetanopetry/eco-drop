@@ -5,8 +5,8 @@ require_once __DIR__ . '/../../../backend/core/Url.php';
 $paginas = [
     'sobre' => ['Sobre o EcoDrop', 'Conheça o EcoDrop e nossa proposta de aproximar a coleta seletiva do dia a dia, com informação e incentivo.'],
     'contato' => ['Contato', 'Fale com o EcoDrop. Encontre nossos canais de contato e compartilhe suas dúvidas, ideias e propostas de parceria.'],
-    'perguntas-frequentes' => ['Perguntas frequentes', 'Tire suas dúvidas sobre cadastro, materiais, pontos e a versão demonstrativa do EcoDrop.'],
-    'termos-de-uso' => ['Termos de uso', 'Conheça as condições de uso da plataforma EcoDrop e os limites da versão demonstrativa.'],
+    'perguntas-frequentes' => ['Perguntas frequentes', 'Tire suas dúvidas sobre cadastro, materiais, pontos e o ambiente de demonstração do EcoDrop.'],
+    'termos-de-uso' => ['Termos de uso', 'Conheça as condições de uso da plataforma EcoDrop e os limites do ambiente de demonstração.'],
     'politica-de-privacidade' => ['Política de privacidade', 'Saiba quais dados o EcoDrop utiliza, para que servem e como funcionam os recursos de privacidade nesta versão.'],
 ];
 

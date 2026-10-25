@@ -120,7 +120,7 @@ $sessoes = $repo->sessoesEmUso();
 
         <section class="station-operacao">
             <div>
-                <h2>Registrar descarte simulado</h2>
+                <h2>Registrar descarte</h2>
                 <p>Depois que o usuário confirmar a associação no app, selecione a sessão e registre o material e a quantidade.</p>
             </div>
 

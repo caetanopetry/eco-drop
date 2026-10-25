@@ -22,14 +22,14 @@ $canais = [
           <?php if ($canal['url'] !== ''): ?>
             <svg class="contato-seta" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
           <?php else: ?>
-            <span class="contato-em-breve">Em breve</span>
+            <span class="contato-em-breve">Indisponível</span>
           <?php endif; ?>
         </div>
         <h2><?= $escapar($canal['nome']) ?></h2>
         <?php if ($canal['url'] !== ''): ?>
           <p><?= $escapar($canal['detalhe']) ?></p><span class="contato-cartao-acao"><?= $escapar($canal['acao']) ?></span>
         <?php else: ?>
-          <p>Nosso canal está chegando por aqui.</p>
+          <p>Este canal ainda não foi configurado.</p>
         <?php endif; ?>
       <?php if ($canal['url'] !== ''): ?></a><?php else: ?></article><?php endif; ?>
     <?php endforeach; ?>
@@ -40,7 +40,7 @@ $canais = [
     <h2 id="contato-mensagem-titulo">Vamos conversar?</h2>
     <p class="contato-introducao">Uma dúvida, uma ideia ou uma nova parceria. A gente quer ouvir você.</p>
     <?php if ($emailContato === ''): ?>
-      <p class="contato-disponibilidade" id="contato-disponibilidade"><span aria-hidden="true"></span>O envio de mensagens estará disponível em breve.</p>
+      <p class="contato-disponibilidade" id="contato-disponibilidade"><span aria-hidden="true"></span>O endereço de contato não está configurado.</p>
     <?php endif; ?>
     <form class="contato-formulario"<?= $emailContato !== '' ? ' action="mailto:' . $escapar($emailContato) . '" method="get" data-contato-formulario' : ' aria-describedby="contato-disponibilidade"' ?>>
       <fieldset<?= $emailContato === '' ? ' disabled' : '' ?>>
@@ -51,7 +51,7 @@ $canais = [
         </div>
         <div class="campo"><label for="contato-assunto">Sobre o que vamos conversar?</label><select id="contato-assunto" name="subject" required><option value="" disabled selected>Selecione um assunto</option><option value="Dúvida sobre o EcoDrop">Tenho uma dúvida</option><option value="Sugestão para o EcoDrop">Quero compartilhar uma ideia</option><option value="Parceria com o EcoDrop">Quero conversar sobre uma parceria</option><option value="Privacidade e minha conta">Privacidade e minha conta</option><option value="Outro assunto">Outro assunto</option></select></div>
         <div class="campo"><label for="contato-mensagem">Sua mensagem</label><textarea id="contato-mensagem" name="body" rows="4" placeholder="Conte um pouco mais. Estamos aqui para ouvir." maxlength="2000" required></textarea></div>
-        <button class="botao botao-primario contato-enviar" type="submit"><?= $emailContato !== '' ? 'Abrir no meu e-mail' : 'Envio em breve' ?><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 3-7 18-4-7-7-4 18-7ZM10 14 21 3"/></svg></button>
+        <button class="botao botao-primario contato-enviar" type="submit"><?= $emailContato !== '' ? 'Abrir no meu e-mail' : 'Indisponível' ?><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 3-7 18-4-7-7-4 18-7ZM10 14 21 3"/></svg></button>
       </fieldset>
       <?php if ($emailContato !== ''): ?><p class="contato-formulario-nota">A mensagem será preparada no seu aplicativo de e-mail. Você revisa e envia por lá.</p><?php endif; ?>
       <p class="contato-privacidade">Seus dados merecem cuidado. Consulte nossa <a href="<?= Url::escapar('/politica-de-privacidade/') ?>">Política de privacidade</a>.</p>

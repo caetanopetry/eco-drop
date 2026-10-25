@@ -7,7 +7,7 @@
     <?php require __DIR__ . '/../components/theme/head.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173f32">
-  <meta name="description" content="Conheça o EcoDrop: separe materiais, acompanhe pontos e explore resgates em ambiente de demonstração.">
+  <meta name="description" content="Conheça o EcoDrop: separe materiais, acompanhe pontos e explore resgates de recompensas.">
   <title>EcoDrop — reciclagem, pontos e recompensas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,7 +52,7 @@
     </section>
     <section id="como-funciona" class="secao-timeline">
       <div class="container">
-        <div class="secao-cabecalho"><div><span class="sobretitulo">Como funciona</span><h2>Do descarte ao painel.<br>Em três passos.</h2></div><p>Veja como a demonstração associa o descarte à conta e registra os pontos.</p></div>
+        <div class="secao-cabecalho"><div><span class="sobretitulo">Como funciona</span><h2>Do descarte ao painel.<br>Em três passos.</h2></div><p>Veja como a conta se conecta à estação e os descartes validados aparecem no painel.</p></div>
         <ol class="timeline" data-revelar>
           <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div><strong>Separe seus recicláveis</strong><p>Plástico, papel, vidro e óleo usado: conheça os materiais previstos para as estações EcoDrop.</p></div></li>
           <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6m0 6v6h-6m-6 0H3v-6M7 7h3v3H7zm7 0h3v3h-3zM7 14h3v3H7zm7 0h3v3h-3z"/></svg></span><div><strong>Acumule pontos</strong><p>Conecte sua conta à estação por QR Code. Cada descarte validado gera pontos para acompanhar no seu painel.</p></div></li>
@@ -71,7 +71,7 @@
         </ul>
       </div>
     </section>
-    <section class="secao-mvp"><div class="container"><div class="convite"><div><span class="sobretitulo">Comece por aqui</span><h2>Conheça o fluxo<br>de descarte.</h2><p>Crie sua conta para acompanhar a simulação de descarte, pontos e resgates no EcoDrop.</p></div><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Criar conta</a></div></div></section>
+    <section class="secao-mvp"><div class="container"><div class="convite"><div><span class="sobretitulo">Comece por aqui</span><h2>Conheça o fluxo<br>de descarte.</h2><p>Crie sua conta para acompanhar descartes, pontos e resgates no EcoDrop.</p></div><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Criar conta</a></div></div></section>
   </main>
   <?php require __DIR__ . '/../components/footer/hover-footer.php'; ?>
 </body>

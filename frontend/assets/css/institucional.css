@@ -21,6 +21,7 @@
 .institucional-card:nth-child(2) { background: var(--institutional-orange-bg); border-color: var(--institutional-orange-border); }
 .institucional-card:nth-child(3) { background: var(--institutional-blue-bg); border-color: var(--institutional-blue-border); }
 .valor-icone { display: grid; place-items: center; width: 49px; height: 49px; margin-bottom: 28px; border-radius: 50%; background: var(--value-icon-bg); color: var(--musgo-escuro); font-size: 1.8rem; }
+.valor-icone svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .institucional-card h3 { margin-bottom: 12px; line-height: 1.35; font-size: 1.05rem; }
 .institucional-card p { font-size: .88rem; line-height: 1.8; margin-bottom: 0; }
 .sobre-jornada { display: grid; grid-template-columns: 1fr 1.1fr; align-items: start; gap: 80px; padding: 52px 0; border-block: 1px solid var(--linha); }
