@@ -1,0 +1,631 @@
+.materiais-sobretitulo {
+    margin-bottom: 10px !important;
+    color: var(--musgo);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.materiais-controles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: var(--espaco-5);
+}
+
+.materiais-periodos {
+    display: inline-flex;
+    padding: 4px;
+    border: 1px solid var(--linha);
+    border-radius: 999px;
+    background: var(--superficie);
+}
+
+.materiais-periodo {
+    padding: 8px 18px;
+    border-radius: 999px;
+    color: var(--tinta-suave);
+    font-size: .82rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.materiais-periodo:hover {
+    color: var(--musgo-escuro);
+}
+
+.materiais-periodo--ativo {
+    color: var(--text-inverse);
+    background: var(--musgo-escuro);
+}
+
+html[data-theme="dark"] .materiais-periodo--ativo {
+    color: var(--accent-text-on);
+}
+
+.materiais-atualizado {
+    margin: 0;
+    color: var(--tinta-suave);
+    font-size: .78rem;
+}
+
+.materiais-indicadores .valor {
+    font-size: clamp(1.45rem, 3vw, 2.2rem);
+    font-variant-numeric: tabular-nums;
+}
+
+.materiais-secao {
+    margin-bottom: var(--espaco-5);
+}
+
+.materiais-secao-cabecalho {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.materiais-secao-cabecalho h2 {
+    margin: 0 0 4px;
+    font-size: 1.35rem;
+}
+
+.materiais-secao-cabecalho .texto-suave {
+    margin: 0;
+    font-size: .84rem;
+}
+
+.materiais-pill {
+    padding: 7px 12px;
+    border: 1px solid var(--linha);
+    border-radius: 999px;
+    color: var(--tinta-suave);
+    background: var(--superficie);
+    font-size: .78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Cores por categoria ------------------------------------------------ */
+.materiais-categoria--metal {
+    --categoria-bg: #e7edf0;
+    --categoria-text: #46565f;
+}
+
+.materiais-categoria--plastico {
+    --categoria-bg: var(--plastic-bg);
+    --categoria-text: var(--plastic-text);
+}
+
+.materiais-categoria--papel {
+    --categoria-bg: var(--paper-bg);
+    --categoria-text: var(--paper-text);
+}
+
+.materiais-categoria--vidro {
+    --categoria-bg: var(--glass-bg);
+    --categoria-text: var(--glass-text);
+}
+
+.materiais-categoria--organico {
+    --categoria-bg: #efe6d5;
+    --categoria-text: #7a5a33;
+}
+
+.materiais-categoria--oleo {
+    --categoria-bg: var(--oil-bg);
+    --categoria-text: var(--oil-text);
+}
+
+.materiais-categoria--eletronico {
+    --categoria-bg: #e8e3f0;
+    --categoria-text: #5b4a7a;
+}
+
+.materiais-categoria--outros {
+    --categoria-bg: var(--status-neutral-bg);
+    --categoria-text: var(--status-neutral-text);
+}
+
+html[data-theme="dark"] .materiais-categoria--metal {
+    --categoria-bg: #232c31;
+    --categoria-text: #c8d8e0;
+}
+
+html[data-theme="dark"] .materiais-categoria--organico {
+    --categoria-bg: #2d261c;
+    --categoria-text: #e0c79f;
+}
+
+html[data-theme="dark"] .materiais-categoria--eletronico {
+    --categoria-bg: #282235;
+    --categoria-text: #cbbce6;
+}
+
+/* Categorias --------------------------------------------------------- */
+.materiais-categorias-grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.materiais-categoria {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-md);
+    background: var(--superficie);
+}
+
+.materiais-categoria-topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.materiais-categoria-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--categoria-text);
+    background: var(--categoria-bg);
+    font-family: var(--fonte-titulo);
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.materiais-categoria h3 {
+    margin: 0;
+    font-size: 1.02rem;
+}
+
+.materiais-categoria-topo p {
+    margin: 2px 0 0;
+    color: var(--tinta-suave);
+    font-size: .74rem;
+}
+
+.materiais-categoria-numeros {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+}
+
+.materiais-categoria-numeros strong {
+    color: var(--musgo-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1.9rem;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.materiais-categoria-numeros span {
+    color: var(--tinta-suave);
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.materiais-categoria-numeros em {
+    margin-left: auto;
+    color: var(--categoria-text);
+    font-size: .78rem;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.materiais-categoria-volume {
+    margin: 0;
+    color: var(--tinta-suave);
+    font-size: .76rem;
+    overflow-wrap: anywhere;
+}
+
+.materiais-barra {
+    height: 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--surface-active);
+}
+
+.materiais-barra span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--categoria-text, var(--musgo));
+    transition: width .35s ease;
+}
+
+/* Ranking e depósitos recentes --------------------------------------- */
+.materiais-grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, .8fr);
+    align-items: start;
+    gap: var(--espaco-5);
+    margin-bottom: var(--espaco-5);
+}
+
+.materiais-painel {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-md);
+    background: var(--superficie);
+}
+
+.materiais-painel h2 {
+    margin: 0 0 5px;
+    font-size: 1.2rem;
+}
+
+.materiais-painel .texto-suave {
+    margin: 0;
+    font-size: .82rem;
+}
+
+.materiais-ranking {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.materiais-ranking-item {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--linha);
+}
+
+.materiais-ranking-item:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.materiais-ranking-posicao {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: var(--categoria-text);
+    background: var(--categoria-bg);
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.materiais-ranking-conteudo {
+    min-width: 0;
+}
+
+.materiais-ranking-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 7px;
+}
+
+.materiais-ranking-topo strong {
+    overflow-wrap: anywhere;
+    font-size: .88rem;
+}
+
+.materiais-ranking-conteudo .materiais-barra {
+    height: 5px;
+}
+
+.materiais-ranking-conteudo p {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 7px 0 0;
+}
+
+.materiais-ranking-conteudo small {
+    color: var(--tinta-suave);
+    font-size: .73rem;
+    overflow-wrap: anywhere;
+}
+
+.materiais-ranking-conteudo em {
+    color: var(--musgo-escuro);
+    font-size: .76rem;
+    font-style: normal;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.materiais-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    color: var(--categoria-text);
+    background: var(--categoria-bg);
+    font-size: .68rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.materiais-recentes {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.materiais-recentes li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 0;
+    border-top: 1px solid var(--linha);
+}
+
+.materiais-recentes li:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.materiais-recentes-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    color: var(--categoria-text);
+    background: var(--categoria-bg);
+    font-family: var(--fonte-titulo);
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.materiais-recentes-dados {
+    flex: 1;
+    min-width: 0;
+}
+
+.materiais-recentes-dados strong {
+    display: block;
+    font-size: .84rem;
+}
+
+.materiais-recentes-dados small {
+    display: block;
+    margin-top: 2px;
+    color: var(--tinta-suave);
+    font-size: .72rem;
+    overflow-wrap: anywhere;
+}
+
+.materiais-recentes em {
+    color: var(--musgo-escuro);
+    font-size: .78rem;
+    font-style: normal;
+    font-weight: 800;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.materiais-recentes em small {
+    display: block;
+    margin-top: 3px;
+    color: var(--sucesso);
+    font-size: .7rem;
+    font-weight: 700;
+}
+
+/* Tabela ------------------------------------------------------------- */
+.materiais-lista {
+    margin-bottom: var(--espaco-5);
+}
+
+.materiais-tabela {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.materiais-tabela td {
+    vertical-align: middle;
+}
+
+.materiais-tabela tbody tr:hover {
+    background: var(--surface-hover);
+}
+
+.materiais-nome {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.materiais-nome > span:last-child {
+    min-width: 0;
+}
+
+.materiais-nome strong {
+    display: block;
+    font-size: .88rem;
+}
+
+.materiais-nome small {
+    display: block;
+    margin-top: 3px;
+    color: var(--tinta-suave);
+    font-size: .72rem;
+}
+
+.materiais-avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    color: var(--categoria-text);
+    background: var(--categoria-bg);
+    font-family: var(--fonte-titulo);
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.materiais-pontos {
+    color: var(--musgo-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1.02rem;
+    font-weight: 600;
+}
+
+.materiais-participacao {
+    display: grid;
+    grid-template-columns: minmax(70px, 120px) auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.materiais-participacao .materiais-barra {
+    height: 5px;
+}
+
+.materiais-participacao small {
+    color: var(--tinta-suave);
+    font-size: .72rem;
+}
+
+.materiais-status {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 999px;
+    color: var(--status-neutral-text);
+    background: var(--status-neutral-bg);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.materiais-status--ativo {
+    color: var(--musgo-escuro);
+    background: var(--sucesso-fundo);
+}
+
+.materiais-legenda {
+    margin: 14px 0 0;
+    color: var(--tinta-suave);
+    font-size: .74rem;
+    line-height: 1.6;
+}
+
+/* Estados vazios ----------------------------------------------------- */
+.materiais-vazio {
+    padding: 34px 24px;
+    border: 1px dashed var(--linha);
+    border-radius: var(--raio-md);
+    background: var(--superficie);
+    text-align: center;
+}
+
+.materiais-vazio h2 {
+    margin: 0 0 8px;
+    font-size: 1.3rem;
+}
+
+.materiais-vazio p {
+    max-width: 52ch;
+    margin: 0 auto;
+    color: var(--tinta-suave);
+    font-size: .88rem;
+}
+
+.materiais-vazio-texto {
+    margin: 16px 0 0;
+    color: var(--tinta-suave);
+    font-size: .82rem;
+}
+
+@media (max-width: 1180px) {
+    .materiais-categorias-grade {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .materiais-grade {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .materiais-controles {
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .materiais-periodos {
+        display: flex;
+        width: 100%;
+    }
+
+    .materiais-periodo {
+        flex: 1;
+        text-align: center;
+    }
+
+    .materiais-pill {
+        width: 100%;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .materiais-secao-cabecalho {
+        align-items: stretch;
+    }
+
+    .materiais-categorias-grade {
+        grid-template-columns: 1fr;
+    }
+
+    .materiais-painel,
+    .materiais-categoria {
+        padding: 16px;
+    }
+
+    .materiais-indicadores .valor {
+        font-size: 1.65rem;
+    }
+}
+
+@media (max-width: 470px) {
+    .materiais-periodo {
+        padding: 8px 10px;
+        font-size: .76rem;
+    }
+
+    .materiais-ranking-topo {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .materiais-ranking-conteudo p {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .materiais-recentes em {
+        font-size: .72rem;
+    }
+}

@@ -37,14 +37,18 @@ final class EcoDropRepository
         $stmt->execute();
 
         $pdo->exec(
-            "INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
-             SELECT 'EcoDrop Centro', 'Praca Central, 100', -23.5505200, -46.6333080, 'ativa'
-             WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Centro')"
+            "INSERT INTO estacoes (codigo, nome, endereco, latitude, longitude, status)
+             SELECT CONCAT('ECO-', LPAD(COALESCE(MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)), 0) + 1, 3, '0')),
+                    'EcoDrop Centro', 'Praca Central, 100', -23.5505200, -46.6333080, 'ativa'
+             FROM estacoes
+             HAVING NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Centro')"
         );
         $pdo->exec(
-            "INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
-             SELECT 'EcoDrop Parque Verde', 'Rua das Arvores, 42', -23.5558000, -46.6401000, 'ativa'
-             WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Parque Verde')"
+            "INSERT INTO estacoes (codigo, nome, endereco, latitude, longitude, status)
+             SELECT CONCAT('ECO-', LPAD(COALESCE(MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)), 0) + 1, 3, '0')),
+                    'EcoDrop Parque Verde', 'Rua das Arvores, 42', -23.5558000, -46.6401000, 'ativa'
+             FROM estacoes
+             HAVING NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Parque Verde')"
         );
 
         $pdo->exec(
@@ -307,6 +311,54 @@ final class EcoDropRepository
     {
         return Database::transacao(function (PDO $pdo) use ($sessaoId, $materialId, $quantidade): array {
             return $this->efetivarDescarte($pdo, $this->sessaoPorId($sessaoId, true), $materialId, $quantidade);
+        });
+    }
+
+    /**
+     * Pesagem iniciada pelo app do usuário a partir da lixeira selecionada.
+     *
+     * A sessão é criada e concluída na mesma transação para manter o vínculo
+     * exigido por `descartes.sessao_estacao_id`, sem depender do totem físico.
+     * A lixeira precisa estar ativa e o material/quantidade seguem as mesmas
+     * validações da estação.
+     */
+    public function registrarDescarteDireto(int $usuarioId, int $estacaoId, int $materialId, float $quantidade): array
+    {
+        return Database::transacao(function (PDO $pdo) use ($usuarioId, $estacaoId, $materialId, $quantidade): array {
+            $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE id = :id AND status = 'ativo'");
+            $stmt->execute(['id' => $usuarioId]);
+            if ($stmt->fetchColumn() === false) {
+                return ['sucesso' => false, 'mensagem' => 'Conta indisponível para registrar a pesagem.'];
+            }
+
+            if (!$this->estacaoAtivaExiste($estacaoId)) {
+                return ['sucesso' => false, 'mensagem' => 'Lixeira inválida ou inativa. Selecione outra lixeira.'];
+            }
+
+            $agora = date('Y-m-d H:i:s');
+            $stmt = $pdo->prepare(
+                "INSERT INTO sessoes_estacao
+                    (estacao_id, usuario_id, token_hash, status, expira_em, associado_em)
+                 VALUES
+                    (:estacao_id, :usuario_id, :token_hash, 'em_uso', :expira_em, :associado_em)"
+            );
+            $stmt->execute([
+                'estacao_id' => $estacaoId,
+                'usuario_id' => $usuarioId,
+                'token_hash' => hash('sha256', bin2hex(random_bytes(32))),
+                'expira_em' => date('Y-m-d H:i:s', time() + 60),
+                'associado_em' => $agora,
+            ]);
+            $sessaoId = (int) $pdo->lastInsertId();
+
+            $resultado = $this->efetivarDescarte($pdo, $this->sessaoPorId($sessaoId, true), $materialId, $quantidade);
+            if (!$resultado['sucesso']) {
+                // Não deixa uma sessão "em uso" órfã quando a validação falha.
+                $stmt = $pdo->prepare("DELETE FROM sessoes_estacao WHERE id = :id AND status <> 'concluida'");
+                $stmt->execute(['id' => $sessaoId]);
+            }
+
+            return $resultado;
         });
     }
 

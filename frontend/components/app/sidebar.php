@@ -16,6 +16,7 @@ if (!function_exists('linkAppAtivo')) {
     <nav class="app-menu" aria-label="Navegacao do app">
         <span>Cliente</span>
         <a href="<?= Url::escapar('/app/inicio/') ?>" <?= linkAppAtivo('inicio', $paginaAtualApp) ?>>Visao geral</a>
+        <a href="<?= Url::escapar('/app/descartes/') ?>" <?= linkAppAtivo('descartes', $paginaAtualApp) ?>>Meus Descartes</a>
         <a href="<?= Url::escapar('/app/saques/') ?>" <?= linkAppAtivo('saques', $paginaAtualApp) ?>>Resgates</a>
         <a href="<?= Url::escapar('/app/extrato/') ?>" <?= linkAppAtivo('extrato', $paginaAtualApp) ?>>Extrato</a>
         <a href="<?= Url::escapar('/app/conta/') ?>" <?= linkAppAtivo('conta', $paginaAtualApp) ?>>Conta</a>

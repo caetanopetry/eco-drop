@@ -41,6 +41,13 @@ final class GoogleOAuth
 
     public static function cliente(): Google\Client
     {
+        // Tolera pequenos desvios entre o relógio do servidor e o do Google.
+        // Sem isso, um atraso local de poucos segundos faz o "iat" do ID token
+        // cair no futuro e a verificação falha com BeforeValidException.
+        if (class_exists(\Firebase\JWT\JWT::class)) {
+            \Firebase\JWT\JWT::$leeway = 120;
+        }
+
         $config = self::configuracao();
         $cliente = new Google\Client();
 

@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS recuperacoes_acesso (
 
 CREATE TABLE IF NOT EXISTS estacoes (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    codigo          VARCHAR(20)         NOT NULL COMMENT 'Codigo publico da lixeira exibido na estacao e no app.',
     nome            VARCHAR(150)        NOT NULL,
     endereco        VARCHAR(255)        NULL,
     -- Coordenadas para integração com o mapa (Google Maps).
@@ -51,6 +52,7 @@ CREATE TABLE IF NOT EXISTS estacoes (
     status          ENUM('ativa', 'inativa', 'manutencao') NOT NULL DEFAULT 'ativa',
     criado_em       DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em   DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_estacoes_codigo (codigo),
     UNIQUE KEY uq_estacoes_nome (nome)
 ) ENGINE = InnoDB;
 

@@ -98,19 +98,43 @@ $paginaAtualApp = 'saques';
                     </div>
                     <div class="grade-recompensas">
                         <?php foreach ($recompensas as $recompensa): ?>
-                            <article>
+                            <?php
+                            $estoque = $recompensa['estoque'];
+                            $esgotada = $estoque !== null && (int) $estoque <= 0;
+                            $validadeDias = $recompensa['validade_dias'];
+                            $faltamPontos = max(0, (int) $recompensa['custo_pontos'] - $saldo);
+                            ?>
+                            <article class="<?= $esgotada ? 'recompensa-esgotada' : '' ?>">
                                 <span class="badge badge-neutro"><?= htmlspecialchars($recompensa['parceiro'] ?? 'EcoDrop', ENT_QUOTES, 'UTF-8') ?></span>
                                 <h3><?= htmlspecialchars($recompensa['nome'], ENT_QUOTES, 'UTF-8') ?></h3>
                                 <p><?= htmlspecialchars($recompensa['descricao'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
+                                <ul class="recompensa-detalhes">
+                                    <li>
+                                        <strong><?= $estoque === null ? 'Ilimitado' : number_format((int) $estoque, 0, ',', '.') ?></strong>
+                                        <span><?= $estoque === null ? 'estoque disponível' : ((int) $estoque === 1 ? 'unidade em estoque' : 'unidades em estoque') ?></span>
+                                    </li>
+                                    <li>
+                                        <strong><?= $validadeDias === null ? 'Sem validade' : number_format((int) $validadeDias, 0, ',', '.') . ' dias' ?></strong>
+                                        <span><?= $validadeDias === null ? 'para usar o voucher' : 'de validade do voucher' ?></span>
+                                    </li>
+                                </ul>
                                 <strong><?= number_format((int) $recompensa['custo_pontos'], 0, ',', '.') ?> pontos</strong>
+                                <?php if ($esgotada): ?>
+                                    <p class="recompensa-aviso" role="status">Recompensa esgotada. Aguarde a reposição do estoque.</p>
+                                <?php elseif ($faltamPontos > 0): ?>
+                                    <p class="recompensa-aviso">Faltam <?= number_format($faltamPontos, 0, ',', '.') ?> pontos para resgatar.</p>
+                                <?php endif; ?>
                                 <form method="post">
                                     <?= Csrf::campoHtml() ?>
                                     <input type="hidden" name="acao" value="resgatar">
                                     <input type="hidden" name="recompensa_id" value="<?= (int) $recompensa['id'] ?>">
-                                    <button class="botao botao-primario" type="submit" <?= $saldo < (int) $recompensa['custo_pontos'] ? 'disabled' : '' ?>>Resgatar</button>
+                                    <button class="botao botao-primario" type="submit" <?= ($esgotada || $faltamPontos > 0) ? 'disabled' : '' ?>><?= $esgotada ? 'Esgotada' : 'Resgatar' ?></button>
                                 </form>
                             </article>
                         <?php endforeach; ?>
+                        <?php if (empty($recompensas)): ?>
+                            <p class="estado-vazio">Nenhuma recompensa ativa no momento. Continue coletando pontos e volte em breve.</p>
+                        <?php endif; ?>
                     </div>
                 </article>
 

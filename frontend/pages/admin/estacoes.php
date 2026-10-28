@@ -68,7 +68,7 @@ foreach ($dados['materiais'] ?? [] as $m) $materiais[$m['estacao_id']][] = $m;
             <div class="estacoes-grade">
             <?php foreach ($filtradas as $e): ?>
                 <article class="estacoes-card">
-                    <div class="estacoes-titulo"><span class="estacoes-codigo">ESTAÇÃO #<?= (int) $e['id'] ?></span><span class="estacoes-status estacoes-status--<?= $esc($e['status']) ?>"><?= $esc($rotulos[$e['status']] ?? $e['status']) ?></span></div>
+                    <div class="estacoes-titulo"><span class="estacoes-codigo"><?= $esc($e['codigo']) ?></span><span class="estacoes-status estacoes-status--<?= $esc($e['status']) ?>"><?= $esc($rotulos[$e['status']] ?? $e['status']) ?></span></div>
                     <h3><?= $esc($e['nome']) ?></h3><p class="texto-suave estacoes-endereco"><?= $esc($e['endereco'] ?: 'Endereço não informado') ?></p>
                     <div class="estacoes-metricas"><div><strong><?= (int) $e['registros'] ?></strong><span>descartes registrados</span></div><div><strong><?= $numero($e['kg']) ?> <small>kg</small></strong><span>sólidos recebidos</span></div><div><strong><?= $numero($e['litros']) ?> <small>L</small></strong><span>líquidos recebidos</span></div></div>
                     <p class="estacoes-nota"><?= (int) $e['validos'] ?> válidos · <?= (int) $e['registros'] - (int) $e['validos'] ?> inválidos · <?= number_format((int) $e['pontos'], 0, ',', '.') ?> pontos gerados</p>

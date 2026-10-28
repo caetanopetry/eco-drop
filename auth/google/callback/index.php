@@ -99,7 +99,7 @@ try {
     header('Location: ' . Url::para('/app/cadastro/google/'));
     exit;
 } catch (Throwable $erro) {
-    error_log('[EcoDrop] Google callback processing failed (' . get_class($erro) . ').');
+    error_log('[EcoDrop] Google callback processing failed (' . get_class($erro) . '): ' . $erro->getMessage());
     $_SESSION['google_oauth_erro'] = 'Não foi possível concluir o login com Google. Tente novamente.';
     header('Location: ' . Url::para('/app/login/'));
     exit;

@@ -2,11 +2,11 @@
 
 ## RN001 - Materiais aceitos
 
-Materiais iniciais: plástico, papel, vidro e óleo de cozinha usado.
+Materiais iniciais: plástico, papel, vidro, metal, orgânico e óleo de cozinha usado.
 
 ## RN002 - Unidade dos sólidos
 
-Plástico, papel e vidro são medidos em kg.
+Plástico, papel, vidro, metal e orgânico são medidos em kg.
 
 ## RN003 - Unidade do óleo
 
@@ -14,7 +14,7 @@ Plástico, papel e vidro são medidos em kg.
 
 ## RN004 - Quantidade mínima dos sólidos
 
-Plástico, papel e vidro exigem no mínimo 0,100 kg para descarte válido para pontuação.
+Plástico, papel, vidro, metal e orgânico exigem no mínimo 0,100 kg para descarte válido para pontuação.
 
 ## RN005 - Quantidade mínima do óleo
 
@@ -98,7 +98,10 @@ QR deverá associar usuário autenticado à sessão temporária da estação.
 
 ## RN021 - Descarte controlado
 
-Usuário comum não poderá autodeclarar livremente descartes para gerar pontos.
+Usuário comum não poderá autodeclarar livremente descartes para gerar pontos. O
+registro pelo app exige a seleção de uma lixeira ativa e passa pelas validações
+de material, quantidade mínima e pontuação; o fluxo por sessão temporária da
+estação permanece disponível para a operação no totem.
 
 ## RN022 - Resgate condicionado ao saldo
 

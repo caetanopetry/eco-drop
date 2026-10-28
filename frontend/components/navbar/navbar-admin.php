@@ -16,11 +16,11 @@ function linkAdminAtivo(string $chave, string $atual): string
             <li><a href="<?= Url::escapar('/admin/dashboard/') ?>" <?= linkAdminAtivo('dashboard', $paginaAtual) ?>>Dashboard</a></li>
             <li><a href="<?= Url::escapar('/admin/usuarios/') ?>" <?= linkAdminAtivo('usuarios', $paginaAtual) ?>>Usuários</a></li>
             <li><a href="<?= Url::escapar('/admin/estacoes/') ?>" <?= linkAdminAtivo('estacoes', $paginaAtual) ?>>Estações</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Materiais</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Recompensas</a></li>
+            <li><a href="<?= Url::escapar('/admin/lixeiras/') ?>" <?= linkAdminAtivo('lixeiras', $paginaAtual) ?>>Lixeiras</a></li>
+            <li><a href="<?= Url::escapar('/admin/materiais/') ?>" <?= linkAdminAtivo('materiais', $paginaAtual) ?>>Materiais</a></li>
+            <li><a href="<?= Url::escapar('/admin/recompensas/') ?>" <?= linkAdminAtivo('recompensas', $paginaAtual) ?>>Recompensas</a></li>
             <li><a href="<?= Url::escapar('/admin/parceiros/') ?>" <?= linkAdminAtivo('parceiros', $paginaAtual) ?>>Parceiros</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Vouchers</a></li>
-            <li><a href="#" aria-disabled="true" title="Disponível em uma próxima fase">Ranking</a></li>
+            <li><a href="<?= Url::escapar('/admin/ranking/') ?>" <?= linkAdminAtivo('ranking', $paginaAtual) ?>>Ranking</a></li>
         </ul>
     </nav>
 </aside>

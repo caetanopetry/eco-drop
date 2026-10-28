@@ -475,6 +475,60 @@ table.tabela-ecodrop td {
     font-size: .95rem;
 }
 
+.recompensa-detalhes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px 0;
+    margin: 0;
+    border-top: 1px solid var(--divider-subtle);
+    border-bottom: 1px solid var(--divider-subtle);
+    list-style: none;
+}
+
+.recompensa-detalhes li {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.recompensa-detalhes strong {
+    color: var(--tinta);
+    font-size: .82rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.recompensa-detalhes span {
+    color: var(--tinta-suave);
+    font-size: .7rem;
+    line-height: 1.35;
+}
+
+.recompensa-aviso {
+    margin: 0 !important;
+    padding: 7px 10px;
+    border-radius: 6px;
+    color: var(--aviso) !important;
+    background: var(--aviso-fundo, var(--surface-active));
+    font-size: .76rem !important;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.grade-recompensas article.recompensa-esgotada {
+    opacity: .78;
+    background: var(--superficie-2);
+}
+
+.grade-recompensas .botao:disabled {
+    cursor: not-allowed;
+}
+
+.grade-recompensas .estado-vazio {
+    grid-column: 1 / -1;
+}
+
 .grade-recompensas form {
     margin-top: 4px;
 }

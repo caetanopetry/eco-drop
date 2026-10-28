@@ -1,0 +1,446 @@
+.descartes-indicadores {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.descartes-indicadores .cartao-resumo {
+    min-height: 150px;
+    padding: 16px;
+}
+
+.descartes-indicadores .cartao-resumo strong {
+    font-size: clamp(1.65rem, 3vw, 2.5rem);
+    font-variant-numeric: tabular-nums;
+}
+
+.descartes-indicadores .descartes-volume {
+    font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.descartes-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(320px, .75fr);
+    align-items: start;
+    gap: 14px;
+}
+
+.descartes-coluna {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+}
+
+.descartes-painel {
+    padding: 20px;
+}
+
+/* Tipos recolhidos --------------------------------------------------- */
+.descartes-tipos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.descartes-tipo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--divider-subtle);
+    border-radius: 8px;
+    background: var(--surface-plain);
+}
+
+.descartes-tipo-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: var(--musgo-escuro);
+    background: var(--musgo-claro);
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.descartes-tipo > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.descartes-tipo strong {
+    display: block;
+    font-size: .86rem;
+    overflow-wrap: anywhere;
+}
+
+.descartes-tipo small {
+    display: block;
+    margin-top: 2px;
+    color: var(--tinta-suave);
+    font-size: .72rem;
+    line-height: 1.4;
+}
+
+.descartes-tipo em {
+    color: var(--musgo-escuro);
+    font-size: .75rem;
+    font-style: normal;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* Histórico ---------------------------------------------------------- */
+.descartes-historico {
+    display: grid;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.descartes-historico li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--divider-subtle);
+}
+
+.descartes-historico li:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.descartes-historico-icone {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: var(--musgo-escuro);
+    background: var(--musgo-claro);
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.descartes-historico-dados {
+    flex: 1;
+    min-width: 0;
+}
+
+.descartes-historico-topo {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.descartes-historico-topo strong {
+    font-size: .88rem;
+    overflow-wrap: anywhere;
+}
+
+.descartes-historico-dados small {
+    display: block;
+    margin-top: 3px;
+    color: var(--tinta-suave);
+    font-size: .72rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.descartes-historico-numeros {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.descartes-historico-numeros strong {
+    display: block;
+    font-size: .86rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.descartes-historico-numeros em {
+    display: block;
+    margin-top: 3px;
+    color: var(--sucesso);
+    font-size: .72rem;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.descartes-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: .66rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.descartes-status--valida {
+    color: var(--sucesso);
+    background: var(--sucesso-fundo);
+}
+
+.descartes-status--aviso {
+    color: var(--aviso);
+    background: var(--aviso-fundo, var(--surface-active));
+}
+
+.descartes-legenda {
+    margin: 14px 0 0;
+    color: var(--tinta-suave);
+    font-size: .72rem;
+    line-height: 1.55;
+}
+
+/* Nova pesagem ------------------------------------------------------- */
+.descartes-nova {
+    position: sticky;
+    top: 20px;
+    padding: 20px;
+}
+
+.descartes-nova-cabecalho {
+    margin-bottom: 16px;
+}
+
+.descartes-nova-cabecalho h2 {
+    margin: 0 0 5px;
+    font-size: 1.15rem;
+}
+
+.descartes-nova-cabecalho p {
+    margin: 0;
+    color: var(--tinta-suave);
+    font-size: .82rem;
+    line-height: 1.5;
+}
+
+.descartes-aviso {
+    margin: 0 0 16px;
+    padding: 13px 14px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--tinta-suave);
+    background: var(--surface-active);
+    font-size: .8rem;
+    line-height: 1.55;
+}
+
+.descartes-form {
+    display: grid;
+    gap: 13px;
+}
+
+.descartes-campo {
+    display: grid;
+    gap: 6px;
+    color: var(--tinta);
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.descartes-campo select,
+.descartes-campo textarea,
+.descartes-campo input {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid var(--card-border);
+    border-radius: 7px;
+    color: var(--tinta);
+    background: var(--surface-plain);
+    font-family: inherit;
+    font-size: .86rem;
+    font-weight: 400;
+}
+
+.descartes-campo textarea {
+    min-height: 82px;
+    resize: vertical;
+}
+
+.descartes-campo select:focus,
+.descartes-campo textarea:focus,
+.descartes-campo input:focus {
+    border-color: var(--musgo);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--musgo-claro);
+}
+
+.descartes-codigo {
+    display: grid;
+    gap: 2px;
+    padding: 12px 14px;
+    border: 1px solid var(--musgo);
+    border-radius: 8px;
+    background: var(--musgo-claro);
+}
+
+.descartes-codigo span {
+    color: var(--musgo-escuro);
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.descartes-codigo strong {
+    color: var(--musgo-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.descartes-codigo small {
+    color: var(--tinta-suave);
+    font-size: .7rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.descartes-campo-medida {
+    display: flex;
+    align-items: stretch;
+}
+
+.descartes-campo-medida input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.descartes-campo-medida em {
+    display: grid;
+    place-items: center;
+    min-width: 54px;
+    padding: 0 10px;
+    border: 1px solid var(--card-border);
+    border-left: 0;
+    border-radius: 0 7px 7px 0;
+    color: var(--tinta-suave);
+    background: var(--surface-active);
+    font-size: .8rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.descartes-minimo {
+    margin: -5px 0 0;
+    color: var(--tinta-suave);
+    font-size: .7rem;
+}
+
+.descartes-previa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px dashed var(--card-border);
+    border-radius: 8px;
+    background: var(--surface-active);
+}
+
+.descartes-previa span {
+    color: var(--tinta-suave);
+    font-size: .76rem;
+    font-weight: 600;
+}
+
+.descartes-previa strong {
+    color: var(--musgo-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.descartes-botao {
+    width: 100%;
+    min-height: 44px;
+}
+
+.descartes-ajuda {
+    margin: 0;
+    color: var(--tinta-suave);
+    font-size: .7rem;
+    line-height: 1.5;
+}
+
+/* Responsivo --------------------------------------------------------- */
+@media (max-width: 1180px) {
+    .descartes-indicadores {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .descartes-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .descartes-nova {
+        position: static;
+    }
+}
+
+@media (max-width: 720px) {
+    .descartes-indicadores {
+        grid-template-columns: 1fr;
+    }
+
+    .descartes-indicadores .cartao-resumo {
+        min-height: 120px;
+    }
+
+    .descartes-tipos {
+        grid-template-columns: 1fr;
+    }
+
+    .descartes-painel,
+    .descartes-nova {
+        padding: 16px;
+    }
+
+    .descartes-historico li {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .descartes-historico-numeros {
+        width: 100%;
+        padding-left: 50px;
+        text-align: left;
+    }
+
+    .descartes-historico-numeros strong,
+    .descartes-historico-numeros em {
+        display: inline;
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 470px) {
+    .descartes-historico-topo {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .descartes-historico-numeros {
+        padding-left: 0;
+    }
+}

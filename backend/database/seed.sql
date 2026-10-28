@@ -11,6 +11,8 @@ VALUES
     ('Plastico', 'plastico', 'kg', 0.100, 150, 'ativo'),
     ('Papel', 'papel', 'kg', 0.100, 90, 'ativo'),
     ('Vidro', 'vidro', 'kg', 0.100, 120, 'ativo'),
+    ('Metal', 'metal', 'kg', 0.100, 200, 'ativo'),
+    ('Organico', 'organico', 'kg', 0.100, 60, 'ativo'),
     ('Oleo de cozinha usado', 'oleo-cozinha-usado', 'l', 0.500, 220, 'ativo')
 ON DUPLICATE KEY UPDATE
     nome = VALUES(nome),
@@ -28,21 +30,36 @@ ON DUPLICATE KEY UPDATE
     valor = COALESCE(configuracoes.valor, VALUES(valor)),
     descricao = VALUES(descricao);
 
-INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
-SELECT 'Estacao EcoDrop Demo', 'Endereco de demonstracao para testes locais', -23.5505200, -46.6333080, 'ativa'
-WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'Estacao EcoDrop Demo');
+INSERT INTO estacoes (codigo, nome, endereco, latitude, longitude, status)
+SELECT CONCAT('ECO-', LPAD(COALESCE(MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)), 0) + 1, 3, '0')),
+       'Estacao EcoDrop Demo', 'Endereco de demonstracao para testes locais', -23.5505200, -46.6333080, 'ativa'
+FROM estacoes
+HAVING NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'Estacao EcoDrop Demo');
 
-INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
-SELECT 'EcoDrop Centro', 'Praca Central, 100', -23.5505200, -46.6333080, 'ativa'
-WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Centro');
+INSERT INTO estacoes (codigo, nome, endereco, latitude, longitude, status)
+SELECT CONCAT('ECO-', LPAD(COALESCE(MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)), 0) + 1, 3, '0')),
+       'EcoDrop Centro', 'Praca Central, 100', -23.5505200, -46.6333080, 'ativa'
+FROM estacoes
+HAVING NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Centro');
 
-INSERT INTO estacoes (nome, endereco, latitude, longitude, status)
-SELECT 'EcoDrop Parque Verde', 'Rua das Arvores, 42', -23.5558000, -46.6401000, 'ativa'
-WHERE NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Parque Verde');
+INSERT INTO estacoes (codigo, nome, endereco, latitude, longitude, status)
+SELECT CONCAT('ECO-', LPAD(COALESCE(MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)), 0) + 1, 3, '0')),
+       'EcoDrop Parque Verde', 'Rua das Arvores, 42', -23.5558000, -46.6401000, 'ativa'
+FROM estacoes
+HAVING NOT EXISTS (SELECT 1 FROM estacoes WHERE nome = 'EcoDrop Parque Verde');
 
 UPDATE estacoes
 SET status = 'ativa'
 WHERE nome IN ('Estacao EcoDrop Demo', 'EcoDrop Centro', 'EcoDrop Parque Verde');
+
+UPDATE estacoes
+SET codigo = CASE nome
+        WHEN 'Estacao EcoDrop Demo' THEN 'ECO-001'
+        WHEN 'EcoDrop Centro' THEN 'ECO-002'
+        WHEN 'EcoDrop Parque Verde' THEN 'ECO-003'
+    END
+WHERE nome IN ('Estacao EcoDrop Demo', 'EcoDrop Centro', 'EcoDrop Parque Verde')
+  AND (codigo IS NULL OR codigo = '');
 
 INSERT INTO parceiros (nome, descricao, contato, status)
 SELECT 'Mercado Verde', 'Parceiro ficticio para recompensas do MVP.', 'contato@mercadoverde.local', 'ativo'

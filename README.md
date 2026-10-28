@@ -29,7 +29,7 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação, associação por QR Code temporário, descarte simulado controlado pela interface da estação, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
 
-Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. O usuário comum não deverá autodeclarar descartes livremente pelo aplicativo para gerar pontos.
+Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. No app, a pesagem exige a seleção de uma lixeira ativa e passa pelas mesmas validações de material, quantidade e pontuação; a interface da estação com sessão temporária continua disponível.
 
 ## Funcionalidades planejadas
 
@@ -51,8 +51,15 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 
 Implementados: autenticação local, integração Google, recuperação de senha por
 e-mail, perfil, estação demonstrativa com identificação temporária, descarte,
-pontos, extrato, ranking mensal, recompensas e vouchers. O admin possui dashboard
-e consulta de usuários com indicadores e histórico de acessos reais do banco.
+pontos, extrato, ranking mensal, recompensas e vouchers. O admin possui dashboard,
+consulta de usuários com indicadores e histórico de acessos reais do banco, um
+ranking de coletores com pódio, classificação e detalhes por material, um
+painel de materiais com depósitos, ranking e separação por categoria e o
+catálogo de recompensas com criação, publicação e pausa refletidas no app.
+No app do usuário, “Meus Descartes” reúne o histórico de pesagens, os tipos de
+itens recolhidos e uma nova pesagem em que o usuário seleciona a lixeira e
+confere o código exibido. O admin também possui a aba “Lixeiras”, com cadastro,
+status e totais descartados por ponto.
 As abas Estações e Parceiros incluem acompanhamento das coletas e avaliação
 de propostas, respectivamente, com dados persistidos no banco.
 O tema claro/escuro compartilha tokens e preferência persistida.
@@ -66,14 +73,16 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
 1. Copie a pasta do projeto para `C:\xampp\htdocs\EcoDrop`.
 2. Crie o banco: abra o phpMyAdmin (ou o cliente MySQL de sua preferência) e
    execute, nesta ordem:
-   - `backend/database/schema.sql`
-   - `backend/database/seed.sql`
-   Para bancos já existentes, aplique uma única vez
-   `backend/database/atualizacao.sql`. Ele cria a tabela `tentativas_acesso`
-   (proteção contra força bruta, exigida pelo login) e alinha a coluna
-   `sessoes_estacao.token_hash` usada pelo fluxo da estação. O script é
-   idempotente e pode ser executado novamente sem erro. Em uma instalação nova,
-   essas estruturas já estão no `schema.sql`.
+   - Instalação nova: `backend/database/schema.sql` e depois
+     `backend/database/seed.sql`.
+   - Banco já existente: aplique uma única vez
+     `backend/database/atualizacao.sql` **antes** de rodar o `seed.sql`.
+   O script `atualizacao.sql` cria a tabela `tentativas_acesso` (proteção contra
+   força bruta, exigida pelo login), alinha a coluna
+   `sessoes_estacao.token_hash` usada pelo fluxo da estação, adiciona os novos
+   materiais e cria/backfilla o código público das lixeiras em `estacoes.codigo`.
+   Ele é idempotente e pode ser executado novamente sem erro. Em uma instalação
+   nova, essas estruturas já estão no `schema.sql`.
 3. Instale o Composer para Windows, caso ainda não esteja instalado, em
    [getcomposer.org/download](https://getcomposer.org/download/). Durante a
    instalação, selecione o PHP do XAMPP (`C:\xampp\php\php.exe`) se o instalador
@@ -122,6 +131,7 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/logout/` — encerrar sessão (POST com CSRF)
 - `/app/esqueci-senha/` e `/app/redefinir-senha/` — recuperação de acesso
 - `/app/saques/` — resgates e vouchers
+- `/app/descartes/` — histórico de pesagens, tipos recolhidos e nova pesagem com seleção da lixeira e código
 - `/app/extrato/` — movimentações de pontos
 - `/app/conta/` — perfil e fotos
 - `/station/` — estação demonstrativa
@@ -129,7 +139,11 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
 - `/admin/usuarios/` — contas e histórico de acessos (papel `admin`)
 - `/admin/estacoes/` — estações, descartes e volumes por material (papel `admin`)
+- `/admin/lixeiras/` — cadastro de lixeiras, códigos, status e volumes descartados (papel `admin`)
 - `/admin/parceiros/` — propostas, avaliações e parceiros cadastrados (papel `admin`)
+- `/admin/materiais/` — depósitos por material, ranking dos mais depositados e separação por categoria (papel `admin`)
+- `/admin/ranking/` — ranking de usuários por pontos em coletas, com pódio, classificação e detalhes por material (papel `admin`)
+- `/admin/recompensas/` — catálogo de recompensas, criação e publicação/pausa no app do usuário (papel `admin`)
 
 ## Próximos passos recomendados
 
