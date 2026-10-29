@@ -19,7 +19,7 @@ return [
     ],
 
     'contato' => [
-        'email' => 'recicle.ecodrop@gmail.com',
+        'email' => 'contatoecodrop@gmail.com',
         'whatsapp' => '5547992913723',
     ],
 

@@ -20,7 +20,7 @@ return [
 
     'contato' => [
         // E-mail público de atendimento. Vazio mantém o formulário indisponível.
-        'email' => 'recicle.ecodrop@gmail.com',
+        'email' => 'contatoecodrop@gmail.com',
         // Número completo com código do país e DDD, somente dígitos.
         'whatsapp' => '5547992913723',
         // Nome do perfil, sem URL. O @ é opcional.
