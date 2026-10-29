@@ -18,6 +18,11 @@ return [
         'timezone' => 'America/Sao_Paulo',
     ],
 
+    'contato' => [
+        'email' => 'recicle.ecodrop@gmail.com',
+        'whatsapp' => '5547992913723',
+    ],
+
     'sessao' => [
         'nome_cookie' => 'ecodrop_session',
         // Tempo de vida do cookie de sessão, em segundos (8 horas).
