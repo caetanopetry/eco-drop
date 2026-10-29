@@ -107,7 +107,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
 7. Acesse `http://localhost:9999/EcoDrop/`, ajustando a porta e o nome da pasta
    em `backend/config/config.php` (`app.url_base`) conforme o Apache local.
 
-### Usuários de teste (criados pelo seed)
+### Usuários de teste locais (criados pelo `seed.sql`)
 
 | Perfil | E-mail | Senha |
 | --- | --- | --- |
