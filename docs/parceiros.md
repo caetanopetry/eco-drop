@@ -10,7 +10,7 @@ Campos obrigatórios: organização, responsável, e-mail, telefone, cidade/UF, 
 
 Em bancos existentes, aplicar `backend/database/migrations/20261016_create_propostas_parceria.sql`. Instalações novas já incluem a tabela em `schema.sql`.
 
-Executar `php tests/admin-parceiros.php` com o banco local e uma conta administrativa ativa. O teste usa transação e reverte os registros criados.
+A verificação é manual: abra `/admin/parceiros/` com uma conta administrativa ativa, envie uma proposta pelo formulário e confira o registro na listagem. A avaliação também pode ser feita na própria tela.
 
 ## Próxima etapa: Seja um Parceiro
 

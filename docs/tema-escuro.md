@@ -46,7 +46,7 @@ As cores claras originais, inclusive o branco já utilizado, foram preservadas. 
 
 ## Como testar
 
-1. Abra `http://localhost:9999/EcoDrop/` ou entre no app. Use o botão de lua/sol no cabeçalho; no app ele fica junto ao perfil. Em autenticação fica no canto superior direito.
+1. Abra `http://localhost:9999/eco-drop/` ou entre no app. Use o botão de lua/sol no cabeçalho; no app ele fica junto ao perfil. Em autenticação fica no canto superior direito.
 2. Alterne os temas, recarregue e navegue por Início, Saques, Extrato, Conta, Estação demo e admin. A escolha deve continuar ativa.
 3. Abra uma segunda aba na mesma origem e alterne na primeira: a segunda deve acompanhar a escolha.
 4. Para testar a primeira visita, remova somente a chave `ecodrop-theme` no armazenamento local do navegador. Configure o sistema para claro/escuro e recarregue. Uma escolha explícita deve prevalecer sobre mudanças posteriores do sistema.
@@ -54,7 +54,7 @@ As cores claras originais, inclusive o branco já utilizado, foram preservadas. 
 6. Ative redução de movimento no sistema e confira que as transições de cor do tema não animam. As animações de autenticação já existentes têm uma regra própria que esta implementação não altera.
 7. Confira as telas em larguras de celular, tablet e desktop, incluindo tabelas com rolagem, formulários, upload, dropdowns, avisos e o modal de detalhes em Usuários.
 
-Para executar os testes automatizados: `node --test tests/theme.test.cjs`.
+Para verificar o tema manualmente: alterne entre claro e escuro em cada página e recarregue para confirmar que a preferência foi persistida.
 
 ## Verificação realizada
 

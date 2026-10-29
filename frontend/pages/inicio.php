@@ -55,7 +55,7 @@
         <div class="secao-cabecalho"><div><span class="sobretitulo">Como funciona</span><h2>Do descarte ao painel.<br>Em três passos.</h2></div><p>Veja como a conta se conecta à estação e os descartes validados aparecem no painel.</p></div>
         <ol class="timeline" data-revelar>
           <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div><strong>Separe seus recicláveis</strong><p>Plástico, papel, vidro e óleo usado: conheça os materiais previstos para as estações EcoDrop.</p></div></li>
-          <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6m0 6v6h-6m-6 0H3v-6M7 7h3v3H7zm7 0h3v3h-3zM7 14h3v3H7zm7 0h3v3h-3z"/></svg></span><div><strong>Acumule pontos</strong><p>Conecte sua conta à estação por QR Code. Cada descarte validado gera pontos para acompanhar no seu painel.</p></div></li>
+          <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6m0 6v6h-6m-6 0H3v-6M7 7h3v3H7zm7 0h3v3h-3zM7 14h3v3H7zm7 0h3v3h-3z"/></svg></span><div><strong>Acumule pontos</strong><p>Conecte sua conta à estação por link ou QR Code. Cada descarte validado gera pontos para acompanhar no seu painel.</p></div></li>
           <li><span class="passo-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10h18v4H3zm2 4v7h14v-7M12 10v11m0-11C2 10 5 1 9 5l3 5Zm0 0c10 0 7-9 3-5l-3 5Z"/></svg></span><div><strong>Consulte seus resgates</strong><p>Use o saldo para explorar recompensas e vouchers disponíveis no painel.</p></div></li>
         </ol>
       </div>

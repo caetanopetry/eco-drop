@@ -14,7 +14,7 @@ return [
     'app' => [
         // URL base da aplicação no ambiente local de teste.
         // Deve corresponder à porta do Apache e ao nome real da pasta em htdocs.
-        'url_base' => 'http://localhost:9999/EcoDrop',
+        'url_base' => 'http://localhost:9999/eco-drop',
         'timezone' => 'America/Sao_Paulo',
     ],
 

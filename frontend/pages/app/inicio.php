@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'associa
     if ($qrSessao === null || $qrSessao['status'] !== 'aguardando_usuario') {
         $qrToken = null;
         $qrSessao = null;
-        $mensagem = 'QR Code inválido, já utilizado ou expirado. Gere um novo na estação.';
+        $mensagem = 'Sessão da estação inválida, já utilizada ou expirada. Gere uma nova na estação.';
         $tipoMensagem = 'erro';
     }
 }
@@ -122,7 +122,7 @@ $paginaAtualApp = 'inicio';
                 <article class="cartao-principal">
                     <span class="etiqueta">Fluxo principal</span>
                     <h2>Descarte reciclaveis, acumule pontos e troque por beneficios.</h2>
-                    <p>Em uma estação EcoDrop, escaneie o QR Code temporário para associar sua conta e registrar o descarte.</p>
+                    <p>Em uma estação EcoDrop, conecte sua conta pelo link temporário exibido na estação para registrar o descarte.</p>
                     <div class="acoes-hero">
                         <a class="botao botao-primario" href="<?= Url::escapar('/app/extrato/') ?>">Ver extrato</a>
                         <a class="botao botao-secundario" href="<?= Url::escapar('/app/saques/') ?>">Ver resgates</a>
@@ -163,7 +163,7 @@ $paginaAtualApp = 'inicio';
                         <?php if ($ultimoDescarte): ?>
                             <?= htmlspecialchars($ultimoDescarte['material'], ENT_QUOTES, 'UTF-8') ?> em <?= date('d/m H:i', strtotime((string) $ultimoDescarte['criado_em'])) ?>.
                         <?php else: ?>
-                            Escaneie o QR Code em uma estação EcoDrop para registrar seu primeiro descarte.
+                            Conecte sua conta pelo link temporário em uma estação EcoDrop para registrar seu primeiro descarte.
                         <?php endif; ?>
                     </p>
                 </div>

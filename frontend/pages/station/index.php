@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $estacoes = $repo->estacoesAtivas();
 $materiais = $repo->materiaisAtivos();
 $sessoes = $repo->sessoesEmUso();
+$validadeMinutos = max(1, (int) ceil($repo->validadeSessaoSegundos() / 60));
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -79,7 +80,7 @@ $sessoes = $repo->sessoesEmUso();
             <div>
                 <p class="station-etiqueta">Simulador de estação</p>
                 <h1>Registre um descarte simulado</h1>
-                <p>Crie uma sessão temporária, associe uma conta pelo app e informe o material e a quantidade do descarte.</p>
+                <p>Crie uma sessão temporária, abra o link em outra janela com a conta do usuário e depois registre o material e a quantidade do descarte.</p>
             </div>
 
             <form class="station-form" method="post">
@@ -104,16 +105,20 @@ $sessoes = $repo->sessoesEmUso();
         <?php if ($sessaoCriada): ?>
             <?php $linkQr = Url::para('/app/inicio/?qr=' . urlencode((string) $sessaoCriada['token'])); ?>
             <section class="station-qr">
-                <div class="qr-sessao" aria-label="Código visual da sessão temporária">
-                    <?php for ($i = 0; $i < 49; $i++): ?>
-                        <span class="<?= ($i + ord($sessaoCriada['token'][$i % 64])) % 3 === 0 ? 'preto' : '' ?>"></span>
-                    <?php endfor; ?>
+                <div class="sessao-selo" aria-hidden="true">
+                    <span>Sessão</span>
+                    <strong><?= htmlspecialchars(substr((string) $sessaoCriada['token'], 0, 6), ENT_QUOTES, 'UTF-8') ?></strong>
+                    <small><?= (int) $validadeMinutos ?> min</small>
                 </div>
                 <div>
-                    <h2>Sessão válida por 2 minutos</h2>
-                    <p>Abra a associação no app com a conta do usuário e confirme a sessão antes de registrar o descarte.</p>
-                    <a class="botao botao-primario" href="<?= htmlspecialchars($linkQr, ENT_QUOTES, 'UTF-8') ?>">Abrir associação no app</a>
-                    <code><?= htmlspecialchars(substr((string) $sessaoCriada['token'], 0, 18), ENT_QUOTES, 'UTF-8') ?>...</code>
+                    <h2>Sessão criada — válida por <?= (int) $validadeMinutos ?> minuto<?= $validadeMinutos === 1 ? '' : 's' ?></h2>
+                    <p>Copie o link abaixo e abra em <strong>outra janela anônima ou outro navegador</strong> com a conta do usuário. Depois volte a esta janela e registre o descarte.</p>
+                    <p class="station-aviso">Esta janela está logada como administrador: o app redireciona contas admin para o painel, por isso a associação precisa ser feita separadamente.</p>
+                    <div class="station-link">
+                        <input id="station-link-qr" type="text" readonly value="<?= htmlspecialchars($linkQr, ENT_QUOTES, 'UTF-8') ?>" aria-label="Link de associação da sessão">
+                        <button class="botao botao-primario" type="button" data-copiar="#station-link-qr">Copiar link</button>
+                    </div>
+                    <code>Token: <?= htmlspecialchars(substr((string) $sessaoCriada['token'], 0, 18), ENT_QUOTES, 'UTF-8') ?>...</code>
                 </div>
             </section>
         <?php endif; ?>
@@ -159,5 +164,6 @@ $sessoes = $repo->sessoesEmUso();
             </form>
         </section>
     </main>
+    <script src="<?= Url::escapar('/frontend/assets/js/station.js') ?>?v=<?= filemtime(__DIR__ . '/../../assets/js/station.js') ?>" defer></script>
 </body>
 </html>

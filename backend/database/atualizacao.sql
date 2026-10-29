@@ -5,6 +5,9 @@
 --
 -- O script é idempotente: pode ser executado novamente sem erro.
 
+USE ecodrop;
+SET NAMES utf8mb4;
+
 -- 1) Tabela usada pelo RateLimiter (login, recuperação de senha etc.).
 --    Sem ela, qualquer tentativa de login termina em erro fatal.
 CREATE TABLE IF NOT EXISTS tentativas_acesso (

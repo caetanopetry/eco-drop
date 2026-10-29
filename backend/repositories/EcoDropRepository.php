@@ -116,8 +116,12 @@ final class EcoDropRepository
         return (int) $stmt->fetchColumn();
     }
 
-    public function descartesDoUsuario(int $usuarioId): array
+    public function descartesDoUsuario(int $usuarioId, int $limite = 8): array
     {
+        // Limite controlado pelo chamador para que o dashboard mostre apenas os
+        // últimos registros e o extrato possa listar um histórico maior.
+        $limite = max(1, min($limite, 200));
+
         $stmt = Database::conexao()->prepare(
             "SELECT d.*, m.nome AS material, m.slug AS material_slug, m.unidade, e.nome AS estacao
              FROM descartes d
@@ -125,22 +129,37 @@ final class EcoDropRepository
              INNER JOIN estacoes e ON e.id = d.estacao_id
              WHERE d.usuario_id = :usuario_id
              ORDER BY d.criado_em DESC
-             LIMIT 8"
+             LIMIT :limite"
         );
-        $stmt->execute(['usuario_id' => $usuarioId]);
+        $stmt->bindValue(':usuario_id', $usuarioId, PDO::PARAM_INT);
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    public function extratoDoUsuario(int $usuarioId): array
+    public function contarDescartesDoUsuario(int $usuarioId): int
     {
+        $stmt = Database::conexao()->prepare(
+            'SELECT COUNT(*) FROM descartes WHERE usuario_id = :usuario_id'
+        );
+        $stmt->execute(['usuario_id' => $usuarioId]);
+        return (int) $stmt->fetchColumn();
+    }
+
+    public function extratoDoUsuario(int $usuarioId, int $limite = 50): array
+    {
+        $limite = max(1, min($limite, 200));
+
         $stmt = Database::conexao()->prepare(
             "SELECT *
              FROM movimentacoes_pontos
              WHERE usuario_id = :usuario_id
              ORDER BY criado_em DESC
-             LIMIT 10"
+             LIMIT :limite"
         );
-        $stmt->execute(['usuario_id' => $usuarioId]);
+        $stmt->bindValue(':usuario_id', $usuarioId, PDO::PARAM_INT);
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 
@@ -254,7 +273,7 @@ final class EcoDropRepository
 
             if (strtotime((string) $sessao['expira_em']) < time()) {
                 $this->marcarSessao($token, 'expirada');
-                return ['sucesso' => false, 'mensagem' => 'QR Code expirado. Gere uma nova sessao na estacao.'];
+                return ['sucesso' => false, 'mensagem' => 'Sessao da estacao expirada. Gere uma nova sessao na estacao.'];
             }
 
             if ($sessao['status'] !== 'aguardando_usuario') {
@@ -505,6 +524,12 @@ final class EcoDropRepository
         $stmt->execute();
         $valor = $stmt->fetchColumn();
         return is_numeric($valor) ? max(30, (int) $valor) : 120;
+    }
+
+    /** Tempo de validade da sessão temporária, em segundos (para exibir na estação). */
+    public function validadeSessaoSegundos(): int
+    {
+        return $this->validadeQrSegundos();
     }
 
     private function sessaoPorToken(string $token, bool $forUpdate = false): ?array

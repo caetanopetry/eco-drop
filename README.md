@@ -18,7 +18,7 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 - cadastro e autenticação de usuários;
 - consulta de estações EcoDrop;
-- identificação em estação por QR Code temporário;
+- identificação em estação por sessão temporária (link/QR Code);
 - registro controlado de descartes simulados no MVP;
 - cálculo e extrato de pontos;
 - ranking mensal;
@@ -27,7 +27,7 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 ## MVP
 
-O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação, associação por QR Code temporário, descarte simulado controlado pela interface da estação, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
+O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação, associação por sessão temporária (link/QR Code), descarte simulado controlado pela interface da estação, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
 
 Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. No app, a pesagem exige a seleção de uma lixeira ativa e passa pelas mesmas validações de material, quantidade e pontuação; a interface da estação com sessão temporária continua disponível.
 
@@ -38,7 +38,7 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 - Painel administrativo.
 - Cadastro, autenticação, logout, perfil e recuperação de acesso.
 - Consulta, detalhes e mapa de estações.
-- Sessões temporárias de estação e QR Code com validade de 2 minutos.
+- Sessões temporárias de estação e link/QR Code com validade de 2 minutos.
 - Registro simulado de descartes com material e quantidade.
 - Configuração de materiais e pontos por unidade.
 - Saldo e extrato de pontos.
@@ -70,7 +70,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
 
 ## Como executar localmente (XAMPP)
 
-1. Copie a pasta do projeto para `C:\xampp\htdocs\EcoDrop`.
+1. Copie a pasta do projeto para `C:\xampp\htdocs\eco-drop`.
 2. Crie o banco: abra o phpMyAdmin (ou o cliente MySQL de sua preferência) e
    execute, nesta ordem:
    - Instalação nova: `backend/database/schema.sql` e depois
@@ -87,7 +87,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    [getcomposer.org/download](https://getcomposer.org/download/). Durante a
    instalação, selecione o PHP do XAMPP (`C:\xampp\php\php.exe`) se o instalador
    solicitar o caminho do executável.
-4. Abra um terminal na raiz do projeto (`C:\xampp\htdocs\EcoDrop`) e execute:
+4. Abra um terminal na raiz do projeto (`C:\xampp\htdocs\eco-drop`) e execute:
 
    ```sh
    composer install
@@ -104,7 +104,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    vazia no XAMPP). As credenciais do banco são lidas do `.env`, não de
    `backend/config/config.php`. Mantenha o `.env` fora do controle de versão.
 6. Inicie o Apache e o MySQL pelo painel do XAMPP.
-7. Acesse `http://localhost:9999/EcoDrop/`, ajustando a porta e o nome da pasta
+7. Acesse `http://localhost:9999/eco-drop/`, ajustando a porta e o nome da pasta
    em `backend/config/config.php` (`app.url_base`) conforme o Apache local.
 
 ### Usuários de teste (criados pelo seed)
@@ -165,22 +165,38 @@ operação pública.
 4. Definir limites de tentativas, política de sessões e implantação HTTPS.
 5. Conferir responsividade e acessibilidade visual em navegador.
 
-## Verificação automatizada
+## Verificação e demonstração
 
-Com Apache e MySQL locais ativos, execute na raiz:
+Os testes automatizados que existiam foram removidos junto com a pasta `tests/`.
+A verificação atual é manual, com Apache e MySQL ativos:
 
-```sh
-php tests/integration.php
-php tests/http-smoke.php
-php tests/admin-parceiros.php
-node --test tests/theme.test.cjs tests/admin-usuarios.test.cjs
-```
+1. `php -l` em todos os arquivos PHP (sem erros) e `node --check` nos arquivos JS.
+2. Abrir as rotas públicas (`/`, `/sobre/`, `/contato/`, `/perguntas-frequentes/`,
+   `/termos-de-uso/`, `/politica-de-privacidade/`) e conferir status 200.
+3. Entrar com os dois perfis do seed e percorrer cadastro, login, perfil e extrato.
+4. Registrar uma pesagem no app, conferir pontos, bônus e extrato.
+5. Resgatar uma recompensa e conferir o voucher gerado.
+6. No painel admin, conferir dashboard, lixeiras, materiais, ranking e recompensas.
 
-O teste de integração cria e remove um banco temporário exclusivo; o usuário do
-MySQL precisa de permissão para isso. O teste HTTP usa a URL local configurada e
-precisa de contas ativas dos dois perfis. Não envia e-mails nem testa o provedor
-Google. Configure SMTP e Google conforme `.env.example`, mantendo os segredos
-somente no `.env`.
+### Fluxo da estação em duas janelas
+
+A tela `/station/` é restrita ao perfil `admin`, e as páginas do app redirecionam
+administradores para o painel. Por isso a associação da sessão precisa ser feita
+em outra janela/perfil do navegador:
+
+1. Na janela A (normal), entre como administrador e abra `/station/`.
+2. Clique em “Criar sessão temporária” e use “Copiar link”.
+3. Na janela B (anônima ou outro navegador), entre como usuário comum.
+4. Cole o link, confirme “Conectar minha conta” e volte à janela A.
+5. Na janela A, selecione a sessão, o material e a quantidade e registre o descarte.
+
+O link expira em 2 minutos (configurável em
+`configuracoes.qr_code_validade_segundos`), então deixe a janela B já autenticada
+antes de criar a sessão.
+
+> Em ambiente local, o link usa `localhost`; por isso ele funciona apenas no
+> mesmo computador. A leitura por celular exige publicar a aplicação em um
+> domínio ou IP acessível na rede.
 
 ## Documentação
 

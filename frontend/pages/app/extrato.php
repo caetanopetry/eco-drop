@@ -17,7 +17,8 @@ if ($usuario['papel'] === 'admin') {
 $repo = new EcoDropRepository();
 
 $saldo = $repo->saldoDoUsuario((int) $usuario['id']);
-$descartes = $repo->descartesDoUsuario((int) $usuario['id']);
+$descartes = $repo->descartesDoUsuario((int) $usuario['id'], 50);
+$totalDescartes = $repo->contarDescartesDoUsuario((int) $usuario['id']);
 $extrato = $repo->extratoDoUsuario((int) $usuario['id']);
 $paginaAtualApp = 'extrato';
 ?>
@@ -59,9 +60,9 @@ $paginaAtualApp = 'extrato';
                     <em>pontos</em>
                 </article>
                 <article class="cartao-resumo">
-                    <span>Descartes recentes</span>
-                    <strong><?= number_format(count($descartes), 0, ',', '.') ?></strong>
-                    <em>registros encontrados</em>
+                    <span>Descartes registrados</span>
+                    <strong><?= number_format($totalDescartes, 0, ',', '.') ?></strong>
+                    <em>no total</em>
                 </article>
             </section>
 
@@ -69,7 +70,7 @@ $paginaAtualApp = 'extrato';
                 <article class="painel-app painel-tabela">
                     <div class="cabecalho-painel">
                         <h2>Historico de descartes</h2>
-                        <span><?= number_format(count($descartes), 0, ',', '.') ?> registros</span>
+                        <span><?= number_format(count($descartes), 0, ',', '.') ?> registros<?= $totalDescartes > count($descartes) ? ' (mais recentes)' : '' ?></span>
                     </div>
                     <?php if (empty($descartes)): ?>
                         <p class="estado-vazio">Nenhum descarte registrado.</p>
