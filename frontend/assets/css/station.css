@@ -1,4 +1,4 @@
-.pagina-station-demo {
+.pagina-station {
     min-height: 100vh;
     color: var(--text-inverse);
     background: var(--brand-panel-bg);
@@ -99,7 +99,7 @@
 }
 .station-botao-principal:hover:not(:disabled) { background: var(--station-action-hover); }
 
-.pagina-station-demo .alerta {
+.pagina-station .alerta {
     margin: var(--espaco-5) 0;
     background: var(--superficie);
 }

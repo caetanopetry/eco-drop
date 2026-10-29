@@ -29,7 +29,7 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação, associação por QR Code temporário, descarte simulado controlado pela interface da estação, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
 
-Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. No app, a pesagem exige a seleção de uma lixeira ativa e passa pelas mesmas validações de material, quantidade e pontuação; a interface da estação com sessão temporária continua disponível.
+Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. No app, a pesagem exige a seleção de uma estação ativa e passa pelas mesmas validações de material, quantidade e pontuação; a interface da estação com sessão temporária continua disponível.
 
 ## Funcionalidades planejadas
 
@@ -57,11 +57,11 @@ ranking de coletores com pódio, classificação e detalhes por material, um
 painel de materiais com depósitos, ranking e separação por categoria e o
 catálogo de recompensas com criação, publicação e pausa refletidas no app.
 No app do usuário, “Meus Descartes” reúne o histórico de pesagens, os tipos de
-itens recolhidos e uma nova pesagem em que o usuário seleciona a lixeira e
-confere o código exibido. O admin também possui a aba “Lixeiras”, com cadastro,
-status e totais descartados por ponto.
-As abas Estações e Parceiros incluem acompanhamento das coletas e avaliação
-de propostas, respectivamente, com dados persistidos no banco.
+itens recolhidos e uma nova pesagem em que o usuário seleciona a estação e
+confere o código exibido. A página administrativa de Estações reúne cadastro,
+status, métricas e materiais recebidos por ponto.
+As abas Estações e Parceiros permitem gerenciar estações de coleta e cadastrar
+organizações parceiras diretamente no banco de dados.
 O tema claro/escuro compartilha tokens e preferência persistida.
 
 O projeto continua sendo uma demonstração: hardware, mapas, premiação automática
@@ -80,7 +80,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    O script `atualizacao.sql` cria a tabela `tentativas_acesso` (proteção contra
    força bruta, exigida pelo login), alinha a coluna
    `sessoes_estacao.token_hash` usada pelo fluxo da estação, adiciona os novos
-   materiais e cria/backfilla o código público das lixeiras em `estacoes.codigo`.
+   materiais e cria/preenche o código público das estações em `estacoes.codigo`.
    Ele é idempotente e pode ser executado novamente sem erro. Em uma instalação
    nova, essas estruturas já estão no `schema.sql`.
 3. Instale o Composer para Windows, caso ainda não esteja instalado, em
@@ -131,16 +131,15 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/logout/` — encerrar sessão (POST com CSRF)
 - `/app/esqueci-senha/` e `/app/redefinir-senha/` — recuperação de acesso
 - `/app/saques/` — resgates e vouchers
-- `/app/descartes/` — histórico de pesagens, tipos recolhidos e nova pesagem com seleção da lixeira e código
+- `/app/descartes/` — histórico de pesagens, tipos recolhidos e nova pesagem com seleção da estação e código
 - `/app/extrato/` — movimentações de pontos
 - `/app/conta/` — perfil e fotos
 - `/station/` — estação demonstrativa
 - `/admin/login/` — acesso administrativo
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
 - `/admin/usuarios/` — contas e histórico de acessos (papel `admin`)
-- `/admin/estacoes/` — estações, descartes e volumes por material (papel `admin`)
-- `/admin/lixeiras/` — cadastro de lixeiras, códigos, status e volumes descartados (papel `admin`)
-- `/admin/parceiros/` — propostas, avaliações e parceiros cadastrados (papel `admin`)
+- `/admin/estacoes/` — cadastro, status, descartes, materiais e volumes por estação (papel `admin`)
+- `/admin/parceiros/` — cadastro, consulta e filtragem de parceiros (papel `admin`)
 - `/admin/materiais/` — depósitos por material, ranking dos mais depositados e separação por categoria (papel `admin`)
 - `/admin/ranking/` — ranking de usuários por pontos em coletas, com pódio, classificação e detalhes por material (papel `admin`)
 - `/admin/recompensas/` — catálogo de recompensas, criação e publicação/pausa no app do usuário (papel `admin`)
@@ -197,7 +196,7 @@ A documentação essencial do projeto está organizada em:
 - [`Casos de uso`](docs/casos-de-uso/README.md) · [`Fluxos`](docs/fluxos/README.md)
 - [`Decisões de implementação`](docs/decisoes/)
 - [`Revisão técnica e sincronização`](docs/revisao-tecnica-2026-10-16.md)
-- [`Propostas e avaliação de parceiros`](docs/parceiros.md)
+- [`Administração de parceiros`](docs/parceiros.md)
 - [`Tema claro e escuro`](docs/tema-escuro.md)
 
 ## Tecnologias

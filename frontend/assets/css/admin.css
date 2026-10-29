@@ -1,3 +1,16 @@
+:root {
+    --admin-motion-fast: 160ms;
+    --admin-motion-enter: 240ms;
+    --admin-motion-stagger: 32ms;
+    --admin-motion-ease: cubic-bezier(.2, .65, .3, 1);
+    --admin-motion-shadow: 0 8px 20px -18px rgba(23, 33, 27, .42);
+    --admin-table-stripe: rgba(47, 107, 79, .035);
+}
+
+html[data-theme="dark"] {
+    --admin-table-stripe: rgba(74, 222, 128, .045);
+}
+
 .layout-admin {
     display: flex;
     min-height: 100vh;
@@ -45,6 +58,7 @@
 }
 
 .admin-sidebar nav a {
+    position: relative;
     display: block;
     padding: 10px 12px;
     border-radius: var(--raio-sm);
@@ -52,6 +66,19 @@
     font-size: .9rem;
     font-weight: 700;
     text-decoration: none;
+}
+
+.admin-sidebar nav a::before {
+    position: absolute;
+    top: 9px;
+    bottom: 9px;
+    left: 0;
+    width: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    content: "";
+    transform: scaleY(0);
+    transform-origin: center;
 }
 
 .admin-sidebar nav a:hover,
@@ -98,6 +125,7 @@
 }
 
 .regua-indicadores .item {
+    position: relative;
     min-width: 0;
     padding: 20px;
     border-right: 1px solid var(--linha);
@@ -137,6 +165,162 @@
 
 .admin-painel-largo { grid-column: 1 / -1; }
 
+@media (prefers-reduced-motion: no-preference) {
+    .regua-indicadores .item::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 3px;
+        background: var(--musgo);
+        content: "";
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--admin-motion-fast) var(--admin-motion-ease);
+    }
+
+    .regua-indicadores .item:hover::before {
+        transform: scaleX(1);
+    }
+
+    .admin-sidebar nav a:focus-visible {
+        color: var(--text-inverse);
+        background: var(--admin-menu-active);
+    }
+
+    .admin-sidebar nav a:focus-visible::before {
+        transform: scaleY(1);
+    }
+
+    .admin-grade > .admin-painel {
+        transition: border-color var(--admin-motion-fast) var(--admin-motion-ease), box-shadow var(--admin-motion-fast) var(--admin-motion-ease);
+    }
+
+    .admin-grade > .admin-painel:is(:hover, :focus-within) {
+        border-color: var(--border-strong);
+        box-shadow: var(--admin-motion-shadow);
+    }
+}
+
+.admin-conteudo > .admin-grade > .admin-painel {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--musgo);
+    border-radius: var(--raio-md);
+    background: var(--superficie);
+}
+
+.admin-conteudo > .admin-grade > .admin-painel h2 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--linha);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .admin-sidebar nav a,
+    .admin-sidebar nav a::before,
+    .regua-indicadores .item,
+    .admin-conteudo :is(.botao, button, input, select, textarea, summary),
+    .admin-conteudo .tabela-ecodrop tbody tr > td {
+        transition-duration: var(--admin-motion-fast);
+        transition-timing-function: var(--admin-motion-ease);
+    }
+
+    .admin-sidebar nav a {
+        transition-property: color, background-color;
+    }
+
+    .admin-sidebar nav a::before {
+        transition-property: transform;
+    }
+
+    .admin-sidebar nav a:hover:not([aria-disabled="true"])::before,
+    .admin-sidebar nav a[aria-current="page"]::before {
+        transform: scaleY(1);
+    }
+
+    .admin-cabecalho,
+    .admin-grade > .admin-painel {
+        animation: admin-entrada var(--admin-motion-enter) var(--admin-motion-ease) both;
+    }
+
+    .regua-indicadores .item {
+        animation: admin-entrada var(--admin-motion-enter) var(--admin-motion-ease) both;
+        transition-property: background-color;
+    }
+
+    .regua-indicadores .item:nth-child(2) { animation-delay: var(--admin-motion-stagger); }
+    .regua-indicadores .item:nth-child(3) { animation-delay: calc(var(--admin-motion-stagger) * 2); }
+    .regua-indicadores .item:nth-child(4) { animation-delay: calc(var(--admin-motion-stagger) * 3); }
+    .regua-indicadores .item:nth-child(5) { animation-delay: calc(var(--admin-motion-stagger) * 4); }
+
+    .regua-indicadores .item:hover {
+        background: var(--superficie-2);
+    }
+
+    .admin-grade > .admin-painel:nth-child(2) { animation-delay: var(--admin-motion-stagger); }
+    .admin-grade > .admin-painel:nth-child(3) { animation-delay: calc(var(--admin-motion-stagger) * 2); }
+
+    .admin-conteudo :is(.botao, button):hover:not(:disabled) {
+        transform: translateY(-1px);
+    }
+
+    .admin-conteudo .tabela-ecodrop tbody tr > td {
+        transition-property: background-color, box-shadow;
+    }
+
+    .admin-conteudo .tabela-ecodrop tbody tr:is(:hover, :focus-within) > td {
+        background: var(--surface-hover);
+    }
+
+    .admin-conteudo .tabela-ecodrop tbody tr:is(:hover, :focus-within) > td:first-child {
+        box-shadow: inset 3px 0 0 var(--musgo), inset 0 1px 0 var(--linha), inset 0 -1px 0 var(--linha);
+    }
+
+    .admin-conteudo .alerta,
+    .admin-conteudo :is(.estacoes-mensagem, .recompensas-mensagem, .parceiros-mensagem) {
+        animation: admin-entrada var(--admin-motion-enter) var(--admin-motion-ease) both;
+    }
+
+    .admin-conteudo details[open] > :not(summary) {
+        animation: admin-entrada var(--admin-motion-enter) var(--admin-motion-ease) both;
+    }
+
+    @keyframes admin-entrada {
+        from { opacity: 0; translate: 0 10px; }
+        to { opacity: 1; translate: 0 0; }
+    }
+}
+
+/* Tabelas operacionais ------------------------------------------------ */
+.admin-conteudo .tabela-wrapper {
+    border-color: var(--border);
+    box-shadow: 0 2px 10px var(--shadow-card);
+}
+
+.admin-conteudo table.tabela-ecodrop th {
+    color: var(--text-inverse);
+    background: var(--brand-panel-bg);
+    border-bottom-color: var(--border-strong);
+}
+
+.admin-conteudo table.tabela-ecodrop tbody tr:nth-child(even):not(.ranking-linha--destaque) {
+    background: var(--admin-table-stripe);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .layout-admin *,
+    .layout-admin *::before,
+    .layout-admin *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    .layout-admin :is(.botao, button):hover:not(:disabled) {
+        transform: none !important;
+    }
+}
+
 @media (max-width: 1080px) {
     .regua-indicadores { grid-template-columns: repeat(3, minmax(150px, 1fr)); }
     .regua-indicadores .item { border-bottom: 1px solid var(--linha); }
@@ -172,6 +356,10 @@
 @media (max-width: 680px) {
     .admin-conteudo {
         padding: 22px 14px 32px;
+    }
+
+    .admin-conteudo > .admin-grade > .admin-painel {
+        padding: 16px;
     }
 
     .admin-cabecalho {
@@ -217,5 +405,308 @@
 
     .admin-painel h2 {
         font-size: 1.12rem;
+    }
+}
+
+/* Admin usa o mesmo sistema visual da área do usuário. */
+html[data-theme] .layout-admin {
+    background: var(--app-bg);
+}
+
+html[data-theme] .layout-admin .admin-sidebar {
+    width: 220px;
+    padding: 22px 16px;
+    border-right: 1px solid var(--app-border);
+    color: var(--text);
+    background: var(--surface-plain);
+}
+
+html[data-theme] .layout-admin .admin-sidebar .marca {
+    margin: 0 0 34px;
+    color: var(--text);
+}
+
+html[data-theme] .layout-admin .admin-sidebar .eco-marca {
+    --marca-largura: 132px;
+    flex-shrink: 0;
+}
+
+html[data-theme] .layout-admin .admin-sidebar .marca-selo {
+    color: var(--text-muted);
+}
+
+html[data-theme] .layout-admin .admin-sidebar nav ul {
+    gap: 5px;
+}
+
+html[data-theme] .layout-admin .admin-sidebar nav a {
+    min-height: 36px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: var(--text-menu);
+    background: transparent;
+    font-size: .86rem;
+}
+
+html[data-theme] .layout-admin .admin-sidebar nav a::before {
+    display: none;
+}
+
+html[data-theme] .layout-admin .admin-sidebar nav a:hover,
+html[data-theme] .layout-admin .admin-sidebar nav a[aria-current="page"] {
+    color: var(--accent);
+    background: var(--menu-active);
+}
+
+html[data-theme] .layout-admin .admin-sidebar nav a[aria-disabled="true"] {
+    color: var(--text-muted);
+}
+
+html[data-theme] .admin-conteudo {
+    margin-left: 220px;
+    padding: 26px 28px 38px;
+    background: var(--app-bg);
+}
+
+html[data-theme] .admin-cabecalho {
+    align-items: center;
+    padding-bottom: 0;
+    margin-bottom: 22px;
+    border-bottom: 0;
+}
+
+html[data-theme] .admin-cabecalho h1 {
+    margin: 0;
+    font-family: var(--fonte-corpo);
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+html[data-theme] .layout-admin :is(h2, h3) {
+    font-family: var(--fonte-corpo);
+}
+
+html[data-theme] .admin-cabecalho > div:first-child > p {
+    margin-top: 5px;
+    color: var(--text-muted);
+    font-size: .88rem;
+}
+
+html[data-theme] .regua-indicadores {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+}
+
+html[data-theme] .regua-indicadores .item {
+    padding: 18px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: var(--surface-plain);
+    box-shadow: 0 8px 20px var(--shadow-card);
+}
+
+html[data-theme] .regua-indicadores .item:last-child {
+    border-right: 1px solid var(--card-border);
+}
+
+html[data-theme] .admin-conteudo > .admin-grade > .admin-painel,
+html[data-theme] .layout-admin :is(
+    .usuarios-card,
+    .usuarios-metrica,
+    .estacoes-card,
+    .materiais-categoria,
+    .materiais-painel,
+    .recompensas-card,
+    .recompensas-form-painel,
+    .ranking-podio-card:not(.ranking-podio-card--pos1),
+    .ranking-painel,
+    .parceiros-card
+) {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    background: var(--surface-plain);
+    box-shadow: 0 8px 20px var(--shadow-card);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html[data-theme] .layout-admin :is(
+        .usuarios-card,
+        .usuarios-metrica,
+        .estacoes-card,
+        .materiais-categoria,
+        .materiais-painel,
+        .recompensas-card,
+        .ranking-podio-card:not(.ranking-podio-card--pos1),
+        .ranking-painel,
+        .parceiros-card
+    ) {
+        transition: border-color var(--admin-motion-fast) var(--admin-motion-ease), box-shadow var(--admin-motion-fast) var(--admin-motion-ease);
+    }
+
+    html[data-theme] .layout-admin :is(
+        .usuarios-card,
+        .usuarios-metrica,
+        .estacoes-card,
+        .materiais-categoria,
+        .materiais-painel,
+        .recompensas-card,
+        .ranking-podio-card:not(.ranking-podio-card--pos1),
+        .ranking-painel,
+        .parceiros-card
+    ):is(:hover, :focus-within) {
+        border-color: var(--accent);
+        box-shadow: 0 12px 26px var(--shadow-card);
+        transform: none;
+    }
+
+}
+
+html[data-theme] .layout-admin .ranking-podio-card--pos1 {
+    border-radius: 8px;
+}
+
+html[data-theme] .admin-conteudo > .admin-grade > .admin-painel {
+    border-top: 1px solid var(--card-border);
+}
+
+html[data-theme] .admin-conteudo > .admin-grade > .admin-painel h2,
+html[data-theme] .layout-admin :is(.admin-painel, .ranking-painel, .materiais-painel) h2 {
+    padding-bottom: 0;
+    border-bottom: 0;
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+html[data-theme] .layout-admin .tabela-wrapper {
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+html[data-theme] .layout-admin table.tabela-ecodrop {
+    font-size: .88rem;
+}
+
+html[data-theme] .layout-admin table.tabela-ecodrop th,
+html[data-theme] .layout-admin table.tabela-ecodrop td {
+    padding: 11px 12px;
+}
+
+html[data-theme] .layout-admin table.tabela-ecodrop th {
+    color: var(--text-muted);
+    background: var(--surface-active);
+    border-bottom-color: var(--border);
+    font-size: .72rem;
+}
+
+html[data-theme] .layout-admin table.tabela-ecodrop tbody tr:nth-child(even):not(.ranking-linha--destaque) > td {
+    background: var(--admin-table-stripe);
+}
+
+@media (max-width: 1100px) {
+    html[data-theme] .regua-indicadores {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    html[data-theme] .admin-grade {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    html[data-theme] .layout-admin {
+        flex-direction: column;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar {
+        position: sticky;
+        align-self: stretch;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        height: auto;
+        overflow-y: visible;
+        padding: 14px 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--app-border);
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar .marca {
+        margin-bottom: 0;
+        align-self: center;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar nav {
+        grid-column: 1 / -1;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar nav ul {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 6px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar nav li {
+        flex: 0 0 auto;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar nav a {
+        min-height: 44px;
+    }
+
+    html[data-theme] .admin-conteudo {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 680px) {
+    html[data-theme] .admin-conteudo {
+        padding: 18px 14px 30px;
+    }
+
+    html[data-theme] .admin-cabecalho {
+        align-items: flex-start;
+    }
+
+    html[data-theme] .admin-cabecalho .flex {
+        width: auto;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    html[data-theme] .admin-conteudo > .admin-grade > .admin-painel {
+        padding: 16px;
+    }
+
+    html[data-theme] .regua-indicadores {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    html[data-theme] .layout-admin .admin-sidebar {
+        padding: 12px 14px;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar nav ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow: visible;
+    }
+
+    html[data-theme] .layout-admin .admin-sidebar nav a {
+        min-height: 44px;
+        white-space: normal;
+    }
+
+    html[data-theme] .regua-indicadores {
+        grid-template-columns: 1fr;
     }
 }

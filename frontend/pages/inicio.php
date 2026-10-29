@@ -32,7 +32,6 @@
           <h1>Recicle seus materiais. <em>Acompanhe seus pontos.</em></h1>
           <p>No EcoDrop, a conta é associada à estação por uma sessão temporária. Os descartes validados geram pontos para acompanhar no painel.</p>
           <div class="hero-acoes"><a class="botao botao-primario" href="<?= Url::escapar('/app/cadastro/') ?>">Quero começar</a><a class="botao botao-secundario" href="#como-funciona">Como funciona</a></div>
-          <p class="hero-nota">Ambiente de demonstração: estações, pontos e recompensas são simulados.</p>
         </div>
         <div class="hero-ilustracao">
           <img src="<?= Url::escapar('/frontend/assets/img/ciclo.svg') ?>" width="600" height="560" alt="Garrafas e papel em uma cesta de reciclagem, cercada por folhas e um selo: menos lixo, mais vida.">

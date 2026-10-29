@@ -99,7 +99,7 @@ QR deverá associar usuário autenticado à sessão temporária da estação.
 ## RN021 - Descarte controlado
 
 Usuário comum não poderá autodeclarar livremente descartes para gerar pontos. O
-registro pelo app exige a seleção de uma lixeira ativa e passa pelas validações
+registro pelo app exige a seleção de uma estação ativa e passa pelas validações
 de material, quantidade mínima e pontuação; o fluxo por sessão temporária da
 estação permanece disponível para a operação no totem.
 

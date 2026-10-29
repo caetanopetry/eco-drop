@@ -69,7 +69,7 @@ $paginaAtualApp = 'saques';
                 <?php include __DIR__ . '/../../components/app/perfil.php'; ?>
             </div>
 
-            <p class="texto-suave" role="note">Ambiente de demonstração: pontos, recompensas e vouchers não têm valor monetário nem podem ser usados em estabelecimentos.</p>
+            <p class="texto-suave" role="note">Pontos, recompensas e vouchers não têm valor monetário nem podem ser usados em estabelecimentos.</p>
 
             <?php if ($mensagem !== null): ?>
                 <div class="alerta alerta-<?= htmlspecialchars($tipoMensagem, ENT_QUOTES, 'UTF-8') ?>" role="<?= $tipoMensagem === 'erro' ? 'alert' : 'status' ?>">

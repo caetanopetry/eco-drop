@@ -58,7 +58,7 @@ $sessoes = $repo->sessoesEmUso();
     <meta charset="utf-8">
     <?php require __DIR__ . '/../../components/theme/head.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simulador de estação - EcoDrop</title>
+    <title>Estação · EcoDrop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -68,7 +68,7 @@ $sessoes = $repo->sessoesEmUso();
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/station.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/station.css') ?>">
     <link rel="stylesheet" href="<?= Url::escapar('/frontend/assets/css/theme.css') ?>?v=<?= filemtime(__DIR__ . '/../../assets/css/theme.css') ?>">
 </head>
-<body class="pagina-station-demo">
+<body class="pagina-station">
     <main class="station-shell">
         <header class="station-topo">
             <a class="station-marca eco-marca eco-marca--clara" href="<?= Url::escapar('/app/inicio/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
@@ -77,9 +77,9 @@ $sessoes = $repo->sessoesEmUso();
 
         <section class="station-hero">
             <div>
-                <p class="station-etiqueta">Simulador de estação</p>
-                <h1>Registre um descarte simulado</h1>
-                <p>Crie uma sessão temporária, associe uma conta pelo app e informe o material e a quantidade do descarte.</p>
+                <p class="station-etiqueta">OPERAÇÃO DA ESTAÇÃO</p>
+                <h1>Registrar descarte</h1>
+                <p>Crie uma sessão temporária, associe a conta pelo app e informe o material e a quantidade do descarte.</p>
             </div>
 
             <form class="station-form" method="post">

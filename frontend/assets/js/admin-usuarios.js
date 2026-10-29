@@ -8,15 +8,40 @@
     const normalizar = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     const badge = value => `<span class="usuarios-badge ${normalizar(value).replace(/ /g, '-')}">${escape(value)}</span>`;
     const m = dados.indicadores;
+    const movimentoReduzido = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const podeAnimar = !movimentoReduzido.matches;
+    const valoresIndicadores = [m.total, m.online, m.novas, m.ativas, m.bloqueadas];
     el('indicadores').innerHTML = [
         ['Contas criadas', m.total, 'Inclui todos os perfis'],
         ['Online agora', m.online, 'Atividade nos últimos 5 min'],
         ['Novas em 7 dias', m.novas, 'Últimos 7 dias, incluindo hoje'],
         ['Contas ativas', m.ativas, 'Habilitadas para acesso'],
         ['Contas bloqueadas', m.bloqueadas, `${m.inativas} conta(s) inativa(s)`]
-    ].map(([label, value, note]) => `<article class="usuarios-metrica"><p>${label}</p><strong>${value}</strong><small>${note}</small></article>`).join('');
+    ].map(([label, value, note]) => `<article class="usuarios-metrica"><p>${label}</p><strong>${podeAnimar && Number.isInteger(Number(value)) && Number(value) >= 0 ? 0 : escape(value)}</strong><small>${note}</small></article>`).join('');
     const maximo = Math.max(1, ...dados.grafico.map(d => d.total));
-    el('grafico').innerHTML = dados.grafico.map(d => `<div class="usuarios-coluna"><strong>${d.total}</strong><div class="usuarios-barra" style="height:${d.total / maximo * 100}px"></div><span>${escape(d.dia)}</span></div>`).join('');
+    const grafico = el('grafico');
+    grafico.innerHTML = dados.grafico.map(d => `<div class="usuarios-coluna"><strong>${d.total}</strong><div class="usuarios-barra" style="--usuarios-altura:${d.total / maximo * 100}px"></div><span>${escape(d.dia)}</span></div>`).join('');
+    if (podeAnimar) {
+        requestAnimationFrame(() => grafico.classList.add('usuarios-grafico--animar'));
+        const indicadores = el('indicadores').querySelectorAll('strong');
+        valoresIndicadores.forEach((valor, indice) => {
+            const numero = Number(valor);
+            if (!Number.isInteger(numero) || numero < 0) return;
+            const elemento = indicadores[indice];
+            const inicio = performance.now();
+            const duracao = 280;
+            function atualizarContagem(agora) {
+                if (movimentoReduzido.matches) {
+                    elemento.textContent = String(valor);
+                    return;
+                }
+                const progresso = Math.min((agora - inicio) / duracao, 1);
+                elemento.textContent = progresso === 1 ? String(valor) : String(Math.floor(numero * progresso));
+                if (progresso < 1) requestAnimationFrame(atualizarContagem);
+            }
+            requestAnimationFrame(atualizarContagem);
+        });
+    }
     const eventos = {cadastro: 'criou uma conta', login: 'entrou na plataforma', logout: 'encerrou a sessão'};
     el('atividade').innerHTML = dados.atividade.map(a => `<li><span class="usuarios-ponto ${a.tipo === 'logout' ? 'ponto-neutro' : ''}"></span><div><strong>${escape(a.nome)} ${eventos[a.tipo]}</strong><small>${escape(a.ocorrido_em.replace(/^(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1'))}</small></div></li>`).join('') || '<li>Nenhuma atividade registrada.</li>';
     let pagina = 1;

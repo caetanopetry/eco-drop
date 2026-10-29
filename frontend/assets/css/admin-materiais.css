@@ -30,7 +30,6 @@
     font-size: .82rem;
     font-weight: 700;
     text-decoration: none;
-    transition: background-color .15s ease, color .15s ease;
 }
 
 .materiais-periodo:hover {
@@ -246,7 +245,6 @@ html[data-theme="dark"] .materiais-categoria--eletronico {
     height: 100%;
     border-radius: inherit;
     background: var(--categoria-text, var(--musgo));
-    transition: width .35s ease;
 }
 
 /* Ranking e depósitos recentes --------------------------------------- */
@@ -627,5 +625,29 @@ html[data-theme="dark"] .materiais-categoria--eletronico {
 
     .materiais-recentes em {
         font-size: .72rem;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .materiais-periodo,
+    .materiais-barra span {
+        transition-timing-function: var(--admin-motion-ease);
+    }
+
+    .materiais-periodo { transition: background-color var(--admin-motion-fast), color var(--admin-motion-fast); }
+    .materiais-barra span { transition: width var(--admin-motion-enter); }
+
+    .materiais-categoria {
+        animation: admin-entrada var(--admin-motion-enter) var(--admin-motion-ease) both;
+        transition: transform var(--admin-motion-fast) var(--admin-motion-ease), border-color var(--admin-motion-fast) var(--admin-motion-ease), box-shadow var(--admin-motion-fast) var(--admin-motion-ease);
+    }
+
+    .materiais-categoria:nth-child(2) { animation-delay: var(--admin-motion-stagger); }
+    .materiais-categoria:nth-child(3) { animation-delay: calc(var(--admin-motion-stagger) * 2); }
+
+    .materiais-categoria:hover {
+        transform: translateY(-2px);
+        border-color: var(--border-strong);
+        box-shadow: var(--admin-motion-shadow);
     }
 }

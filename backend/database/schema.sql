@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS recuperacoes_acesso (
 
 CREATE TABLE IF NOT EXISTS estacoes (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    codigo          VARCHAR(20)         NOT NULL COMMENT 'Codigo publico da lixeira exibido na estacao e no app.',
+    codigo          VARCHAR(20)         NOT NULL COMMENT 'Código público da estação exibido no app.',
     nome            VARCHAR(150)        NOT NULL,
     endereco        VARCHAR(255)        NULL,
     -- Coordenadas para integração com o mapa (Google Maps).

@@ -47,8 +47,8 @@ INSERT INTO materiais (nome, slug, unidade, quantidade_minima, pontos_por_unidad
 SELECT 'Organico', 'organico', 'kg', 0.100, 60, 'ativo'
 WHERE NOT EXISTS (SELECT 1 FROM materiais WHERE slug = 'organico');
 
--- 4) Código público das lixeiras (estações), exibido no app após a seleção.
---    As lixeiras já cadastradas recebem um código sequencial único.
+-- 4) Código público das estações, exibido no app após a seleção.
+--    As estações já cadastradas recebem um código sequencial único.
 SET @tem_coluna_codigo := (
     SELECT COUNT(*)
     FROM information_schema.COLUMNS

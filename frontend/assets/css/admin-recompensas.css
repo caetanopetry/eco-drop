@@ -104,7 +104,6 @@
     border: 1px solid var(--linha);
     border-radius: var(--raio-md);
     background: var(--superficie);
-    transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .recompensas-card:hover {
@@ -291,7 +290,6 @@
     font-family: inherit;
     font-size: .86rem;
     font-weight: 400;
-    transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .recompensas-campo textarea {
@@ -406,5 +404,24 @@
 
     .recompensas-botao-status {
         width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .recompensas-card {
+        animation: admin-entrada var(--admin-motion-enter) var(--admin-motion-ease) both;
+        transition: border-color var(--admin-motion-fast) var(--admin-motion-ease), box-shadow var(--admin-motion-fast) var(--admin-motion-ease);
+    }
+
+    .recompensas-card:nth-child(2) { animation-delay: var(--admin-motion-stagger); }
+    .recompensas-card:nth-child(3) { animation-delay: calc(var(--admin-motion-stagger) * 2); }
+
+    .recompensas-card:hover {
+        border-color: var(--border-strong);
+        box-shadow: var(--admin-motion-shadow);
+    }
+
+    .recompensas-campo :is(input, select, textarea) {
+        transition: border-color var(--admin-motion-fast) var(--admin-motion-ease), box-shadow var(--admin-motion-fast) var(--admin-motion-ease);
     }
 }

@@ -315,11 +315,11 @@ final class EcoDropRepository
     }
 
     /**
-     * Pesagem iniciada pelo app do usuário a partir da lixeira selecionada.
+     * Pesagem iniciada pelo app do usuário a partir da estação selecionada.
      *
      * A sessão é criada e concluída na mesma transação para manter o vínculo
      * exigido por `descartes.sessao_estacao_id`, sem depender do totem físico.
-     * A lixeira precisa estar ativa e o material/quantidade seguem as mesmas
+     * A estação precisa estar ativa e o material/quantidade seguem as mesmas
      * validações da estação.
      */
     public function registrarDescarteDireto(int $usuarioId, int $estacaoId, int $materialId, float $quantidade): array
@@ -332,7 +332,7 @@ final class EcoDropRepository
             }
 
             if (!$this->estacaoAtivaExiste($estacaoId)) {
-                return ['sucesso' => false, 'mensagem' => 'Lixeira inválida ou inativa. Selecione outra lixeira.'];
+                return ['sucesso' => false, 'mensagem' => 'Estação inválida ou inativa. Selecione outra estação.'];
             }
 
             $agora = date('Y-m-d H:i:s');

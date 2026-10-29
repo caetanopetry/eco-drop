@@ -94,6 +94,14 @@
 /* A foto substitui o logo/anel no painel; no mobile a marca continua no topo. */
 .auth-marca-painel .eco-marca { display: none; }
 .auth-marca-mobile { display: none; }
+.auth-marca-texto {
+    color: var(--musgo-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1.65rem;
+    font-weight: 600;
+    letter-spacing: -.035em;
+    line-height: 1;
+}
 .auth-troca[data-modo="cadastro"] .auth-formulario { transform: translateX(100%); }
 .auth-troca[data-modo="cadastro"] .auth-marca-painel { transform: translateX(-100%); }
 
@@ -125,26 +133,28 @@
 
 @media (max-width: 800px) {
     .auth-troca { --auth-duracao: 320ms; }
-    .auth-formulario { width: 100%; padding: 32px 24px; align-content: center; }
+    .auth-formulario {
+        width: 100%;
+        padding: 32px 24px;
+        align-content: start;
+        align-items: start;
+    }
     .auth-conteudo { grid-area: 2 / 1; }
     .auth-pronta .auth-conteudo { transition-duration: 320ms; transition-delay: 0ms; }
     .auth-troca[data-modo="cadastro"] .auth-formulario { transform: none; }
     .auth-marca-painel { display: none; }
     .auth-marca-mobile { display: inline-flex; grid-area: 1 / 1; justify-self: center; --marca-largura: 150px; margin-bottom: 32px; }
+
+    .auth-interativa[data-modo="login"] [data-auth-painel="cadastro"],
+    .auth-interativa[data-modo="cadastro"] [data-auth-painel="login"] {
+        display: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    /* Esta troca foi solicitada com movimento mesmo quando o Windows desativa
-       animações. A exceção fica restrita à autenticação; o restante do site
-       continua respeitando a preferência global. */
-    .auth-pronta .auth-formulario, .auth-pronta .auth-marca-painel {
-        transition-duration: var(--auth-duracao) !important;
-    }
+    .auth-pronta .auth-formulario,
+    .auth-pronta .auth-marca-painel,
     .auth-pronta .auth-conteudo {
-        transition-duration: 550ms, var(--auth-duracao) !important;
+        transition: none !important;
     }
-}
-
-@media (prefers-reduced-motion: reduce) and (max-width: 800px) {
-    .auth-pronta .auth-conteudo { transition-duration: 320ms !important; }
 }
