@@ -30,12 +30,6 @@ cliente") e RNF006 (integridade): um saldo em cache poderia divergir do extrato 
 caso de falha parcial. Se o desempenho exigir, um cache pode ser adicionado depois
 como coluna derivada, recalculada a partir do extrato — nunca como fonte de verdade.
 
-### Validade das sessões da estação
-
-A validade das sessões da estação é lida de `configuracoes.chave =
-'qr_code_validade_segundos'`, com padrão de 120 segundos quando não há valor
-numérico. Não existe uma configuração paralela desse prazo no arquivo PHP.
-
 ### `movimentacoes_pontos` como extrato único
 
 Toda alteração de pontos (descarte, bônus, resgate, estorno) gera uma linha aqui,
@@ -53,15 +47,13 @@ fiquem fixos no código. Os valores que a documentação marca como **PENDENTE**
 em `configuracoes.valor` — nunca com um número inventado. A UI do Admin (Fase 5)
 deve deixar claro quando um valor ainda não foi definido.
 
-### QR Code / sessão de estação como token opaco
+### Sessões internas de descarte
 
-`sessoes_estacao.token_hash` é o hash SHA-256 de uma string aleatória sem
-significado — o banco nunca guarda o token puro, que existe apenas no link/QR
-exibido uma vez no momento da criação (nunca contém CPF, e-mail ou qualquer dado
-sensível — RN019). O QR Code apresentado pela estação codifica apenas esse token;
-a validação de validade (RN018, 2 minutos) é feita no servidor via `expira_em`,
-nunca confiando em um timestamp vindo do cliente. Sessões que aguardam o
-descarte no totem expiram após `sessao_estacao_uso_segundos` (padrão 900s).
+O painel do usuário registra cada pesagem em uma transação que cria uma linha em
+`sessoes_estacao` e a vincula ao descarte. Essa sessão é interna ao registro: não
+há interface de estação, token de associação ou leitura de QR Code. A tabela e
+sua chave estrangeira são mantidas para preservar o histórico e a integridade
+dos descartes existentes.
 
 ## Tabelas e sua origem na documentação
 
@@ -70,7 +62,7 @@ descarte no totem expiram após `sessao_estacao_uso_segundos` (padrão 900s).
 | `usuarios` | RF001-RF005, RN014, RN015, RNF002 |
 | `recuperacoes_acesso` | RF005 (hash do token, validade e utilização única) |
 | `estacoes` | RF006-RF009, RF045 |
-| `sessoes_estacao` | RF010-RF014, RN018-RN020, RNF008 |
+| `sessoes_estacao` | Vínculo interno dos descartes; preserva o histórico |
 | `materiais` | RN001-RN008 |
 | `descartes` | RF015-RF023, RN001-RN013, RN021 |
 | `movimentacoes_pontos` | RF024, RF025, RN009, RN011-RN013 |

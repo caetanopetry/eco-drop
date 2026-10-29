@@ -12,8 +12,7 @@ Pessoa cadastrada na plataforma EcoDrop.
 - Gerenciar dados permitidos do perfil.
 - Recuperar acesso.
 - Consultar estações e mapa.
-- Identificar-se em uma estação.
-- Acompanhar descartes.
+- Registrar pesagens no aplicativo e acompanhar descartes.
 - Consultar saldo e extrato.
 - Consultar ranking.
 - Visualizar recompensas.
@@ -24,8 +23,8 @@ Pessoa cadastrada na plataforma EcoDrop.
 
 - CPF não deverá ser exibido publicamente.
 - CPF não deverá aparecer no ranking.
-- CPF não deverá ser colocado dentro de QR Codes públicos.
-- O usuário comum não poderá autodeclarar descartes livremente para gerar pontos.
+- Pesagens registradas pelo usuário passam por validação de estação, material,
+  quantidade e pontuação no servidor.
 
 ## AT02 - Administrador
 
@@ -47,20 +46,6 @@ Responsável pela administração da plataforma EcoDrop.
 ### Observações
 
 As parcerias comerciais são fechadas e gerenciadas pela equipe EcoDrop. Empresas parceiras não terão painel próprio no MVP.
-
-## AT03 - Estação EcoDrop
-
-Sistema/interface utilizada no ponto de coleta.
-
-Inicialmente, será uma representação em software da estação.
-
-### Responsabilidades
-
-- Criar sessão temporária.
-- Apresentar QR Code.
-- Permitir associação de usuário.
-- Permitir simulação controlada de descarte.
-- Enviar os dados necessários ao sistema.
 
 ## Atores fora do MVP
 

@@ -84,24 +84,10 @@ Usuário poderá receber bonificação pelo primeiro descarte válido apenas uma
 
 Valor será configurável e permanece pendente até definição da economia de recompensas.
 
-## RN018 - QR Code temporário
-
-QR Code da estação possui validade de 2 minutos.
-
-## RN019 - QR Code sem dados sensíveis
-
-QR não poderá expor CPF, senha ou credenciais sensíveis.
-
-## RN020 - Associação de sessão
-
-QR deverá associar usuário autenticado à sessão temporária da estação.
-
 ## RN021 - Descarte controlado
 
-Usuário comum não poderá autodeclarar livremente descartes para gerar pontos. O
-registro pelo app exige a seleção de uma estação ativa e passa pelas validações
-de material, quantidade mínima e pontuação; o fluxo por sessão temporária da
-estação permanece disponível para a operação no totem.
+O registro de pesagem pelo aplicativo exige uma estação ativa e passa pelas
+validações de material, quantidade mínima e pontuação antes de gerar créditos.
 
 ## RN022 - Resgate condicionado ao saldo
 

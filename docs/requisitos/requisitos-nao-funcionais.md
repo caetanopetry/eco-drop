@@ -49,13 +49,12 @@
 | Descrição | Movimentações relevantes deverão possuir origem identificável. |
 | Prioridade | Essencial para MVP |
 
-## RNF008 - Expiração de sessões temporárias
+## RNF008 - Expiração de tokens temporários
 
 | Campo | Valor |
 | --- | --- |
-| Descrição | Sessões e tokens temporários deverão possuir expiração. |
+| Descrição | Tokens temporários de recuperação de acesso deverão possuir expiração. |
 | Prioridade | Essencial para MVP |
-| Regras relacionadas | [`RN018`](regras-de-negocio.md#rn018--qr-code-temporário) |
 
 ## RNF009 - Usabilidade
 

@@ -13,7 +13,7 @@
       <details class="faq-item" open><summary><span>O que é o EcoDrop?</span></summary><div><p>É uma plataforma de coleta seletiva incentivada que associa descartes validados a uma conta, registra pontos e permite acompanhar recompensas.</p></div></details>
       <details class="faq-item"><summary><span>Como posso participar?</span></summary><div><p><a href="<?= Url::escapar('/app/cadastro/') ?>">Crie sua conta</a> com nome, e-mail, CPF e senha para acessar o painel e acompanhar descartes, pontos e resgates.</p></div></details>
       <details class="faq-item"><summary><span>Já existem estações físicas em funcionamento?</span></summary><div><p>No momento, não há estações físicas em funcionamento. Os nomes e endereços apresentados não representam locais confirmados de coleta.</p></div></details>
-      <details class="faq-item"><summary><span>Como funciona a identificação na estação?</span></summary><div><p>Uma sessão temporária com QR Code conecta a conta à estação. Siga as instruções exibidas na interface da estação para associar a conta e registrar o descarte.</p></div></details>
+      <details class="faq-item"><summary><span>Como registrar uma pesagem?</span></summary><div><p>Acesse “Meus Descartes” no painel, selecione a estação e o material, informe a quantidade e confirme o registro.</p></div></details>
     </section>
     <section id="materiais-pontos" class="faq-grupo"><h2>Materiais e pontos</h2>
       <details class="faq-item"><summary><span>Quais materiais fazem parte do projeto?</span></summary><div><p>Plástico, papel, vidro e óleo de cozinha usado são aceitos no sistema. Confira a seção de <a href="<?= Url::escapar('/') ?>#materiais">materiais recicláveis</a> para conhecer cada categoria.</p></div></details>

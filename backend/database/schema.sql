@@ -59,9 +59,8 @@ CREATE TABLE IF NOT EXISTS estacoes (
 CREATE TABLE IF NOT EXISTS sessoes_estacao (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     estacao_id      INT UNSIGNED        NOT NULL,
-    usuario_id      INT UNSIGNED        NULL COMMENT 'Preenchido quando o usuário se associa via QR Code ou credenciais.',
-    -- O banco guarda somente o hash SHA-256 do token; o valor puro existe apenas
-    -- no link/QR exibido uma vez, no momento da criação.
+    usuario_id      INT UNSIGNED        NULL COMMENT 'Usuário associado ao descarte vinculado à sessão.',
+    -- Hash interno preservado para compatibilidade do vínculo histórico.
     token_hash      CHAR(64)            NOT NULL,
     status          ENUM('aguardando_usuario', 'em_uso', 'concluida', 'expirada', 'cancelada') NOT NULL DEFAULT 'aguardando_usuario',
     expira_em       DATETIME            NOT NULL,

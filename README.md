@@ -18,7 +18,7 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 - cadastro e autenticação de usuários;
 - consulta de estações EcoDrop;
-- identificação em estação por QR Code temporário;
+- registro direto de pesagens no painel do usuário;
 - registro controlado de descartes simulados no MVP;
 - cálculo e extrato de pontos;
 - ranking mensal;
@@ -27,9 +27,9 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 ## MVP
 
-O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação, associação por QR Code temporário, descarte simulado controlado pela interface da estação, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
+O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação e material, registro de pesagem no painel do usuário, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
 
-Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. No app, a pesagem exige a seleção de uma estação ativa e passa pelas mesmas validações de material, quantidade e pontuação; a interface da estação com sessão temporária continua disponível.
+O registro de pesagem é feito pelo painel do usuário, com seleção de estação ativa e material, e passa pelas validações de quantidade e pontuação.
 
 ## Funcionalidades planejadas
 
@@ -38,8 +38,7 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 - Painel administrativo.
 - Cadastro, autenticação, logout, perfil e recuperação de acesso.
 - Consulta, detalhes e mapa de estações.
-- Sessões temporárias de estação e QR Code com validade de 2 minutos.
-- Registro simulado de descartes com material e quantidade.
+- Registro de descartes com estação, material e quantidade.
 - Configuração de materiais e pontos por unidade.
 - Saldo e extrato de pontos.
 - Histórico de descartes.
@@ -134,7 +133,6 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/descartes/` — histórico de pesagens, tipos recolhidos e nova pesagem com seleção da estação e código
 - `/app/extrato/` — movimentações de pontos
 - `/app/conta/` — perfil e fotos
-- `/station/` — estação demonstrativa
 - `/admin/login/` — acesso administrativo
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
 - `/admin/usuarios/` — contas e histórico de acessos (papel `admin`)

@@ -25,8 +25,6 @@ inventado), não um bloqueio silencioso.
 ## Pendências de fluxo/processo (ainda não detalhadas na documentação)
 
 - Canal e etapas exatas de recuperação de acesso (UC003 / RF005).
-- Credenciais aceitas e passos do método alternativo de identificação na estação,
-  sem QR Code (UC008 / RF013).
 - Critério que define se uma recompensa gera voucher ou não (UC016 / UC017).
 - Quem solicita a utilização de um voucher e como ocorre a validação comercial
   completa junto ao parceiro (UC019 / FLUXO 08).

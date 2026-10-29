@@ -61,7 +61,7 @@ Não foi necessário stash, pois não houve avanço remoto.
 
 ## Pendências e riscos existentes
 
-1. ~~Restringir a interface pública `/station/` a operadores autorizados e separar a preparação de dados demo das requisições comuns.~~ **Resolvido (18/10/2026):** `/station/` exige papel `admin`; dados demo vêm apenas de `seed.sql` (sem escrita por requisição).
+1. ~~Restringir a interface pública `/station/` a operadores autorizados e separar a preparação de dados demo das requisições comuns.~~ **Resolvido (18/10/2026):** `/station/` exigia papel `admin`; dados demo vinham apenas de `seed.sql` (sem escrita por requisição). **Atualização (28/10/2026):** interface e rota removidas; pesagens são registradas em “Meus Descartes”.
 2. ~~Endurecimento para produção: limites de tentativas, expiração absoluta de sessão, HTTPS/cookies seguros e logout com proteção contra requisições externas.~~ **Resolvido (18/10/2026):** rate limiting em login/recuperação, expiração de sessões `em_uso`, cookie `Secure` em HTTPS, `use_strict_mode`, logout por POST + CSRF e token de redefinição retirado da URL. Resta apenas colocar a aplicação atrás de HTTPS em produção.
 3. Validar Google, entrega SMTP, upload real, hardware e mapas nos respectivos ambientes. Nenhum e-mail foi enviado nesta revisão.
 4. Realizar conferência visual em navegador, dispositivos móveis e acessibilidade manual. Os testes HTTP/CSS não substituem essa avaliação.

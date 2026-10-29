@@ -5,10 +5,10 @@ Este documento registra diretrizes iniciais de arquitetura sem escolher linguage
 ## Diretrizes iniciais
 
 - O MVP deve ser focado em software.
-- A aplicação deve separar claramente as responsabilidades de usuário, estação EcoDrop e administração.
+- A aplicação deve separar claramente as responsabilidades de usuário e administração.
 - O cálculo de pontos, validações de descarte, resgates, estornos e regras de ranking não devem depender de valores enviados livremente pelo cliente.
 - O extrato de pontos deve ser tratado como histórico de movimentações, não apenas como um campo numérico de saldo.
-- Sessões temporárias da estação e QR Codes devem possuir expiração.
+- Tokens temporários de recuperação de acesso devem possuir expiração.
 - Dados pessoais, especialmente CPF e e-mail, não devem ser expostos publicamente.
 - A arquitetura deve permitir futura integração com hardware sem tornar hardware obrigatório no MVP.
 
@@ -17,8 +17,8 @@ Este documento registra diretrizes iniciais de arquitetura sem escolher linguage
 | Área | Responsabilidade |
 | --- | --- |
 | Conta e acesso | Cadastro, autenticação, logout, perfil, recuperação de acesso e status da conta. |
-| Estações | Consulta, detalhes, mapa, status, sessões temporárias e identificação por QR Code ou credenciais. |
-| Descartes | Registro controlado de material, quantidade, unidade, validação e status. |
+| Estações | Consulta, detalhes, mapa e status. |
+| Descartes | Registro de pesagem pelo usuário, sessão técnica interna, validação e status. |
 | Pontos | Cálculo, crédito, débito, saldo, extrato, bônus e estornos. |
 | Ranking | Classificação mensal por pontos conquistados no período. |
 | Recompensas | Catálogo, disponibilidade, custo em pontos e administração. |

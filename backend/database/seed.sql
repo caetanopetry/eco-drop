@@ -24,8 +24,7 @@ ON DUPLICATE KEY UPDATE
 INSERT INTO configuracoes (chave, valor, descricao)
 VALUES
     ('bonus_primeiro_descarte_pontos', '100', 'Bonus ficticio concedido uma unica vez no primeiro descarte valido.'),
-    ('qr_code_validade_segundos', '120', 'Validade do QR Code/sessao temporaria da estacao, em segundos.'),
-    ('sessao_estacao_uso_segundos', '900', 'Tempo maximo, em segundos, que uma sessao em uso aguarda o descarte no totem.')
+    ('sessao_estacao_uso_segundos', '900', 'Tempo maximo, em segundos, para concluir uma pesagem.')
 ON DUPLICATE KEY UPDATE
     valor = COALESCE(configuracoes.valor, VALUES(valor)),
     descricao = VALUES(descricao);

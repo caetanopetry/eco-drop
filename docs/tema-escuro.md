@@ -13,7 +13,6 @@ O projeto usa PHP, HTML, CSS e JavaScript sem framework de frontend. O tema clar
 | `frontend/assets/css/components.css` | Botões, formulários e painéis compartilhados usam tokens. |
 | `frontend/assets/css/app.css` | Sidebar, perfil, hero, cards, ranking, recompensas, divisórias e sombras usam tokens. |
 | `frontend/assets/css/conta.css` | Cabeçalho, upload de foto, navegação e detalhes usam tokens; conserva o estilo da pílula junto ao novo botão. |
-| `frontend/assets/css/station.css` | Fundos, textos, controles, ação principal e QR demonstrativo usam tokens. |
 | `frontend/assets/css/admin.css` | Navegação, estados do menu e marca usam tokens. |
 | `frontend/assets/css/admin-usuarios.css` | Indicadores, avisos, gráficos, tags, inputs e modal usam tokens. |
 | `frontend/assets/css/auth.css` | Cores do painel e de sua decoração usam tokens. |
@@ -28,7 +27,6 @@ O projeto usa PHP, HTML, CSS e JavaScript sem framework de frontend. O tema clar
 | `frontend/components/brand/marca.php` | Usa a imagem original `logo-e-nome.png` nos dois temas, preservando o símbolo e a tipografia. |
 | `frontend/pages/app/{inicio,saques,extrato,conta}.php` | Recursos do tema e CSS versionados; botão no cabeçalho de Conta. |
 | `frontend/pages/admin/{dashboard,usuarios,login}.php` | Recursos do tema e botão de alternância. |
-| `frontend/pages/station/index.php` | Recursos do tema e botão no cabeçalho. |
 | `frontend/pages/auth/{layout,google-completar,esqueci-senha,redefinir-senha}.php` | Recursos do tema e botão de alternância, incluindo as telas recebidas do repositório. |
 | `frontend/pages/inicio.php`, `frontend/pages/institucional/layout.php` | Recursos compartilhados e CSS versionados nas páginas públicas. |
 | `tests/theme.test.cjs` | Testes de preferência, persistência, acessibilidade do controle, sincronização, tokens e contraste. |
