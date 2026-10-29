@@ -1,11 +1,15 @@
 <?php
 $whatsapp = preg_replace('/\D/', '', (string) Config::get('contato.whatsapp', ''));
 $whatsapp = preg_match('/^[1-9][0-9]{9,14}$/', $whatsapp) ? $whatsapp : '';
+$whatsappExibicao = '+' . $whatsapp;
+if (preg_match('/^55([1-9][0-9])([0-9]{5})([0-9]{4})$/', $whatsapp, $partes)) {
+    $whatsappExibicao = '+55 ' . $partes[1] . ' ' . $partes[2] . '-' . $partes[3];
+}
 $instagram = ltrim(trim((string) Config::get('contato.instagram', '')), '@');
 $instagram = preg_match('/^[a-zA-Z0-9._]{1,30}$/', $instagram) ? $instagram : '';
 $canais = [
     ['nome' => 'E-mail', 'detalhe' => $emailContato, 'url' => $emailContato !== '' ? 'mailto:' . $emailContato : '', 'acao' => 'Escrever e-mail', 'icone' => '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/>'],
-    ['nome' => 'WhatsApp', 'detalhe' => $whatsapp !== '' ? '+' . $whatsapp : '', 'url' => $whatsapp !== '' ? 'https://wa.me/' . $whatsapp : '', 'acao' => 'Abrir conversa', 'icone' => '<path d="M20.5 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-4.6A8.5 8.5 0 1 1 20.5 11.5Z"/><path d="m8 7 2 3-1.2 1.2a7 7 0 0 0 4 4L14 14l3 2c-1 3-4 2-7-1s-4-6-2-8Z"/>'],
+    ['nome' => 'WhatsApp', 'detalhe' => $whatsapp !== '' ? $whatsappExibicao : '', 'url' => $whatsapp !== '' ? 'https://wa.me/' . $whatsapp : '', 'acao' => 'Abrir conversa', 'icone' => '<path d="M20.5 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-4.6A8.5 8.5 0 1 1 20.5 11.5Z"/><path d="m8 7 2 3-1.2 1.2a7 7 0 0 0 4 4L14 14l3 2c-1 3-4 2-7-1s-4-6-2-8Z"/>'],
     ['nome' => 'Instagram', 'detalhe' => $instagram !== '' ? '@' . $instagram : '', 'url' => $instagram !== '' ? 'https://www.instagram.com/' . $instagram . '/' : '', 'acao' => 'Visitar perfil', 'icone' => '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>'],
 ];
 ?>

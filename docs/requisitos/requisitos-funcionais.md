@@ -76,57 +76,12 @@
 | Ator relacionado | AT02 - Administrador |
 | Prioridade | Importante |
 
-## RF010 - Criação de sessão da estação
-
-| Campo | Valor |
-| --- | --- |
-| Descrição | A estação deverá poder iniciar sessão temporária de utilização. |
-| Ator relacionado | AT03 - Estação EcoDrop |
-| Prioridade | Essencial para MVP |
-| Regras relacionadas | [`RN020`](regras-de-negocio.md#rn020--associação-de-sessão) |
-
-## RF011 - Geração de QR Code
-
-| Campo | Valor |
-| --- | --- |
-| Descrição | Sistema deverá gerar QR Code temporário para identificação. |
-| Ator relacionado | AT03 - Estação EcoDrop |
-| Prioridade | Essencial para MVP |
-| Regras relacionadas | [`RN018`](regras-de-negocio.md#rn018--qr-code-temporário), [`RN019`](regras-de-negocio.md#rn019--qr-code-sem-dados-sensíveis) |
-
-## RF012 - Identificação por QR Code
-
-| Campo | Valor |
-| --- | --- |
-| Descrição | Usuário autenticado deverá poder associar-se à sessão através do QR Code. |
-| Ator relacionado | AT01 - Usuário |
-| Prioridade | Essencial para MVP |
-| Regras relacionadas | [`RN020`](regras-de-negocio.md#rn020--associação-de-sessão) |
-
-## RF013 - Identificação alternativa
-
-| Campo | Valor |
-| --- | --- |
-| Descrição | Deverá existir método alternativo por credenciais. |
-| Ator relacionado | AT01 - Usuário, AT03 - Estação EcoDrop |
-| Prioridade | Importante |
-| Observações | Detalhamento do fluxo alternativo permanece pendente. |
-
-## RF014 - Expiração de QR Code
-
-| Campo | Valor |
-| --- | --- |
-| Descrição | Sistema deverá invalidar QR Code após 2 minutos. |
-| Ator relacionado | AT03 - Estação EcoDrop |
-| Prioridade | Essencial para MVP |
-| Regras relacionadas | [`RN018`](regras-de-negocio.md#rn018--qr-code-temporário) |
-
 ## RF015 - Registro de descarte
 
 | Campo | Valor |
 | --- | --- |
 | Descrição | Sistema deverá permitir registrar descarte associado ao usuário e estação. |
-| Ator relacionado | AT03 - Estação EcoDrop |
+| Ator relacionado | AT01 - Usuário |
 | Prioridade | Essencial para MVP |
 | Regras relacionadas | [`RN011`](regras-de-negocio.md#rn011--crédito-após-validação), [`RN021`](regras-de-negocio.md#rn021--descarte-controlado) |
 
@@ -135,7 +90,7 @@
 | Campo | Valor |
 | --- | --- |
 | Descrição | Sistema deverá registrar o material descartado. |
-| Ator relacionado | AT03 - Estação EcoDrop |
+| Ator relacionado | AT01 - Usuário |
 | Prioridade | Essencial para MVP |
 | Regras relacionadas | [`RN001`](regras-de-negocio.md#rn001--materiais-aceitos) |
 
@@ -144,7 +99,7 @@
 | Campo | Valor |
 | --- | --- |
 | Descrição | Sistema deverá registrar a quantidade e unidade correspondentes. |
-| Ator relacionado | AT03 - Estação EcoDrop |
+| Ator relacionado | AT01 - Usuário |
 | Prioridade | Essencial para MVP |
 | Regras relacionadas | [`RN002`](regras-de-negocio.md#rn002--unidade-dos-sólidos), [`RN003`](regras-de-negocio.md#rn003--unidade-do-óleo) |
 
@@ -153,16 +108,16 @@
 | Campo | Valor |
 | --- | --- |
 | Descrição | Sistema deverá validar os limites mínimos definidos para cada material. |
-| Ator relacionado | AT03 - Estação EcoDrop |
+| Ator relacionado | AT01 - Usuário |
 | Prioridade | Essencial para MVP |
 | Regras relacionadas | [`RN004`](regras-de-negocio.md#rn004--quantidade-mínima-dos-sólidos), [`RN005`](regras-de-negocio.md#rn005--quantidade-mínima-do-óleo) |
 
-## RF019 - Simulação de descarte
+## RF019 - Registro manual de pesagem
 
 | Campo | Valor |
 | --- | --- |
-| Descrição | Interface da estação deverá permitir simular material e quantidade no MVP. |
-| Ator relacionado | AT03 - Estação EcoDrop |
+| Descrição | O painel do usuário deverá permitir informar o material, a estação e a quantidade da pesagem. |
+| Ator relacionado | AT01 - Usuário |
 | Prioridade | Essencial para MVP |
 | Regras relacionadas | [`RN021`](regras-de-negocio.md#rn021--descarte-controlado) |
 

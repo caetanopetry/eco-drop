@@ -51,7 +51,7 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | Exceções | Dados insuficientes ou não reconhecidos impedem a conclusão da solicitação. |
 | Regras | — |
 | RFs | RF005 |
-| Observações | O link expira em 60 minutos; o token é invalidado após a redefinição. A senha é armazenada com `password_hash()`. |
+| Observações | O link expira em 15 minutos; o token é invalidado após a redefinição. A senha é armazenada com `password_hash()`. |
 
 ## UC004 — Consultar estações
 
@@ -87,73 +87,22 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | RFs | RF007, RF045 |
 | Observações | Os dados exibidos por estação permanecem PENDENTES. |
 
-## UC006 — Iniciar sessão na estação
-
-| Item | Descrição |
-| --- | --- |
-| Identificador | UC006 |
-| Objetivo | Abrir uma sessão temporária para identificação e descarte. |
-| Ator principal | AT03 — Estação EcoDrop |
-| Atores secundários | Sistema |
-| Pré-condições | Estação cadastrada e apta para uso. |
-| Pós-condições | Sessão temporária e QR Code são disponibilizados. |
-| Fluxo principal | 1. Estação inicia a sessão. 2. Sistema cria a sessão temporária. 3. Sistema gera e apresenta o QR Code. |
-| Fluxos alternativos | A estação pode usar identificação por credenciais. |
-| Exceções | Estação sem condição de uso: sessão não é iniciada. QR Code expirado: deve ser invalidado. |
-| Regras | RN018, RN019, RN020 |
-| RFs | RF010, RF011, RF014, RF045 |
-| Observações | O QR Code não contém dados sensíveis. |
-
-## UC007 — Identificar usuário por QR Code
-
-| Item | Descrição |
-| --- | --- |
-| Identificador | UC007 |
-| Objetivo | Associar usuário autenticado à sessão temporária da estação. |
-| Ator principal | AT01 — Usuário |
-| Atores secundários | AT03 — Estação EcoDrop; Sistema |
-| Pré-condições | Usuário autenticado; sessão ativa; QR Code dentro da validade. |
-| Pós-condições | Usuário fica associado à sessão da estação. |
-| Fluxo principal | 1. Usuário lê o QR Code. 2. Sistema verifica validade. 3. Sistema associa o usuário à sessão. |
-| Fluxos alternativos | Usuário pode utilizar o método alternativo por credenciais. |
-| Exceções | QR Code expirado ou inválido: associação não é realizada. |
-| Regras | RN018, RN019, RN020 |
-| RFs | RF011, RF012, RF014 |
-| Observações | O conteúdo do QR Code não expõe CPF, senha ou credenciais. |
-
-## UC008 — Identificar usuário por credenciais
-
-| Item | Descrição |
-| --- | --- |
-| Identificador | UC008 |
-| Objetivo | Oferecer identificação alternativa na estação. |
-| Ator principal | AT01 — Usuário |
-| Atores secundários | AT03 — Estação EcoDrop; Sistema |
-| Pré-condições | Sessão temporária ativa. |
-| Pós-condições | Quando válida, a identificação associa o usuário à sessão. |
-| Fluxo principal | 1. Usuário opta pelo método alternativo. 2. Estação recebe as credenciais. 3. Sistema verifica e associa o usuário à sessão. |
-| Fluxos alternativos | Usuário identifica-se por QR Code. |
-| Exceções | Credenciais inválidas ou sessão expirada: associação não é realizada. |
-| Regras | RN020 |
-| RFs | RF013 |
-| Observações | Credenciais aceitas e detalhamento do fluxo estão PENDENTES. |
-
 ## UC009 — Registrar descarte
 
 | Item | Descrição |
 | --- | --- |
 | Identificador | UC009 |
 | Objetivo | Registrar descarte associado a usuário e estação. |
-| Ator principal | AT03 — Estação EcoDrop |
-| Atores secundários | AT01 — Usuário; Sistema |
-| Pré-condições | Usuário associado à sessão da estação. |
+| Ator principal | AT01 — Usuário |
+| Atores secundários | Sistema |
+| Pré-condições | Usuário autenticado; estação ativa e material disponível. |
 | Pós-condições | Descarte válido é registrado e encaminhado à pontuação. |
-| Fluxo principal | 1. Estação, em simulação controlada, informa material, quantidade e unidade. 2. Sistema valida o descarte. 3. Sistema registra o descarte válido. |
+| Fluxo principal | 1. Usuário seleciona estação e material em “Meus Descartes”. 2. Informa a quantidade. 3. Sistema valida e registra a pesagem. |
 | Fluxos alternativos | — |
-| Exceções | Quantidade inválida: descarte não gera pontos. Usuário não associado à sessão: registro não é concluído. |
+| Exceções | Estação inativa, material inválido ou quantidade abaixo do mínimo: não há crédito de pontos. |
 | Regras | RN001, RN002, RN003, RN011, RN021 |
 | RFs | RF015, RF016, RF017, RF019 |
-| Observações | Usuário comum não autodeclara descartes pelo aplicativo. |
+| Observações | A sessão técnica vinculada ao registro é criada pelo sistema na mesma transação. |
 
 ## UC010 — Validar quantidade do descarte
 
@@ -162,8 +111,8 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | Identificador | UC010 |
 | Objetivo | Verificar se a quantidade atende ao mínimo do material. |
 | Ator principal | Sistema |
-| Atores secundários | AT03 — Estação EcoDrop |
-| Pré-condições | Material, quantidade e unidade foram informados pela estação. |
+| Atores secundários | AT01 — Usuário |
+| Pré-condições | Material, quantidade e unidade foram informados no aplicativo. |
 | Pós-condições | Descarte é classificado como válido ou inválido para pontuação. |
 | Fluxo principal | 1. Sistema identifica o material. 2. Aplica a unidade e o mínimo correspondentes. 3. Informa o resultado da validação. |
 | Fluxos alternativos | Validação para sólido ou óleo usa o limite aplicável. |
@@ -179,7 +128,7 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | Identificador | UC011 |
 | Objetivo | Calcular, arredondar e creditar os pontos de descarte válido. |
 | Ator principal | Sistema |
-| Atores secundários | AT01 — Usuário; AT03 — Estação EcoDrop |
+| Atores secundários | AT01 — Usuário |
 | Pré-condições | Descarte válido registrado; pontuação do material configurada. |
 | Pós-condições | Pontos inteiros são creditados; extrato, histórico e ranking são atualizados. |
 | Fluxo principal | 1. Sistema calcula pontos conforme material e quantidade. 2. Arredonda matematicamente para inteiro. 3. Credita os pontos. 4. Registra a movimentação e o histórico. 5. Considera os pontos no ranking mensal. |
@@ -457,7 +406,7 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | Fluxo principal | 1. Administrador acessa o recurso. 2. Consulta ou altera o status permitido. 3. Sistema registra o estado resultante. |
 | Fluxos alternativos | Status pode ser alterado automaticamente pelo sistema, como expiração de voucher ou QR Code. |
 | Exceções | Transição não permitida ou falta de autorização: status não é alterado. |
-| Regras | RN018, RN025, RN026, RN036 |
+| Regras | RN025, RN026, RN036 |
 | RFs | RF045, RF009, RF030, RF034, RF035 |
 | Observações | Estados, transições e quais status podem ser alterados manualmente estão PENDENTES. |
 
@@ -468,12 +417,11 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | UC001 | RF001 | RN014, RN015 |
 | UC002–UC003 | RF002, RF005 | — |
 | UC004–UC005 | RF006–RF008, RF045 | — |
-| UC006–UC008 | RF010–RF014 | RN018–RN020 |
 | UC009–UC011 | RF015–RF019, RF022–RF025, RF028, RF037 | RN001–RN013, RN016–RN021, RN029–RN032, RN039 |
 | UC012–UC013 | RF020, RF024–RF025 | RN009, RN012, RN013, RN021 |
 | UC014 | RF037–RF039 | RN029–RN033 |
 | UC015–UC019 | RF029–RF035, RF045 | RN022–RN027, RN036, RN039 |
 | UC020 | RF036 | RN013, RN028 |
-| UC021–UC027 | RF009, RF026–RF027, RF030, RF040–RF045 | RN001–RN008, RN018, RN025–RN026, RN034–RN039 |
+| UC021–UC027 | RF009, RF026–RF027, RF030, RF040–RF045 | RN001–RN008, RN025–RN026, RN034–RN039 |
 
-Os casos também se relacionam aos requisitos não funcionais aplicáveis, especialmente RNF004 e RNF005 para operações restritas e sensíveis, RNF006 e RNF007 para transações e registros, RNF008 para sessões temporárias e RNF013 para privacidade.
+Os casos também se relacionam aos requisitos não funcionais aplicáveis, especialmente RNF004 e RNF005 para operações restritas e sensíveis, RNF006 e RNF007 para transações e registros, RNF008 para tokens de recuperação e RNF013 para privacidade.

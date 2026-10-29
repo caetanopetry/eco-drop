@@ -8,8 +8,8 @@ require_once __DIR__ . '/EcoDropRepository.php';
 /**
  * Histórico e nova pesagem do usuário.
  *
- * A pesagem é feita a partir da lixeira escolhida no app. O repositório
- * reaproveita as estações cadastradas e delega ao EcoDropRepository a criação
+ * A pesagem é feita a partir da estação escolhida no app. O repositório
+ * delega ao EcoDropRepository a criação
  * e conclusão da sessão interna, mantendo o vínculo exigido pelos descartes.
  */
 final class MeusDescartesRepository
@@ -54,7 +54,7 @@ final class MeusDescartesRepository
         $stmt = Database::conexao()->prepare(
             "SELECT d.id, d.quantidade, d.quantidade_valida, d.pontos_gerados,
                     d.status, d.criado_em, m.nome AS material, m.slug AS material_slug,
-                    m.unidade, e.nome AS estacao, e.codigo AS lixeira_codigo
+                    m.unidade, e.nome AS estacao, e.codigo AS codigo_estacao
              FROM descartes d
              INNER JOIN materiais m ON m.id = d.material_id
              INNER JOIN estacoes e ON e.id = d.estacao_id
@@ -88,7 +88,7 @@ final class MeusDescartesRepository
         return $this->ecodrop->materiaisAtivos();
     }
 
-    public function lixeirasAtivas(): array
+    public function estacoesAtivas(): array
     {
         return $this->ecodrop->estacoesAtivas();
     }
@@ -96,7 +96,7 @@ final class MeusDescartesRepository
     public function registrarPesagem(int $usuarioId, int $estacaoId, int $materialId, float $quantidade): array
     {
         if ($estacaoId < 1 || $materialId < 1) {
-            return ['sucesso' => false, 'mensagem' => 'Selecione a lixeira, o material e informe a quantidade.'];
+            return ['sucesso' => false, 'mensagem' => 'Selecione a estação, o material e informe a quantidade.'];
         }
 
         return $this->ecodrop->registrarDescarteDireto($usuarioId, $estacaoId, $materialId, $quantidade);

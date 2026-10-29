@@ -31,7 +31,7 @@ final class EcoDropRepository
 
         $stmt = $pdo->prepare(
             "INSERT INTO configuracoes (chave, valor, descricao)
-             VALUES ('sessao_estacao_uso_segundos', '900', 'Tempo maximo, em segundos, que uma sessao em uso aguarda o descarte no totem.')
+             VALUES ('sessao_estacao_uso_segundos', '900', 'Tempo maximo, em segundos, para concluir uma pesagem.')
              ON DUPLICATE KEY UPDATE valor = COALESCE(valor, VALUES(valor))"
         );
         $stmt->execute();
@@ -208,138 +208,8 @@ final class EcoDropRepository
         return null;
     }
 
-    public function criarSessaoEstacao(int $estacaoId): array
-    {
-        $this->expirarSessoesVencidas();
-
-        if (!$this->estacaoAtivaExiste($estacaoId)) {
-            return [];
-        }
-
-        $this->cancelarSessoesAguardandoDaEstacao($estacaoId);
-
-        $token = bin2hex(random_bytes(32));
-        $validadeSegundos = $this->validadeQrSegundos();
-        $expiraEm = date('Y-m-d H:i:s', time() + $validadeSegundos);
-
-        $stmt = Database::conexao()->prepare(
-            "INSERT INTO sessoes_estacao (estacao_id, token_hash, expira_em)
-             VALUES (:estacao_id, :token_hash, :expira_em)"
-        );
-        $stmt->bindValue('estacao_id', $estacaoId, PDO::PARAM_INT);
-        $stmt->bindValue('token_hash', hash('sha256', $token));
-        $stmt->bindValue('expira_em', $expiraEm);
-        $stmt->execute();
-
-        // O token puro é devolvido apenas aqui (para montar o QR/link), nunca persistido.
-        $sessao = $this->sessaoPorToken($token);
-        return $sessao === null ? [] : $sessao + ['token' => $token];
-    }
-
     /**
-     * Descreve a sessão a partir do token, sem alterar estado. Usado pela página de
-     * confirmação do app antes de associar a conta ao descarte.
-     *
-     * @return array{status: string, expira_em: string, estacao: string}|null
-     */
-    public function descreverSessao(string $token): ?array
-    {
-        if (preg_match('/\A[a-f0-9]{64}\z/', $token) !== 1) {
-            return null;
-        }
-
-        $this->expirarSessoesVencidas();
-
-        $stmt = Database::conexao()->prepare(
-            "SELECT s.status, s.expira_em, e.nome AS estacao
-             FROM sessoes_estacao s
-             INNER JOIN estacoes e ON e.id = s.estacao_id
-             WHERE s.token_hash = :token_hash
-             LIMIT 1"
-        );
-        $stmt->execute(['token_hash' => hash('sha256', $token)]);
-        $sessao = $stmt->fetch();
-        return $sessao ?: null;
-    }
-
-    public function associarSessao(string $token, int $usuarioId): array
-    {        return Database::transacao(function (PDO $pdo) use ($token, $usuarioId): array {
-            $this->expirarSessoesVencidas();
-            $sessao = $this->sessaoPorToken($token, true);
-
-            if ($sessao === null) {
-                return ['sucesso' => false, 'mensagem' => 'Sessao nao encontrada.'];
-            }
-
-            if (strtotime((string) $sessao['expira_em']) < time()) {
-                $this->marcarSessao($token, 'expirada');
-                return ['sucesso' => false, 'mensagem' => 'Sessao da estacao expirada. Gere uma nova sessao na estacao.'];
-            }
-
-            if ($sessao['status'] !== 'aguardando_usuario') {
-                return ['sucesso' => false, 'mensagem' => 'Esta sessao nao esta aguardando identificacao.'];
-            }
-
-            $this->cancelarOutrasSessoesEmUso($pdo, (int) $sessao['id'], (int) $sessao['estacao_id'], $usuarioId);
-
-            $stmt = $pdo->prepare(
-                "UPDATE sessoes_estacao
-                 SET usuario_id = :usuario_id, status = 'em_uso', associado_em = :associado_em
-                 WHERE token_hash = :token_hash"
-            );
-            $stmt->execute([
-                'usuario_id' => $usuarioId,
-                'associado_em' => date('Y-m-d H:i:s'),
-                'token_hash' => hash('sha256', $token),
-            ]);
-
-            return ['sucesso' => true, 'mensagem' => 'Sessao associada. A estacao ja pode simular o descarte.'];
-        });
-    }
-
-    public function sessoesEmUso(): array
-    {
-        $this->expirarSessoesVencidas();
-
-        // Não expõe o token de associação: a estação identifica a sessão pelo id.
-        return Database::conexao()
-            ->query(
-                "SELECT s.id, s.estacao_id, s.usuario_id, s.associado_em, e.nome AS estacao, u.nome AS usuario
-                 FROM sessoes_estacao s
-                 INNER JOIN estacoes e ON e.id = s.estacao_id
-                 INNER JOIN usuarios u ON u.id = s.usuario_id
-                 WHERE s.status = 'em_uso'
-                 ORDER BY s.associado_em DESC
-                 LIMIT 20"
-            )
-            ->fetchAll();
-    }
-
-    public function registrarDescarte(string $token, int $materialId, float $quantidade): array
-    {
-        return Database::transacao(function (PDO $pdo) use ($token, $materialId, $quantidade): array {
-            return $this->efetivarDescarte($pdo, $this->sessaoPorToken($token, true), $materialId, $quantidade);
-        });
-    }
-
-    /**
-     * Usado pela interface da estação: identifica a sessão pelo id (sem expor o token
-     * de associação no HTML) e delega para a mesma regra de registro.
-     */
-    public function registrarDescartePorSessao(int $sessaoId, int $materialId, float $quantidade): array
-    {
-        return Database::transacao(function (PDO $pdo) use ($sessaoId, $materialId, $quantidade): array {
-            return $this->efetivarDescarte($pdo, $this->sessaoPorId($sessaoId, true), $materialId, $quantidade);
-        });
-    }
-
-    /**
-     * Pesagem iniciada pelo app do usuário a partir da lixeira selecionada.
-     *
-     * A sessão é criada e concluída na mesma transação para manter o vínculo
-     * exigido por `descartes.sessao_estacao_id`, sem depender do totem físico.
-     * A lixeira precisa estar ativa e o material/quantidade seguem as mesmas
-     * validações da estação.
+     * Registra a pesagem do usuário e sua sessão técnica de vínculo na mesma transação.
      */
     public function registrarDescarteDireto(int $usuarioId, int $estacaoId, int $materialId, float $quantidade): array
     {
@@ -351,7 +221,7 @@ final class EcoDropRepository
             }
 
             if (!$this->estacaoAtivaExiste($estacaoId)) {
-                return ['sucesso' => false, 'mensagem' => 'Lixeira inválida ou inativa. Selecione outra lixeira.'];
+                return ['sucesso' => false, 'mensagem' => 'Estação inválida ou inativa. Selecione outra estação.'];
             }
 
             $agora = date('Y-m-d H:i:s');
@@ -388,15 +258,14 @@ final class EcoDropRepository
     private function efetivarDescarte(PDO $pdo, ?array $sessao, int $materialId, float $quantidade): array
     {
         if ($sessao === null || $sessao['status'] !== 'em_uso' || empty($sessao['usuario_id'])) {
-            return ['sucesso' => false, 'mensagem' => 'Sessao invalida ou sem usuario identificado.'];
+            return ['sucesso' => false, 'mensagem' => 'Sessão de descarte inválida ou sem usuário associado.'];
         }
 
-        // A sessão em uso também tem prazo: sem esse limite, uma sessão ficaria
-        // "em_uso" indefinidamente caso o descarte nunca fosse concluído no totem.
+        // Evita concluir sessões técnicas antigas que tenham ficado sem descarte.
         $associadoEm = strtotime((string) ($sessao['associado_em'] ?? ''));
         if ($associadoEm === false || time() - $associadoEm > $this->sessaoUsoSegundos()) {
             $this->marcarSessaoPorId($pdo, (int) $sessao['id'], 'expirada');
-            return ['sucesso' => false, 'mensagem' => 'A sessao de descarte expirou. Gere um novo QR na estacao.'];
+            return ['sucesso' => false, 'mensagem' => 'A sessão de descarte expirou. Registre a pesagem novamente.'];
         }
 
         $material = $this->materialPorId($materialId);
@@ -518,33 +387,6 @@ final class EcoDropRepository
         });
     }
 
-    private function validadeQrSegundos(): int
-    {
-        $stmt = Database::conexao()->prepare("SELECT valor FROM configuracoes WHERE chave = 'qr_code_validade_segundos'");
-        $stmt->execute();
-        $valor = $stmt->fetchColumn();
-        return is_numeric($valor) ? max(30, (int) $valor) : 120;
-    }
-
-    /** Tempo de validade da sessão temporária, em segundos (para exibir na estação). */
-    public function validadeSessaoSegundos(): int
-    {
-        return $this->validadeQrSegundos();
-    }
-
-    private function sessaoPorToken(string $token, bool $forUpdate = false): ?array
-    {
-        $sql = "SELECT * FROM sessoes_estacao WHERE token_hash = :token_hash";
-        if ($forUpdate) {
-            $sql .= ' FOR UPDATE';
-        }
-
-        $stmt = Database::conexao()->prepare($sql);
-        $stmt->execute(['token_hash' => hash('sha256', $token)]);
-        $sessao = $stmt->fetch();
-        return $sessao ?: null;
-    }
-
     private function sessaoPorId(int $id, bool $forUpdate = false): ?array
     {
         $sql = 'SELECT * FROM sessoes_estacao WHERE id = :id';
@@ -573,30 +415,6 @@ final class EcoDropRepository
         return (int) $stmt->fetchColumn() > 0;
     }
 
-    private function expirarSessoesVencidas(): void
-    {
-        // Comparações feitas com o relógio do PHP (mesma origem usada para gravar
-        // expira_em/associado_em), evitando divergência com o fuso do MySQL.
-        $agora = date('Y-m-d H:i:s');
-        $stmt = Database::conexao()->prepare(
-            "UPDATE sessoes_estacao
-             SET status = 'expirada'
-             WHERE status = 'aguardando_usuario'
-                AND expira_em < :agora"
-        );
-        $stmt->execute(['agora' => $agora]);
-
-        $limiteUso = date('Y-m-d H:i:s', time() - $this->sessaoUsoSegundos());
-        $stmt = Database::conexao()->prepare(
-            "UPDATE sessoes_estacao
-             SET status = 'expirada'
-             WHERE status = 'em_uso'
-                AND associado_em IS NOT NULL
-                AND associado_em < :limite"
-        );
-        $stmt->execute(['limite' => $limiteUso]);
-    }
-
     private function sessaoUsoSegundos(): int
     {
         $stmt = Database::conexao()->prepare("SELECT valor FROM configuracoes WHERE chave = 'sessao_estacao_uso_segundos'");
@@ -605,43 +423,10 @@ final class EcoDropRepository
         return is_numeric($valor) ? max(60, (int) $valor) : 900;
     }
 
-    private function marcarSessao(string $token, string $status): void
-    {
-        $stmt = Database::conexao()->prepare('UPDATE sessoes_estacao SET status = :status WHERE token_hash = :token_hash');
-        $stmt->execute(['status' => $status, 'token_hash' => hash('sha256', $token)]);
-    }
-
     private function marcarSessaoPorId(PDO $pdo, int $id, string $status): void
     {
         $stmt = $pdo->prepare('UPDATE sessoes_estacao SET status = :status WHERE id = :id');
         $stmt->execute(['status' => $status, 'id' => $id]);
-    }
-
-    private function cancelarSessoesAguardandoDaEstacao(int $estacaoId): void
-    {
-        $stmt = Database::conexao()->prepare(
-            "UPDATE sessoes_estacao
-             SET status = 'cancelada'
-             WHERE estacao_id = :estacao_id
-                AND status = 'aguardando_usuario'"
-        );
-        $stmt->execute(['estacao_id' => $estacaoId]);
-    }
-
-    private function cancelarOutrasSessoesEmUso(PDO $pdo, int $sessaoAtualId, int $estacaoId, int $usuarioId): void
-    {
-        $stmt = $pdo->prepare(
-            "UPDATE sessoes_estacao
-             SET status = 'cancelada'
-             WHERE id <> :sessao_atual_id
-                AND status = 'em_uso'
-                AND (estacao_id = :estacao_id OR usuario_id = :usuario_id)"
-        );
-        $stmt->execute([
-            'sessao_atual_id' => $sessaoAtualId,
-            'estacao_id' => $estacaoId,
-            'usuario_id' => $usuarioId,
-        ]);
     }
 
     private function registrarMovimentacao(PDO $pdo, int $usuarioId, string $tipo, string $origem, int $origemId, int $quantidade, string $descricao): void

@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    const lixeira = document.getElementById('descartes-lixeira');
-    const lixeiraCodigo = document.getElementById('descartes-lixeira-codigo');
-    const lixeiraLocal = document.getElementById('descartes-lixeira-local');
+    const estacao = document.getElementById('descartes-estacao');
+    const estacaoCodigo = document.getElementById('descartes-estacao-codigo');
+    const estacaoLocal = document.getElementById('descartes-estacao-local');
     const material = document.getElementById('descartes-material');
     const quantidade = document.getElementById('descartes-quantidade');
     const unidade = document.getElementById('descartes-unidade');
@@ -19,23 +19,23 @@
         maximumFractionDigits: 3
     });
 
-    function atualizarLixeira() {
-        if (!lixeira || !lixeiraCodigo || !lixeiraLocal) {
+    function atualizarEstacao() {
+        if (!estacao || !estacaoCodigo || !estacaoLocal) {
             return;
         }
 
-        const opcao = lixeira.options[lixeira.selectedIndex];
+        const opcao = estacao.options[estacao.selectedIndex];
         if (!opcao || !opcao.value) {
-            lixeiraCodigo.textContent = '—';
-            lixeiraLocal.textContent = 'Selecione uma lixeira para ver o código.';
+            estacaoCodigo.textContent = '—';
+            estacaoLocal.textContent = 'Selecione uma estação para ver o código.';
             return;
         }
 
-        lixeiraCodigo.textContent = opcao.dataset.codigo || '—';
+        estacaoCodigo.textContent = opcao.dataset.codigo || '—';
 
         const nome = opcao.dataset.nome || '';
         const endereco = opcao.dataset.endereco || '';
-        lixeiraLocal.textContent = [nome, endereco].filter(Boolean).join(' · ');
+        estacaoLocal.textContent = [nome, endereco].filter(Boolean).join(' · ');
     }
 
     function atualizarMaterial() {
@@ -60,9 +60,9 @@
         previa.textContent = valida ? numero.format(Math.round(valor * pontosPorUnidade)) + ' pts' : '0 pts';
     }
 
-    if (lixeira) {
-        lixeira.addEventListener('change', atualizarLixeira);
-        atualizarLixeira();
+    if (estacao) {
+        estacao.addEventListener('change', atualizarEstacao);
+        atualizarEstacao();
     }
 
     if (material) {

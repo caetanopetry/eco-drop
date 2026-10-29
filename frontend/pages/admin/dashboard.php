@@ -44,11 +44,9 @@ $paginaAtual = 'dashboard';
             <div class="admin-cabecalho">
                 <div>
                     <h1>Dashboard</h1>
-                    <p class="texto-suave" style="margin:0;">Indicadores desta instalação de teste.</p>
                 </div>
                 <div class="flex itens-centro gap-3"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?>
                     <span class="texto-suave"><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?></span>
-                    <a class="botao botao-secundario" href="<?= Url::escapar('/station/') ?>">Simulador da estação</a>
                     <?php $logoutClasse = 'botao botao-secundario'; require __DIR__ . '/../../components/app/logout-form.php'; ?>
                 </div>
             </div>

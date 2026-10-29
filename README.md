@@ -18,7 +18,7 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 - cadastro e autenticação de usuários;
 - consulta de estações EcoDrop;
-- identificação em estação por sessão temporária (link/QR Code);
+- registro direto de pesagens no painel do usuário;
 - registro controlado de descartes simulados no MVP;
 - cálculo e extrato de pontos;
 - ranking mensal;
@@ -27,9 +27,9 @@ A proposta do EcoDrop é oferecer uma plataforma web responsiva com:
 
 ## MVP
 
-O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação, associação por sessão temporária (link/QR Code), descarte simulado controlado pela interface da estação, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
+O MVP deverá demonstrar o ciclo principal do EcoDrop: criação de conta, login, seleção de estação e material, registro de pesagem no painel do usuário, crédito de pontos, histórico, extrato, ranking mensal, consulta de recompensas, resgate e emissão de voucher quando aplicável.
 
-Enquanto não houver hardware real, a estação será representada por uma interface web com modo de demonstração/simulação controlado. No app, a pesagem exige a seleção de uma lixeira ativa e passa pelas mesmas validações de material, quantidade e pontuação; a interface da estação com sessão temporária continua disponível.
+O registro de pesagem é feito pelo painel do usuário, com seleção de estação ativa e material, e passa pelas validações de quantidade e pontuação.
 
 ## Funcionalidades planejadas
 
@@ -38,8 +38,7 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 - Painel administrativo.
 - Cadastro, autenticação, logout, perfil e recuperação de acesso.
 - Consulta, detalhes e mapa de estações.
-- Sessões temporárias de estação e link/QR Code com validade de 2 minutos.
-- Registro simulado de descartes com material e quantidade.
+- Registro de descartes com estação, material e quantidade.
 - Configuração de materiais e pontos por unidade.
 - Saldo e extrato de pontos.
 - Histórico de descartes.
@@ -50,18 +49,18 @@ Enquanto não houver hardware real, a estação será representada por uma inter
 ## Estado atual
 
 Implementados: autenticação local, integração Google, recuperação de senha por
-e-mail, perfil, estação demonstrativa com identificação temporária, descarte,
+e-mail, perfil, pesagem pelo painel do usuário, descarte,
 pontos, extrato, ranking mensal, recompensas e vouchers. O admin possui dashboard,
 consulta de usuários com indicadores e histórico de acessos reais do banco, um
 ranking de coletores com pódio, classificação e detalhes por material, um
 painel de materiais com depósitos, ranking e separação por categoria e o
 catálogo de recompensas com criação, publicação e pausa refletidas no app.
 No app do usuário, “Meus Descartes” reúne o histórico de pesagens, os tipos de
-itens recolhidos e uma nova pesagem em que o usuário seleciona a lixeira e
-confere o código exibido. O admin também possui a aba “Lixeiras”, com cadastro,
-status e totais descartados por ponto.
-As abas Estações e Parceiros incluem acompanhamento das coletas e avaliação
-de propostas, respectivamente, com dados persistidos no banco.
+itens recolhidos e uma nova pesagem em que o usuário seleciona a estação e
+confere o código exibido. A página administrativa de Estações reúne cadastro,
+status, métricas e materiais recebidos por ponto.
+As abas Estações e Parceiros permitem gerenciar estações de coleta e cadastrar
+organizações parceiras diretamente no banco de dados.
 O tema claro/escuro compartilha tokens e preferência persistida.
 
 O projeto continua sendo uma demonstração: hardware, mapas, premiação automática
@@ -80,7 +79,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
    O script `atualizacao.sql` cria a tabela `tentativas_acesso` (proteção contra
    força bruta, exigida pelo login), alinha a coluna
    `sessoes_estacao.token_hash` usada pelo fluxo da estação, adiciona os novos
-   materiais e cria/backfilla o código público das lixeiras em `estacoes.codigo`.
+   materiais e cria/preenche o código público das estações em `estacoes.codigo`.
    Ele é idempotente e pode ser executado novamente sem erro. Em uma instalação
    nova, essas estruturas já estão no `schema.sql`.
 3. Instale o Composer para Windows, caso ainda não esteja instalado, em
@@ -107,7 +106,7 @@ e os demais cadastros administrativos ainda exigem implementação. Consulte a
 7. Acesse `http://localhost:9999/eco-drop/`, ajustando a porta e o nome da pasta
    em `backend/config/config.php` (`app.url_base`) conforme o Apache local.
 
-### Usuários de teste (criados pelo seed)
+### Usuários de teste locais (criados pelo `seed.sql`)
 
 | Perfil | E-mail | Senha |
 | --- | --- | --- |
@@ -131,16 +130,14 @@ principal, enquanto o conteúdo permanece em `frontend/pages/institucional/`.
 - `/app/logout/` — encerrar sessão (POST com CSRF)
 - `/app/esqueci-senha/` e `/app/redefinir-senha/` — recuperação de acesso
 - `/app/saques/` — resgates e vouchers
-- `/app/descartes/` — histórico de pesagens, tipos recolhidos e nova pesagem com seleção da lixeira e código
+- `/app/descartes/` — histórico de pesagens, tipos recolhidos e nova pesagem com seleção da estação e código
 - `/app/extrato/` — movimentações de pontos
 - `/app/conta/` — perfil e fotos
-- `/station/` — estação demonstrativa
 - `/admin/login/` — acesso administrativo
 - `/admin/dashboard/` — dashboard administrativo (protegida, papel `admin`)
 - `/admin/usuarios/` — contas e histórico de acessos (papel `admin`)
-- `/admin/estacoes/` — estações, descartes e volumes por material (papel `admin`)
-- `/admin/lixeiras/` — cadastro de lixeiras, códigos, status e volumes descartados (papel `admin`)
-- `/admin/parceiros/` — propostas, avaliações e parceiros cadastrados (papel `admin`)
+- `/admin/estacoes/` — cadastro, status, descartes, materiais e volumes por estação (papel `admin`)
+- `/admin/parceiros/` — cadastro, consulta e filtragem de parceiros (papel `admin`)
 - `/admin/materiais/` — depósitos por material, ranking dos mais depositados e separação por categoria (papel `admin`)
 - `/admin/ranking/` — ranking de usuários por pontos em coletas, com pódio, classificação e detalhes por material (papel `admin`)
 - `/admin/recompensas/` — catálogo de recompensas, criação e publicação/pausa no app do usuário (papel `admin`)
@@ -159,7 +156,7 @@ descrevem a demonstração atual. A identificação do responsável pelo tratame
 o canal de privacidade e os prazos de retenção precisam ser completados antes da
 operação pública.
 
-1. Restringir a estação demonstrativa antes de operar pontos reais.
+1. Restringir o registro de pesagens antes de operar pontos reais.
 2. Completar os cadastros administrativos e a premiação do ranking.
 3. Validar Google e SMTP com as credenciais do ambiente de destino.
 4. Definir limites de tentativas, política de sessões e implantação HTTPS.
@@ -167,36 +164,27 @@ operação pública.
 
 ## Verificação e demonstração
 
-Os testes automatizados que existiam foram removidos junto com a pasta `tests/`.
-A verificação atual é manual, com Apache e MySQL ativos:
+A verificação é manual, com Apache e MySQL ativos. O template do e-mail de
+recuperação de senha possui teste automatizado:
+
+```sh
+php tests/email-recuperacao.php
+```
+
+Roteiro de conferência:
 
 1. `php -l` em todos os arquivos PHP (sem erros) e `node --check` nos arquivos JS.
 2. Abrir as rotas públicas (`/`, `/sobre/`, `/contato/`, `/perguntas-frequentes/`,
    `/termos-de-uso/`, `/politica-de-privacidade/`) e conferir status 200.
 3. Entrar com os dois perfis do seed e percorrer cadastro, login, perfil e extrato.
-4. Registrar uma pesagem no app, conferir pontos, bônus e extrato.
+4. Registrar uma pesagem em “Meus Descartes”, conferir pontos, bônus e extrato.
 5. Resgatar uma recompensa e conferir o voucher gerado.
-6. No painel admin, conferir dashboard, lixeiras, materiais, ranking e recompensas.
+6. No painel admin, conferir dashboard, estações, materiais, ranking e recompensas.
 
-### Fluxo da estação em duas janelas
-
-A tela `/station/` é restrita ao perfil `admin`, e as páginas do app redirecionam
-administradores para o painel. Por isso a associação da sessão precisa ser feita
-em outra janela/perfil do navegador:
-
-1. Na janela A (normal), entre como administrador e abra `/station/`.
-2. Clique em “Criar sessão temporária” e use “Copiar link”.
-3. Na janela B (anônima ou outro navegador), entre como usuário comum.
-4. Cole o link, confirme “Conectar minha conta” e volte à janela A.
-5. Na janela A, selecione a sessão, o material e a quantidade e registre o descarte.
-
-O link expira em 2 minutos (configurável em
-`configuracoes.qr_code_validade_segundos`), então deixe a janela B já autenticada
-antes de criar a sessão.
-
-> Em ambiente local, o link usa `localhost`; por isso ele funciona apenas no
-> mesmo computador. A leitura por celular exige publicar a aplicação em um
-> domínio ou IP acessível na rede.
+A pesagem é feita no painel do usuário, com seleção de estação ativa e material,
+e passa pelas mesmas validações de quantidade e pontuação antes do crédito.
+Configure SMTP e Google conforme `.env.example`, mantendo os segredos somente
+no `.env`.
 
 ## Documentação
 
@@ -213,7 +201,7 @@ A documentação essencial do projeto está organizada em:
 - [`Casos de uso`](docs/casos-de-uso/README.md) · [`Fluxos`](docs/fluxos/README.md)
 - [`Decisões de implementação`](docs/decisoes/)
 - [`Revisão técnica e sincronização`](docs/revisao-tecnica-2026-10-16.md)
-- [`Propostas e avaliação de parceiros`](docs/parceiros.md)
+- [`Administração de parceiros`](docs/parceiros.md)
 - [`Tema claro e escuro`](docs/tema-escuro.md)
 
 ## Tecnologias

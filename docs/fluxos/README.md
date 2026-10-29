@@ -46,55 +46,23 @@ flowchart TD
 
 **PENDENTE:** detalhes definitivos da integração com mapas e dados apresentados por estação.
 
-## FLUXO 03 — Identificação do usuário na estação
-
-| Item | Descrição |
-| --- | --- |
-| Objetivo | Vincular usuário autenticado à sessão temporária da estação. |
-| Atores | AT01 — Usuário; AT03 — Estação EcoDrop; Sistema |
-| Início | Estação inicia uma sessão temporária. |
-| Sequência principal | 1. Estação inicia sessão. 2. Sistema gera QR Code temporário. 3. Usuário autenticado lê o QR Code. 4. Sistema verifica validade e associa o usuário à sessão. |
-| Decisões | QR Code está válido por até dois minutos? Se não, a associação não ocorre. Usuário utiliza QR Code? Caso contrário, pode usar credenciais. |
-| Exceções | QR Code inválido ou expirado; credenciais alternativas inválidas; sessão não ativa. |
-| Resultado final | Usuário associado à sessão ou impedido de prosseguir. |
-| Regras | RN018, RN019, RN020 |
-| RFs | RF010–RF014 |
-
-```mermaid
-sequenceDiagram
-    participant E as Estação EcoDrop
-    participant S as Sistema
-    participant U as Usuário
-    E->>S: Inicia sessão temporária
-    S-->>E: QR Code sem dados sensíveis
-    U->>S: Lê QR Code
-    S->>S: Verifica validade de 2 minutos
-    alt QR Code válido
-        S-->>U: Associa usuário à sessão
-    else QR Code inválido ou expirado
-        S-->>U: Não associa usuário
-    end
-```
-
-**PENDENTE:** quais credenciais são usadas no método alternativo e suas etapas detalhadas.
-
 ## FLUXO 04 — Descarte e geração de pontos
 
 | Item | Descrição |
 | --- | --- |
 | Objetivo | Registrar descarte controlado e gerar pontos válidos. |
-| Atores | AT01 — Usuário; AT03 — Estação EcoDrop; Sistema |
-| Início | Usuário já está associado à sessão da estação. |
-| Sequência principal | 1. A estação, em simulação controlada, registra material, quantidade e unidade. 2. Sistema valida o mínimo aplicável. 3. Sistema calcula pontos conforme material e quantidade. 4. Sistema arredonda o resultado para inteiro. 5. Sistema credita pontos. 6. Sistema registra a movimentação, atualiza saldo, histórico e ranking mensal. |
+| Atores | AT01 — Usuário; Sistema |
+| Início | Usuário autenticado acessa “Meus Descartes”. |
+| Sequência principal | 1. Usuário seleciona estação e material, informa quantidade e confirma. 2. Sistema valida o mínimo aplicável. 3. Sistema calcula pontos conforme material e quantidade. 4. Sistema arredonda o resultado para inteiro. 5. Sistema credita pontos. 6. Sistema registra a movimentação, atualiza saldo, histórico e ranking mensal. |
 | Decisões | Material é sólido ou óleo? Aplica kg ou litros e o mínimo correspondente. Quantidade é válida? Somente então há crédito. Primeiro descarte válido? Bônus pode ser aplicado se estiver configurado. |
-| Exceções | Quantidade menor que o mínimo, material/unidade incompatíveis ou usuário não vinculado à sessão impedem crédito. |
+| Exceções | Estação inativa, quantidade menor que o mínimo ou material inválido impedem crédito. |
 | Resultado final | Descarte válido fica registrado e seus pontos são creditados; descarte inválido não gera pontos. |
 | Regras | RN001–RN013, RN016–RN017, RN021, RN029–RN032, RN039 |
 | RFs | RF015–RF019, RF022–RF025, RF028, RF037 |
 
 ```mermaid
 flowchart TD
-    A[Usuário associado à sessão] --> B[Estação registra material e quantidade simulados]
+    A[Usuário acessa Meus Descartes] --> B[Seleciona estação e material, informa quantidade]
     B --> C{Material e unidade válidos?}
     C -- Não --> X[Não registrar crédito]
     C -- Sim --> D{Quantidade mínima atendida?}
@@ -105,8 +73,6 @@ flowchart TD
     G --> H[Registrar extrato e histórico]
     H --> I[Considerar pontos no ranking mensal]
 ```
-
-O usuário não informa livremente um descarte pelo EcoDrop App para receber pontos. A entrada de material e quantidade pertence à EcoDrop Station no modo de simulação do MVP.
 
 **PENDENTE:** valor do bônus de primeiro descarte e valores de pontuação por material.
 
@@ -193,7 +159,7 @@ O usuário não informa livremente um descarte pelo EcoDrop App para receber pon
 | Decisões | Administrador possui autorização? Se não, acesso é negado. A ação envolve status? Aplica apenas transições permitidas. |
 | Exceções | Dados insuficientes, transição não permitida ou falta de autorização impedem a operação. |
 | Resultado final | Recurso é consultado ou atualizado conforme permissão. |
-| Regras | RN001–RN008, RN018, RN025–RN026, RN034–RN039 |
+| Regras | RN001–RN008, RN025–RN026, RN034–RN039 |
 | RFs | RF009, RF026, RF027, RF030, RF040–RF045 |
 
 **PENDENTE:** campos administrativos, ações permitidas sobre usuários e transições de status.
@@ -204,13 +170,12 @@ O usuário não informa livremente um descarte pelo EcoDrop App para receber pon
 | --- | --- | --- | --- |
 | FLUXO 01 | UC001–UC003 | RF001, RF002, RF005 | RN014, RN015 |
 | FLUXO 02 | UC004–UC005 | RF006–RF008, RF045 | — |
-| FLUXO 03 | UC006–UC008 | RF010–RF014 | RN018–RN020 |
 | FLUXO 04 | UC009–UC011 | RF015–RF019, RF022–RF025, RF028, RF037 | RN001–RN013, RN016–RN017, RN021, RN029–RN032, RN039 |
 | FLUXO 05 | UC012–UC013 | RF020, RF024, RF025 | RN009, RN012, RN013, RN021 |
 | FLUXO 06 | UC014 | RF037–RF039 | RN029–RN033 |
 | FLUXO 07 | UC015–UC017 | RF029, RF031, RF032 | RN022–RN024, RN036, RN039 |
 | FLUXO 08 | UC018–UC019 | RF033–RF035, RF045 | RN025–RN027 |
 | FLUXO 09 | UC020 | RF036 | RN013, RN028 |
-| FLUXO 10 | UC021–UC027 | RF009, RF026, RF027, RF030, RF040–RF045 | RN001–RN008, RN018, RN025–RN026, RN034–RN039 |
+| FLUXO 10 | UC021–UC027 | RF009, RF026, RF027, RF030, RF040–RF045 | RN001–RN008, RN025–RN026, RN034–RN039 |
 
-Requisitos não funcionais transversais: RNF004 (controle de acesso), RNF005 (validação no servidor), RNF006 (integridade), RNF007 (rastreabilidade), RNF008 (expiração de sessões), RNF013 (privacidade), RNF015 (pontuação não dependente de valores livres do cliente) e RNF017 (auditabilidade de estornos).
+Requisitos não funcionais transversais: RNF004 (controle de acesso), RNF005 (validação no servidor), RNF006 (integridade), RNF007 (rastreabilidade), RNF008 (expiração de tokens de recuperação), RNF013 (privacidade), RNF015 (pontuação não dependente de valores livres do cliente) e RNF017 (auditabilidade de estornos).

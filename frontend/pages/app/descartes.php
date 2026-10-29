@@ -20,7 +20,7 @@ $repo = new MeusDescartesRepository();
 
 $mensagem = null;
 $tipoMensagem = 'sucesso';
-$lixeiraSelecionada = 0;
+$estacaoSelecionada = 0;
 $materialSelecionado = 0;
 $quantidadeInformada = '';
 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensagem = 'Token de segurança inválido. Recarregue a página e tente novamente.';
         $tipoMensagem = 'erro';
     } elseif (($_POST['acao'] ?? '') === 'registrar') {
-        $lixeiraSelecionada = (int) ($_POST['estacao_id'] ?? 0);
+        $estacaoSelecionada = (int) ($_POST['estacao_id'] ?? 0);
         $materialSelecionado = (int) ($_POST['material_id'] ?? 0);
         $quantidadeInformada = is_string($_POST['quantidade'] ?? null) ? trim($_POST['quantidade']) : '';
         $quantidade = (float) str_replace(',', '.', $quantidadeInformada);
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $resultado = $repo->registrarPesagem(
                 $usuarioId,
-                $lixeiraSelecionada,
+                $estacaoSelecionada,
                 $materialSelecionado,
                 $quantidade
             );
@@ -75,7 +75,7 @@ $resumo = $repo->resumo($usuarioId);
 $historico = $repo->historico($usuarioId);
 $tipos = $repo->tiposRecolhidos($usuarioId);
 $materiais = $repo->materiaisAtivos();
-$lixeiras = $repo->lixeirasAtivas();
+$estacoes = $repo->estacoesAtivas();
 
 $esc = static fn($valor): string => htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
 $inteiro = static fn($valor): string => number_format((float) $valor, 0, ',', '.');
@@ -120,7 +120,7 @@ $paginaAtualApp = 'descartes';
             <div class="app-topbar">
                 <div>
                     <h1>Meus Descartes</h1>
-                    <p>Acompanhe suas pesagens e registre um novo descarte selecionando a lixeira utilizada.</p>
+                    <p>Acompanhe suas pesagens e registre um novo descarte selecionando a estação utilizada.</p>
                 </div>
                 <?php include __DIR__ . '/../../components/app/perfil.php'; ?>
             </div>
@@ -162,7 +162,7 @@ $paginaAtualApp = 'descartes';
                             <span><?= count($tipos) ?> <?= count($tipos) === 1 ? 'tipo' : 'tipos' ?></span>
                         </div>
                         <?php if (!$tipos): ?>
-                            <p class="estado-vazio">Nenhum material recolhido ainda. Selecione uma lixeira para fazer sua primeira pesagem.</p>
+                            <p class="estado-vazio">Nenhum material recolhido ainda. Selecione uma estação para fazer sua primeira pesagem.</p>
                         <?php else: ?>
                             <div class="descartes-tipos">
                                 <?php foreach ($tipos as $tipo): ?>
@@ -185,7 +185,7 @@ $paginaAtualApp = 'descartes';
                             <span><?= $inteiro($resumo['pesagens']) ?> registros</span>
                         </div>
                         <?php if (!$historico): ?>
-                            <p class="estado-vazio">Suas pesagens aparecerão aqui após o primeiro descarte registrado em uma lixeira EcoDrop.</p>
+                            <p class="estado-vazio">Suas pesagens aparecerão aqui após o primeiro descarte registrado em uma estação EcoDrop.</p>
                         <?php else: ?>
                             <ol class="descartes-historico">
                                 <?php foreach ($historico as $descarte): ?>
@@ -197,7 +197,7 @@ $paginaAtualApp = 'descartes';
                                                 <strong><?= $esc($descarte['material']) ?></strong>
                                                 <span class="descartes-status <?= $valida ? 'descartes-status--valida' : 'descartes-status--aviso' ?>"><?= $valida ? 'Válida' : 'Abaixo do mínimo' ?></span>
                                             </div>
-                                            <small><?= $esc($descarte['estacao']) ?><?= !empty($descarte['lixeira_codigo']) ? ' · ' . $esc($descarte['lixeira_codigo']) : '' ?> · <?= $esc($dataHora($descarte['criado_em'])) ?></small>
+                                            <small><?= $esc($descarte['estacao']) ?><?= !empty($descarte['codigo_estacao']) ? ' · ' . $esc($descarte['codigo_estacao']) : '' ?> · <?= $esc($dataHora($descarte['criado_em'])) ?></small>
                                         </div>
                                         <div class="descartes-historico-numeros">
                                             <strong><?= $esc($decimal($descarte['quantidade'])) ?> <?= $esc($descarte['unidade']) ?></strong>
@@ -215,11 +215,11 @@ $paginaAtualApp = 'descartes';
                     <div class="descartes-nova-cabecalho">
                         <span class="etiqueta">Nova pesagem</span>
                         <h2 id="nova-titulo">Registrar descarte</h2>
-                        <p>Selecione a lixeira usada, confira o código e informe o material pesado.</p>
+                        <p>Selecione a estação usada, confira o código e informe o material pesado.</p>
                     </div>
 
-                    <?php if (!$lixeiras): ?>
-                        <p class="descartes-aviso" role="status">Nenhuma lixeira ativa disponível no momento. Tente novamente mais tarde.</p>
+                    <?php if (!$estacoes): ?>
+                        <p class="descartes-aviso" role="status">Nenhuma estação ativa disponível no momento. Tente novamente mais tarde.</p>
                     <?php elseif (!$materiais): ?>
                         <p class="descartes-aviso" role="status">Nenhum material aceito está ativo. Não é possível registrar uma pesagem agora.</p>
                     <?php else: ?>
@@ -227,25 +227,25 @@ $paginaAtualApp = 'descartes';
                             <?= Csrf::campoHtml() ?>
                             <input type="hidden" name="acao" value="registrar">
 
-                            <label class="descartes-campo">Lixeira usada no descarte
-                                <select id="descartes-lixeira" name="estacao_id" required>
-                                    <option value="" <?= $lixeiraSelecionada < 1 ? 'selected' : '' ?> disabled>Selecione a lixeira</option>
-                                    <?php foreach ($lixeiras as $lixeira): ?>
-                                        <option value="<?= (int) $lixeira['id'] ?>"
-                                            data-codigo="<?= $esc($lixeira['codigo']) ?>"
-                                            data-nome="<?= $esc($lixeira['nome']) ?>"
-                                            data-endereco="<?= $esc($lixeira['endereco'] ?? '') ?>"
-                                            <?= (int) $lixeira['id'] === $lixeiraSelecionada ? 'selected' : '' ?>>
-                                            <?= $esc($lixeira['codigo'] . ' · ' . $lixeira['nome']) ?>
+                            <label class="descartes-campo">Estação usada no descarte
+                                <select id="descartes-estacao" name="estacao_id" required>
+                                    <option value="" <?= $estacaoSelecionada < 1 ? 'selected' : '' ?> disabled>Selecione a estação</option>
+                                    <?php foreach ($estacoes as $estacao): ?>
+                                        <option value="<?= (int) $estacao['id'] ?>"
+                                            data-codigo="<?= $esc($estacao['codigo']) ?>"
+                                            data-nome="<?= $esc($estacao['nome']) ?>"
+                                            data-endereco="<?= $esc($estacao['endereco'] ?? '') ?>"
+                                            <?= (int) $estacao['id'] === $estacaoSelecionada ? 'selected' : '' ?>>
+                                            <?= $esc($estacao['codigo'] . ' · ' . $estacao['nome']) ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </label>
 
                             <div class="descartes-codigo" role="status" aria-live="polite">
-                                <span>Código da lixeira</span>
-                                <strong id="descartes-lixeira-codigo">—</strong>
-                                <small id="descartes-lixeira-local">Selecione uma lixeira para ver o código.</small>
+                                <span>Código da estação</span>
+                                <strong id="descartes-estacao-codigo">—</strong>
+                                <small id="descartes-estacao-local">Selecione uma estação para ver o código.</small>
                             </div>
 
                             <label class="descartes-campo">Material

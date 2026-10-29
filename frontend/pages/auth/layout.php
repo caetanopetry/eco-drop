@@ -46,7 +46,9 @@ if ($usuarioLogado !== null) {
     <div class="tema-acesso"><?php require __DIR__ . '/../../components/theme/toggle.php'; ?></div>
     <div class="auth-troca" data-auth-troca data-modo="<?= $modoAuth ?>">
         <main class="auth-formulario">
-            <a class="eco-marca auth-marca-mobile" href="<?= Url::escapar('/') ?>"><?php require __DIR__ . '/../../components/brand/marca.php'; ?></a>
+            <a class="eco-marca auth-marca-mobile" href="<?= Url::escapar('/') ?>" aria-label="EcoDrop">
+                <span class="auth-marca-texto" aria-hidden="true">EcoDrop</span>
+            </a>
             <section class="auth-conteudo" data-auth-painel="login" aria-label="Entrar" <?= $modoAuth !== 'login' ? 'hidden inert' : '' ?>>
                 <h1 tabindex="-1">Entrar</h1>
                 <p class="subtitulo texto-suave">Acompanhe seus pontos e recompensas.</p>

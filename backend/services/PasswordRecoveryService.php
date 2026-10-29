@@ -10,7 +10,7 @@ require_once __DIR__ . '/EmailService.php';
 
 final class PasswordRecoveryService
 {
-    private const TEMPO_EXPIRACAO_MINUTOS = 60;
+    private const TEMPO_EXPIRACAO_MINUTOS = 15;
 
     public function __construct(
         private readonly UsuarioRepository $usuarios = new UsuarioRepository(),

@@ -5,18 +5,13 @@
 Fazem parte do escopo inicial do EcoDrop:
 
 - aplicação web responsiva para usuários;
-- interface web da estação EcoDrop;
 - painel administrativo;
 - cadastro de usuários;
 - autenticação, logout, perfil e recuperação de acesso;
 - CPF como identificador único de conta;
 - consulta, detalhes e mapa de estações;
 - intenção de integração com Google Maps;
-- identificação na estação;
-- QR Code temporário com validade de 2 minutos;
-- alternativa de identificação utilizando credenciais;
-- sessões temporárias das estações;
-- registro simulado de descartes;
+- registro de pesagens no painel do usuário;
 - materiais recicláveis e quantidades descartadas;
 - cálculo de pontos;
 - saldo e extrato de pontos;
@@ -33,7 +28,7 @@ Fazem parte do escopo inicial do EcoDrop:
 
 Não fazem parte do escopo inicial:
 
-- construção física do totem EcoDrop;
+- construção física de estações EcoDrop;
 - desenvolvimento ou integração real com balança;
 - câmeras físicas;
 - sensores físicos;

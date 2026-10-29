@@ -24,6 +24,9 @@ RewriteRule ^(\.git|vendor|tests|backend/(config|core|database|repositories|serv
 # Impede o acesso direto aos fragmentos de página usados pelo layout.
 RewriteRule ^frontend/pages/institucional/(layout|sobre|contato|perguntas-frequentes|termos-de-uso|politica-de-privacidade)\.php$ - [F,L,NC]
 
+# A antiga interface da estação foi removida.
+RewriteRule ^station/?$ - [R=404,L,NC]
+
 # Mantém uma única versão das URLs institucionais, sempre com barra final.
 RewriteCond %{REQUEST_URI} !/$
 RewriteRule ^(sobre|contato|perguntas-frequentes|termos-de-uso|politica-de-privacidade)$ %{REQUEST_URI}/ [R=301,L,NE]

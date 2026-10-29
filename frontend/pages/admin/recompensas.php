@@ -132,8 +132,6 @@ $indicadores = [
             <div class="item"><p class="valor"><?= $inteiro($indicadores['resgates']) ?></p><p class="rotulo">Resgates realizados</p></div>
         </section>
 
-        <p class="recompensas-nota"><strong>Como funciona:</strong> recompensas ativas aparecem imediatamente em “Resgates” no app do usuário. Pausar oculta o item do catálogo sem apagar resgates ou vouchers já emitidos.</p>
-
         <div class="recompensas-layout">
             <section class="recompensas-catalogo" aria-labelledby="catalogo-titulo">
                 <div class="recompensas-secao-cabecalho">
@@ -146,8 +144,7 @@ $indicadores = [
 
                 <?php if (!$recompensas): ?>
                 <div class="recompensas-vazio">
-                    <h3>Seu catálogo começa aqui</h3>
-                    <p>Crie a primeira recompensa ao lado. Ela aparecerá para os usuários assim que estiver ativa.</p>
+                    <h3>Nenhuma recompensa cadastrada</h3>
                 </div>
                 <?php else: ?>
                 <div class="recompensas-grade">
@@ -192,7 +189,6 @@ $indicadores = [
                 <div class="recompensas-form-cabecalho">
                     <span class="recompensas-sobretitulo">CADASTRO</span>
                     <h2 id="nova-titulo">Nova recompensa</h2>
-                    <p>Preencha os dados do benefício. Ao salvar como ativa, ele entra no catálogo do app.</p>
                 </div>
                 <form method="post" action="<?= Url::escapar('/admin/recompensas/') ?>" class="recompensas-form">
                     <?= Csrf::campoHtml() ?>

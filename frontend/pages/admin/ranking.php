@@ -88,7 +88,6 @@ $periodoResumo = $periodo === 'mes' ? 'do mês atual' : 'geral';
         <?php elseif (!$ranking): ?>
         <div class="ranking-vazio">
             <h2>Ainda não há coletores pontuando</h2>
-            <p>Assim que os descartes forem registrados nas estações, os usuários aparecerão aqui automaticamente.</p>
         </div>
         <?php else: ?>
         <section class="regua-indicadores ranking-indicadores" aria-label="Resumo do ranking <?= $esc($periodoResumo) ?>">

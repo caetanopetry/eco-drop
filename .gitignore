@@ -1,6 +1,7 @@
 .env
 .env.*
 !.env.example
+backend/database/seed-servidor.sql
 vendor/
 composer.lock
 google-*.json
