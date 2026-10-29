@@ -51,7 +51,7 @@ Este documento descreve os comportamentos do MVP a partir dos requisitos e regra
 | Exceções | Dados insuficientes ou não reconhecidos impedem a conclusão da solicitação. |
 | Regras | — |
 | RFs | RF005 |
-| Observações | O link expira em 60 minutos; o token é invalidado após a redefinição. A senha é armazenada com `password_hash()`. |
+| Observações | O link expira em 15 minutos; o token é invalidado após a redefinição. A senha é armazenada com `password_hash()`. |
 
 ## UC004 — Consultar estações
 

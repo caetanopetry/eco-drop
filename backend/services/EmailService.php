@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../core/Env.php';
+require_once __DIR__ . '/../core/Config.php';
+require_once __DIR__ . '/EmailTemplate.php';
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
@@ -25,16 +27,22 @@ final class EmailService
         $remetente = $this->variavelObrigatoria('SMTP_FROM');
         $nomeRemetente = $this->variavelObrigatoria('SMTP_FROM_NAME');
 
-        if (strtolower($host) !== 'smtp-relay.brevo.com' || $porta !== 587) {
-            throw new EmailDeliveryException('A configuração SMTP do Brevo deve usar o host e a porta 587.');
+        if ($porta === false || $porta < 1 || $porta > 65535) {
+            throw new EmailDeliveryException('A porta SMTP configurada é inválida.');
         }
 
         if (filter_var($remetente, FILTER_VALIDATE_EMAIL) === false) {
             throw new EmailDeliveryException('O remetente SMTP configurado não é um e-mail válido.');
         }
 
-        $nomeSeguro = htmlspecialchars($nome, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $linkSeguro = htmlspecialchars($link, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $logo = dirname(__DIR__, 2) . '/frontend/assets/img/logos/logo-email.png';
+        $logoCid = is_file($logo) ? 'logo-ecodrop' : null;
+        $conteudo = EmailTemplate::recuperacaoSenha(
+            $nome,
+            $link,
+            (string) Config::get('app.url_base', ''),
+            $logoCid
+        );
 
         try {
             $mailer = new PHPMailer(true);
@@ -43,25 +51,22 @@ final class EmailService
             $mailer->SMTPAuth = true;
             $mailer->Username = $usuario;
             $mailer->Password = $senha;
-            $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            // Porta 465 usa TLS implícito; as demais usam STARTTLS (ex.: 587).
+            $mailer->SMTPSecure = $porta === 465
+                ? PHPMailer::ENCRYPTION_SMTPS
+                : PHPMailer::ENCRYPTION_STARTTLS;
             $mailer->Port = $porta;
             $mailer->Timeout = 15;
             $mailer->CharSet = PHPMailer::CHARSET_UTF8;
             $mailer->setFrom($remetente, $nomeRemetente);
             $mailer->addAddress($destinatario, $nome);
             $mailer->isHTML(true);
-            $mailer->Subject = 'Redefinição de senha — EcoDrop';
-            $mailer->Body = '<!doctype html><html lang="pt-BR"><body>'
-                . '<p>Olá, ' . $nomeSeguro . '.</p>'
-                . '<p>Recebemos uma solicitação para redefinir a senha da sua conta EcoDrop.</p>'
-                . '<p><a href="' . $linkSeguro . '">Redefinir minha senha</a></p>'
-                . '<p>Este link expira em 60 minutos e só pode ser usado uma vez.</p>'
-                . '<p>Se você não solicitou a redefinição, ignore este e-mail. Sua senha atual não será enviada nem alterada.</p>'
-                . '</body></html>';
-            $mailer->AltBody = "Olá, {$nome}.\n\n"
-                . "Para redefinir sua senha EcoDrop, acesse:\n{$link}\n\n"
-                . "O link expira em 60 minutos e só pode ser usado uma vez. "
-                . "Se você não solicitou a redefinição, ignore este e-mail.";
+            if ($logoCid !== null) {
+                $mailer->addEmbeddedImage($logo, $logoCid, 'logo-ecodrop.png', 'base64', 'image/png');
+            }
+            $mailer->Subject = $conteudo['assunto'];
+            $mailer->Body = $conteudo['html'];
+            $mailer->AltBody = $conteudo['texto'];
             $mailer->send();
             error_log('[EcoDrop] E-mail de recuperação submetido ao SMTP para domínio: ' . $this->dominioEmail($destinatario) . '.');
         } catch (PHPMailerException $e) {
